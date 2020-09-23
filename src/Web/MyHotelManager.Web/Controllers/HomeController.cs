@@ -2,9 +2,8 @@
 {
     using System.Diagnostics;
 
-    using MyHotelManager.Web.ViewModels;
-
     using Microsoft.AspNetCore.Mvc;
+    using MyHotelManager.Web.ViewModels;
 
     public class HomeController : BaseController
     {

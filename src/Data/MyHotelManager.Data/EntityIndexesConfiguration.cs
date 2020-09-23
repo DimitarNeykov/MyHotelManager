@@ -2,9 +2,8 @@
 {
     using System.Linq;
 
-    using MyHotelManager.Data.Common.Models;
-
     using Microsoft.EntityFrameworkCore;
+    using MyHotelManager.Data.Common.Models;
 
     internal static class EntityIndexesConfiguration
     {

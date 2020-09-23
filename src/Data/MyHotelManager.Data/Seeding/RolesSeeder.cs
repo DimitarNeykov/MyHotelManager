@@ -4,11 +4,10 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using MyHotelManager.Common;
-    using MyHotelManager.Data.Models;
-
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
+    using MyHotelManager.Common;
+    using MyHotelManager.Data.Models;
 
     internal class RolesSeeder : ISeeder
     {

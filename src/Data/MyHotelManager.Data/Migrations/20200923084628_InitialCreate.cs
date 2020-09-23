@@ -1,8 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace MyHotelManager.Data.Migrations
+﻿namespace MyHotelManager.Data.Migrations
 {
+    using System;
+
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,7 +19,7 @@ namespace MyHotelManager.Data.Migrations
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true)
+                    DeletedOn = table.Column<DateTime>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -36,7 +37,7 @@ namespace MyHotelManager.Data.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     Name = table.Column<string>(nullable: true),
-                    CountryCode = table.Column<string>(nullable: true)
+                    CountryCode = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -57,7 +58,7 @@ namespace MyHotelManager.Data.Migrations
                     Bulstat = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
-                    Address = table.Column<string>(nullable: true)
+                    Address = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -74,7 +75,7 @@ namespace MyHotelManager.Data.Migrations
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -92,7 +93,7 @@ namespace MyHotelManager.Data.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true)
+                    LastName = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -109,7 +110,7 @@ namespace MyHotelManager.Data.Migrations
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -127,7 +128,7 @@ namespace MyHotelManager.Data.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     Name = table.Column<string>(nullable: true),
-                    Value = table.Column<string>(nullable: true)
+                    Value = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -144,7 +145,7 @@ namespace MyHotelManager.Data.Migrations
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -159,7 +160,7 @@ namespace MyHotelManager.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
+                    ClaimValue = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -198,7 +199,7 @@ namespace MyHotelManager.Data.Migrations
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     BirthDate = table.Column<DateTime>(nullable: false),
-                    GenderId = table.Column<int>(nullable: false)
+                    GenderId = table.Column<int>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -229,7 +230,7 @@ namespace MyHotelManager.Data.Migrations
                     PNF = table.Column<string>(nullable: true),
                     DocumentNumber = table.Column<string>(nullable: true),
                     DateOfIssue = table.Column<DateTime>(nullable: false),
-                    DateOfExpiry = table.Column<DateTime>(nullable: false)
+                    DateOfExpiry = table.Column<DateTime>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -259,7 +260,7 @@ namespace MyHotelManager.Data.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     CompanyId = table.Column<int>(nullable: false),
-                    OwnerId = table.Column<int>(nullable: false)
+                    OwnerId = table.Column<int>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -292,7 +293,7 @@ namespace MyHotelManager.Data.Migrations
                     CityId = table.Column<int>(nullable: false),
                     Address = table.Column<string>(nullable: true),
                     StarsId = table.Column<int>(nullable: false),
-                    CompanyId = table.Column<int>(nullable: false)
+                    CompanyId = table.Column<int>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -325,7 +326,7 @@ namespace MyHotelManager.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
+                    ClaimValue = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -345,7 +346,7 @@ namespace MyHotelManager.Data.Migrations
                     LoginProvider = table.Column<string>(nullable: false),
                     ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false)
+                    UserId = table.Column<string>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -363,7 +364,7 @@ namespace MyHotelManager.Data.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false)
+                    RoleId = table.Column<string>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -389,7 +390,7 @@ namespace MyHotelManager.Data.Migrations
                     UserId = table.Column<string>(nullable: false),
                     LoginProvider = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),
-                    Value = table.Column<string>(nullable: true)
+                    Value = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -416,7 +417,7 @@ namespace MyHotelManager.Data.Migrations
                     Description = table.Column<string>(nullable: true),
                     RoomTypeId = table.Column<int>(nullable: false),
                     Price = table.Column<decimal>(nullable: false),
-                    HotelId = table.Column<int>(nullable: false)
+                    HotelId = table.Column<int>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -446,7 +447,7 @@ namespace MyHotelManager.Data.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     UserId = table.Column<string>(nullable: true),
-                    HotelId = table.Column<int>(nullable: false)
+                    HotelId = table.Column<int>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -479,7 +480,7 @@ namespace MyHotelManager.Data.Migrations
                     ArrivalDate = table.Column<DateTime>(nullable: false),
                     ReturnDate = table.Column<DateTime>(nullable: false),
                     CancelDate = table.Column<DateTime>(nullable: true),
-                    Description = table.Column<string>(nullable: true)
+                    Description = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -503,7 +504,7 @@ namespace MyHotelManager.Data.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     GuestId = table.Column<string>(nullable: true),
-                    ReservationId = table.Column<string>(nullable: true)
+                    ReservationId = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {

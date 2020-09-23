@@ -1,9 +1,8 @@
 ﻿namespace MyHotelManager.Web.Areas.Administration.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
     using MyHotelManager.Services.Data;
     using MyHotelManager.Web.ViewModels.Administration.Dashboard;
-
-    using Microsoft.AspNetCore.Mvc;
 
     public class DashboardController : AdministrationController
     {
