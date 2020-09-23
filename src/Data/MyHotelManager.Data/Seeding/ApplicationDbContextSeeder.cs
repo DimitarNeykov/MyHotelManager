@@ -27,6 +27,9 @@
                           {
                               new RolesSeeder(),
                               new SettingsSeeder(),
+                              new GenderSeeder(),
+                              new StarsSeeder(),
+                              new RoomTypesSeeder(),
                           };
 
             foreach (var seeder in seeders)
