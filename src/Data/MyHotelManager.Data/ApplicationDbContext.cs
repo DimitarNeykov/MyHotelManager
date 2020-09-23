@@ -6,11 +6,10 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    using MyHotelManager.Data.Common.Models;
-    using MyHotelManager.Data.Models;
-
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+    using MyHotelManager.Data.Common.Models;
+    using MyHotelManager.Data.Models;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
@@ -24,7 +23,33 @@
         {
         }
 
-        public DbSet<Setting> Settings { get; set; }
+        public virtual DbSet<Setting> Settings { get; set; }
+
+        public virtual DbSet<City> Cities { get; set; }
+
+        public virtual DbSet<Company> Companies { get; set; }
+
+        public virtual DbSet<CompanyOwner> CompanyOwners { get; set; }
+
+        public virtual DbSet<Guest> Guests { get; set; }
+
+        public virtual DbSet<GuestReservation> GuestsReservations { get; set; }
+
+        public virtual DbSet<Hotel> Hotels { get; set; }
+
+        public virtual DbSet<Owner> Owners { get; set; }
+
+        public virtual DbSet<Reservation> Reservations { get; set; }
+
+        public virtual DbSet<Room> Rooms { get; set; }
+
+        public virtual DbSet<UserHotel> UsersHotels { get; set; }
+
+        public virtual DbSet<Gender> Genders { get; set; }
+
+        public virtual DbSet<RoomType> RoomTypes { get; set; }
+
+        public virtual DbSet<Stars> Stars { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 

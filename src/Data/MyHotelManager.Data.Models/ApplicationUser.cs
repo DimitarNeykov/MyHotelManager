@@ -4,9 +4,8 @@ namespace MyHotelManager.Data.Models
     using System;
     using System.Collections.Generic;
 
-    using MyHotelManager.Data.Common.Models;
-
     using Microsoft.AspNetCore.Identity;
+    using MyHotelManager.Data.Common.Models;
 
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
     {
@@ -16,6 +15,7 @@ namespace MyHotelManager.Data.Models
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
+            this.UsersHotels = new HashSet<UserHotel>();
         }
 
         // Audit info
@@ -28,10 +28,22 @@ namespace MyHotelManager.Data.Models
 
         public DateTime? DeletedOn { get; set; }
 
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public DateTime BirthDate { get; set; }
+
+        public int GenderId { get; set; }
+
+        public virtual Gender Gender { get; set; }
+
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
 
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
+
+        public virtual ICollection<UserHotel> UsersHotels { get; set; }
     }
 }
