@@ -13,7 +13,7 @@
             this.GuestsReservations = new HashSet<GuestReservation>();
         }
 
-        public int RoomId { get; set; }
+        public int? RoomId { get; set; }
 
         public virtual Room Room { get; set; }
 

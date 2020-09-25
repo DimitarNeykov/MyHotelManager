@@ -17,6 +17,8 @@
 
         public string LastName { get; set; }
 
+        public int? GenderId { get; set; }
+
         public virtual Gender Gender { get; set; }
 
         public string PhoneNumber { get; set; }

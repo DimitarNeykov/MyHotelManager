@@ -17,6 +17,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.8" />
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
@@ -37,5 +44,9 @@
     <ProjectReference Include="..\..\Services\MyHotelManager.Services\MyHotelManager.Services.csproj" />
     <ProjectReference Include="..\MyHotelManager.Web.Infrastructure\MyHotelManager.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\MyHotelManager.Web.ViewModels\MyHotelManager.Web.ViewModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Hotels\" />
   </ItemGroup>
 </Project>

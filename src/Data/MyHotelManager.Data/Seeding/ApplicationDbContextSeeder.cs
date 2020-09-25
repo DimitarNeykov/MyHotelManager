@@ -30,6 +30,7 @@
                               new GenderSeeder(),
                               new StarsSeeder(),
                               new RoomTypesSeeder(),
+                              new CitiesSeeder(),
                           };
 
             foreach (var seeder in seeders)

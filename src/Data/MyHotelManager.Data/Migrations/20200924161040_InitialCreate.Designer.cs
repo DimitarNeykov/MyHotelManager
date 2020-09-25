@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyHotelManager.Data;
 
 namespace MyHotelManager.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200924161040_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -323,14 +325,9 @@ namespace MyHotelManager.Data.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Companies");
                 });
@@ -778,13 +775,6 @@ namespace MyHotelManager.Data.Migrations
                         .HasForeignKey("GenderId");
                 });
 
-            modelBuilder.Entity("MyHotelManager.Data.Models.Company", b =>
-                {
-                    b.HasOne("MyHotelManager.Data.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-                });
-
             modelBuilder.Entity("MyHotelManager.Data.Models.Guest", b =>
                 {
                     b.HasOne("MyHotelManager.Data.Models.City", "City")
@@ -818,7 +808,7 @@ namespace MyHotelManager.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("MyHotelManager.Data.Models.Company", "Company")
-                        .WithMany("Hotels")
+                        .WithMany()
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();

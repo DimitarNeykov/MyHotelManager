@@ -1,9 +1,8 @@
-﻿namespace MyHotelManager.Data.Migrations
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+namespace MyHotelManager.Data.Migrations
 {
-    using System;
-
-    using Microsoft.EntityFrameworkCore.Migrations;
-
     public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,7 +18,7 @@
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    DeletedOn = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -37,7 +36,7 @@
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     Name = table.Column<string>(nullable: true),
-                    CountryCode = table.Column<string>(nullable: true),
+                    CountryCode = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -58,7 +57,7 @@
                     Bulstat = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
-                    Address = table.Column<string>(nullable: true),
+                    Address = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -75,29 +74,11 @@
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Genders", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Owners",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Owners", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -110,7 +91,7 @@
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -128,7 +109,7 @@
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     Name = table.Column<string>(nullable: true),
-                    Value = table.Column<string>(nullable: true),
+                    Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -145,7 +126,7 @@
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -160,7 +141,7 @@
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -199,7 +180,7 @@
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     BirthDate = table.Column<DateTime>(nullable: false),
-                    GenderId = table.Column<int>(nullable: false),
+                    GenderId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -230,7 +211,7 @@
                     PNF = table.Column<string>(nullable: true),
                     DocumentNumber = table.Column<string>(nullable: true),
                     DateOfIssue = table.Column<DateTime>(nullable: false),
-                    DateOfExpiry = table.Column<DateTime>(nullable: false),
+                    DateOfExpiry = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -250,36 +231,6 @@
                 });
 
             migrationBuilder.CreateTable(
-                name: "CompanyOwners",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true),
-                    CompanyId = table.Column<int>(nullable: false),
-                    OwnerId = table.Column<int>(nullable: false),
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CompanyOwners", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CompanyOwners_Companies_CompanyId",
-                        column: x => x.CompanyId,
-                        principalTable: "Companies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_CompanyOwners_Owners_OwnerId",
-                        column: x => x.OwnerId,
-                        principalTable: "Owners",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Hotels",
                 columns: table => new
                 {
@@ -293,7 +244,7 @@
                     CityId = table.Column<int>(nullable: false),
                     Address = table.Column<string>(nullable: true),
                     StarsId = table.Column<int>(nullable: false),
-                    CompanyId = table.Column<int>(nullable: false),
+                    CompanyId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -326,7 +277,7 @@
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -346,7 +297,7 @@
                     LoginProvider = table.Column<string>(nullable: false),
                     ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false),
+                    UserId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -364,7 +315,7 @@
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false),
+                    RoleId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -390,7 +341,7 @@
                     UserId = table.Column<string>(nullable: false),
                     LoginProvider = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),
-                    Value = table.Column<string>(nullable: true),
+                    Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -417,7 +368,7 @@
                     Description = table.Column<string>(nullable: true),
                     RoomTypeId = table.Column<int>(nullable: false),
                     Price = table.Column<decimal>(nullable: false),
-                    HotelId = table.Column<int>(nullable: false),
+                    HotelId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -447,7 +398,7 @@
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     UserId = table.Column<string>(nullable: true),
-                    HotelId = table.Column<int>(nullable: false),
+                    HotelId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -475,12 +426,12 @@
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
-                    RoomId = table.Column<int>(nullable: false),
+                    RoomId = table.Column<int>(nullable: true),
                     BookDate = table.Column<DateTime>(nullable: false),
                     ArrivalDate = table.Column<DateTime>(nullable: false),
                     ReturnDate = table.Column<DateTime>(nullable: false),
                     CancelDate = table.Column<DateTime>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -504,7 +455,7 @@
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     GuestId = table.Column<string>(nullable: true),
-                    ReservationId = table.Column<string>(nullable: true),
+                    ReservationId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -588,21 +539,6 @@
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CompanyOwners_CompanyId",
-                table: "CompanyOwners",
-                column: "CompanyId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CompanyOwners_IsDeleted",
-                table: "CompanyOwners",
-                column: "IsDeleted");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CompanyOwners_OwnerId",
-                table: "CompanyOwners",
-                column: "OwnerId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Genders_IsDeleted",
                 table: "Genders",
                 column: "IsDeleted");
@@ -656,11 +592,6 @@
                 name: "IX_Hotels_StarsId",
                 table: "Hotels",
                 column: "StarsId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Owners_IsDeleted",
-                table: "Owners",
-                column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reservations_IsDeleted",
@@ -736,9 +667,6 @@
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "CompanyOwners");
-
-            migrationBuilder.DropTable(
                 name: "GuestsReservations");
 
             migrationBuilder.DropTable(
@@ -749,9 +677,6 @@
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "Owners");
 
             migrationBuilder.DropTable(
                 name: "Guests");

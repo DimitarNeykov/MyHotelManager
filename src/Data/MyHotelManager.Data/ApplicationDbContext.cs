@@ -29,15 +29,11 @@
 
         public virtual DbSet<Company> Companies { get; set; }
 
-        public virtual DbSet<CompanyOwner> CompanyOwners { get; set; }
-
         public virtual DbSet<Guest> Guests { get; set; }
 
         public virtual DbSet<GuestReservation> GuestsReservations { get; set; }
 
         public virtual DbSet<Hotel> Hotels { get; set; }
-
-        public virtual DbSet<Owner> Owners { get; set; }
 
         public virtual DbSet<Reservation> Reservations { get; set; }
 
