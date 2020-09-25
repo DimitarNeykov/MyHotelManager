@@ -302,6 +302,9 @@ namespace MyHotelManager.Data.Migrations
                     b.Property<string>("Bulstat")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -327,6 +330,8 @@ namespace MyHotelManager.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CityId");
 
                     b.HasIndex("IsDeleted");
 
@@ -780,6 +785,12 @@ namespace MyHotelManager.Data.Migrations
 
             modelBuilder.Entity("MyHotelManager.Data.Models.Company", b =>
                 {
+                    b.HasOne("MyHotelManager.Data.Models.City", "City")
+                        .WithMany("Companies")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("MyHotelManager.Data.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");

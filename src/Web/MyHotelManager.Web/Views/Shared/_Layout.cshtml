@@ -1,4 +1,6 @@
 ﻿@using MyHotelManager.Common
+@using Microsoft.AspNetCore.Identity
+@using MyHotelManager.Data.Models
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,9 +26,18 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Companies" asp-action="Create">Create Company</a>
-                        </li>
+                        @{
+                            if (User.Identity.IsAuthenticated)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Companies" asp-action="Create">Create Company</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Hotels" asp-action="Create">Create Hotel</a>
+                                </li>
+                            }
+                        }
                     </ul>
                 </div>
             </div>

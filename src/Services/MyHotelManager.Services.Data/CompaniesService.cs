@@ -1,15 +1,18 @@
 ﻿namespace MyHotelManager.Services.Data
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using MyHotelManager.Data.Common.Repositories;
     using MyHotelManager.Data.Models;
+    using MyHotelManager.Services.Mapping;
 
-    public class CompanyService : ICompanyService
+    public class CompaniesService : ICompaniesService
     {
         private readonly IDeletableEntityRepository<Company> companyRepository;
 
-        public CompanyService(IDeletableEntityRepository<Company> companyRepository)
+        public CompaniesService(IDeletableEntityRepository<Company> companyRepository)
         {
             this.companyRepository = companyRepository;
         }
@@ -28,6 +31,16 @@
 
             await this.companyRepository.AddAsync(company);
             await this.companyRepository.SaveChangesAsync();
+        }
+
+        public IEnumerable<T> GetAllByUserId<T>(string userId)
+        {
+            var query = this.companyRepository
+                .All()
+                .Where(c => c.UserId == userId)
+                .OrderBy(x => x.Name);
+
+            return query.To<T>().ToList();
         }
     }
 }

@@ -1,0 +1,59 @@
+﻿@model MyHotelManager.Web.ViewModels.Hotels.HotelCreateInputModel
+
+@{
+    var cities = Model.Cities.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+    var stars = Model.Stars.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+    var companies = Model.Companies.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+}
+
+@{
+    this.ViewData["Title"] = "New Hotel";
+}
+
+<h1 class="text-black-50 text-lg-center mt-5">Create New Hotel</h1>
+
+
+<div class="card-footer col mt-5">
+    <div class="media flex-wrap w-100 justify-content-center text-lg-center">
+        <form asp-action="Create" method="post" class="col-md-4 img-thumbnail">
+            <div class="mt-2">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control mt-2" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="mt-2">
+                <label asp-for="CityId"></label>
+                <select asp-for="CityId" asp-items="cities" class="form-control mt-2">
+                    <option disabled selected>--- SELECT ---</option>
+                </select>
+                <span asp-validation-for="CityId" class="text-danger"></span>
+            </div>
+
+            <div class="mt-2">
+                <label asp-for="Address"></label>
+                <input asp-for="Address" class="form-control mt-2" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+
+            <div class="mt-2">
+                <label asp-for="StarsId"></label>
+                <select asp-for="StarsId" asp-items="stars" class="form-control mt-2">
+                    <option disabled selected>--- SELECT ---</option>
+                </select>
+                <span asp-validation-for="StarsId" class="text-danger"></span>
+            </div>
+
+            <div class="mt-2">
+                <label asp-for="CompanyId"></label>
+                <select asp-for="CompanyId" asp-items="companies" class="form-control mt-2">
+                    <option disabled selected>--- SELECT ---</option>
+                </select>
+                <span asp-validation-for="CompanyId" class="text-danger"></span>
+            </div>
+
+            <hr class="mt-3" />
+            <input type="submit" class="btn btn-success float-right mt-2" />
+        </form>
+    </div>
+</div>

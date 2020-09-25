@@ -45,8 +45,4 @@
     <ProjectReference Include="..\MyHotelManager.Web.Infrastructure\MyHotelManager.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\MyHotelManager.Web.ViewModels\MyHotelManager.Web.ViewModels.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\Hotels\" />
-  </ItemGroup>
 </Project>

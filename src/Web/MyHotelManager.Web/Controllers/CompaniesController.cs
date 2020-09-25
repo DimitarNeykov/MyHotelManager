@@ -12,18 +12,29 @@
     public class CompaniesController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly ICompanyService companyService;
+        private readonly ICompaniesService companiesService;
+        private readonly ICitiesService citiesService;
 
-        public CompaniesController(UserManager<ApplicationUser> userManager, ICompanyService companyService)
+        public CompaniesController(
+            UserManager<ApplicationUser> userManager,
+            ICompaniesService companiesService,
+            ICitiesService citiesService)
         {
             this.userManager = userManager;
-            this.companyService = companyService;
+            this.companiesService = companiesService;
+            this.citiesService = citiesService;
         }
 
         [Authorize]
         public IActionResult Create()
         {
-            var viewModel = new CompanyCreateInputModel();
+            var cities = this.citiesService.GetAll<CityDropDownViewModel>();
+
+            var viewModel = new CompanyCreateInputModel
+            {
+                Cities = cities,
+            };
+
             return this.View(viewModel);
         }
 
@@ -38,7 +49,7 @@
                 return this.View(input);
             }
 
-            await this.companyService.CreateAsync(
+            await this.companiesService.CreateAsync(
                     input.Name,
                     input.Bulstat,
                     input.PhoneNumber,
