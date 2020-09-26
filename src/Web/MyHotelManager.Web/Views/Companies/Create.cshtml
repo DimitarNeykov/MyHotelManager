@@ -5,7 +5,7 @@
 }
 
 @{
-    var cities = Model.Cities.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+    var cities = Model.Cities.Select(x => new SelectListItem(x.Name + " / " + x.Region, x.Id.ToString()));
 }
 
 <h1 class="text-black-50 text-lg-center mt-5">Create New Company</h1>

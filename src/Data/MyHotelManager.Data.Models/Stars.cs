@@ -13,6 +13,8 @@
 
         public string Name { get; set; }
 
+        public int StarsInNumbers { get; set; }
+
         public virtual ICollection<Hotel> Hotels { get; set; }
     }
 }

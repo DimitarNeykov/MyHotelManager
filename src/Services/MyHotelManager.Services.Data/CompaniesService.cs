@@ -17,7 +17,7 @@
             this.companyRepository = companyRepository;
         }
 
-        public async Task CreateAsync(string name, string bulstat, string phoneNumber, string email, string address, string userId)
+        public async Task CreateAsync(string name, string bulstat, string phoneNumber, string email, int cityId, string address, string userId)
         {
             var company = new Company
             {
@@ -25,6 +25,7 @@
                 Bulstat = bulstat,
                 PhoneNumber = phoneNumber,
                 Email = email,
+                CityId = cityId,
                 Address = address,
                 UserId = userId,
             };

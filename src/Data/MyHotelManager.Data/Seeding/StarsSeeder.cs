@@ -13,21 +13,22 @@
         {
             if (!dbContext.Stars.Any())
             {
-                var stars = new List<string>
+                var stars = new List<(string Name, int StarsInNumbers)>
                 {
-                    "One",
-                    "Two",
-                    "Three",
-                    "Four",
-                    "Five",
-                    "Michelin",
+                    ("One", 1),
+                    ("Two", 2),
+                    ("Three", 3),
+                    ("Four", 4),
+                    ("Five", 5),
+                    ("Michelin", 6),
                 };
 
                 foreach (var star in stars)
                 {
                     await dbContext.Stars.AddAsync(new Stars
                     {
-                        Name = star,
+                        Name = star.Name,
+                        StarsInNumbers = star.StarsInNumbers,
                     });
                 }
             }

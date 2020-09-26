@@ -2,11 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Text;
     using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore.Internal;
     using MyHotelManager.Data.Models;
+    using Newtonsoft.Json;
 
     public class CitiesSeeder : ISeeder
     {
@@ -14,23 +16,24 @@
         {
             if (!dbContext.Cities.Any())
             {
-                var cities = new List<(string, string)>
-                {
-                    ("Sofia", "BG"),
-                    ("Stara Zagora", "BG"),
-                    ("Burgas", "BG"),
-                    ("Varna", "BG"),
-                    ("Plovdiv", "BG"),
-                };
+                var json = JsonConvert.DeserializeObject<List<CitiesImportDto>>(await File.ReadAllTextAsync(@"D:\MyHotelManager\src\Data\MyHotelManager.Data\towns.json"));
 
-                foreach (var city in cities)
+                var cities = new List<City>();
+
+                foreach (var city in json)
                 {
-                    await dbContext.Cities.AddAsync(new City
+                    var validCity = new City
                     {
-                        Name = city.Item1,
-                        CountryCode = city.Item2,
-                    });
+                        Name = city.Name,
+                        Region = city.Region,
+                        Population = city.Population,
+                        CountryCode = "BG",
+                    };
+
+                    cities.Add(validCity);
                 }
+
+                await dbContext.Cities.AddRangeAsync(cities);
             }
         }
     }

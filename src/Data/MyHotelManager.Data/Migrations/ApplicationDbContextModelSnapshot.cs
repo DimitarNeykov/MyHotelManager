@@ -282,6 +282,12 @@ namespace MyHotelManager.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Population")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Region")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
@@ -681,6 +687,9 @@ namespace MyHotelManager.Data.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StarsInNumbers")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

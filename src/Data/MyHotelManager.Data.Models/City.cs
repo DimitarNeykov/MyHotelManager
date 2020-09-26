@@ -15,6 +15,10 @@
 
         public string Name { get; set; }
 
+        public string Region { get; set; }
+
+        public int Population { get; set; }
+
         public string CountryCode { get; set; }
 
         public virtual ICollection<Hotel> Hotels { get; set; }

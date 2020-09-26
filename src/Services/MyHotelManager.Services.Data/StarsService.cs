@@ -18,7 +18,7 @@
 
         public IEnumerable<T> GetAll<T>()
         {
-            var query = this.starsRepository.All();
+            var query = this.starsRepository.All().OrderBy(x => x.StarsInNumbers);
 
             return query.To<T>().ToList();
         }

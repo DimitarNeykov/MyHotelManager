@@ -1,7 +1,7 @@
 ﻿@model MyHotelManager.Web.ViewModels.Hotels.HotelCreateInputModel
 
 @{
-    var cities = Model.Cities.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+    var cities = Model.Cities.Select(x => new SelectListItem(x.Name + " / " + x.Region, x.Id.ToString()));
     var stars = Model.Stars.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
     var companies = Model.Companies.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
 }

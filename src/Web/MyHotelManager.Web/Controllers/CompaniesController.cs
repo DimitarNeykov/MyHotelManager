@@ -54,6 +54,7 @@
                     input.Bulstat,
                     input.PhoneNumber,
                     input.Email,
+                    input.CityId,
                     input.Address,
                     user.Id);
 
