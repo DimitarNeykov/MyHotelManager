@@ -10,12 +10,12 @@
 
         public int RoomTypeId { get; set; }
 
-        public virtual RoomType RoomType { get; set; }
+        public RoomType RoomType { get; set; }
 
         public decimal Price { get; set; }
 
         public int HotelId { get; set; }
 
-        public virtual Hotel Hotel { get; set; }
+        public Hotel Hotel { get; set; }
     }
 }

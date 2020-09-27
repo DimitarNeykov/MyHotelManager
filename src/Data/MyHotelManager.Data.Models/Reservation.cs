@@ -15,7 +15,7 @@
 
         public int? RoomId { get; set; }
 
-        public virtual Room Room { get; set; }
+        public Room Room { get; set; }
 
         public DateTime BookDate { get; set; }
 
@@ -27,6 +27,6 @@
 
         public string Description { get; set; }
 
-        public virtual ICollection<GuestReservation> GuestsReservations { get; set; }
+        public ICollection<GuestReservation> GuestsReservations { get; set; }
     }
 }

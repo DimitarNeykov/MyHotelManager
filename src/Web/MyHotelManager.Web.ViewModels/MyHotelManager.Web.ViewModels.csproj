@@ -13,6 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.8" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.205" PrivateAssets="all">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
@@ -21,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\MyHotelManager.Data.Models\MyHotelManager.Data.Models.csproj" />
     <ProjectReference Include="..\..\Services\MyHotelManager.Services.Mapping\MyHotelManager.Services.Mapping.csproj" />
+    <ProjectReference Include="..\MyHotelManager.Web.Infrastructure\MyHotelManager.Web.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

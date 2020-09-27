@@ -26,11 +26,12 @@
         }
 
         [Authorize]
+        [HttpGet]
         public IActionResult Create()
         {
             var cities = this.citiesService.GetAll<CityDropDownViewModel>();
 
-            var viewModel = new CompanyCreateInputModel
+            var viewModel = new CompanyCreateInputModel()
             {
                 Cities = cities,
             };
@@ -46,19 +47,26 @@
 
             if (!this.ModelState.IsValid)
             {
-                return this.View(input);
+                var cities = this.citiesService.GetAll<CityDropDownViewModel>();
+
+                var viewModel = new CompanyCreateInputModel()
+                {
+                    Cities = cities,
+                };
+
+                return this.View(viewModel);
             }
 
             await this.companiesService.CreateAsync(
-                    input.Name,
-                    input.Bulstat,
-                    input.PhoneNumber,
-                    input.Email,
-                    input.CityId,
-                    input.Address,
-                    user.Id);
+                input.Name,
+                input.Bulstat,
+                input.PhoneNumber,
+                input.Email,
+                input.CityId,
+                input.Address,
+                user.Id);
 
-            return this.Redirect("https://localhost:44319");
+            return this.Redirect("https://localhost:44319/Hotels/Create");
         }
     }
 }

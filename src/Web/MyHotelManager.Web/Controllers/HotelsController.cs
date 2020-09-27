@@ -33,13 +33,49 @@
         }
 
         [Authorize]
+        public async Task<IActionResult> ById(int id)
+        {
+            var hotelViewModel = this.hotelsService.GetById<HotelViewModel>(id);
+
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            if (hotelViewModel == null)
+            {
+                return this.NotFound();
+            }
+
+            if (user.UsersHotels.Any(x => x.HotelId == id))
+            {
+                return this.View(hotelViewModel);
+            }
+
+            return this.NotFound();
+        }
+
+        [Authorize]
+        public IActionResult Index()
+        {
+            var userId = this.userManager.GetUserId(this.User);
+
+            var hotelViewModel = this.hotelsService.GetByUserId<HotelViewModel>(userId);
+
+            return this.View(hotelViewModel);
+        }
+
+        [Authorize]
         public IActionResult Create()
         {
             var userId = this.userManager.GetUserId(this.User);
 
+            var companies = this.companiesService.GetAllByUserId<CompanyDropDownViewModel>(userId);
+
+            if (!companies.Any())
+            {
+                return this.Redirect("https://localhost:44319/Companies/Create");
+            }
+
             var cities = this.citiesService.GetAll<CityDropDownViewModel>();
             var stars = this.starsService.GetAll<StarsDropDownViewModel>();
-            var companies = this.companiesService.GetAllByUserId<CompanyDropDownViewModel>(userId);
 
             var viewModel = new HotelCreateInputModel
             {

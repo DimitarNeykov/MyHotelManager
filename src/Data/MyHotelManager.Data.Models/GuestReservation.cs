@@ -6,10 +6,10 @@
     {
         public string GuestId { get; set; }
 
-        public virtual Guest Guest { get; set; }
+        public Guest Guest { get; set; }
 
         public string ReservationId { get; set; }
 
-        public virtual Reservation Reservation { get; set; }
+        public Reservation Reservation { get; set; }
     }
 }

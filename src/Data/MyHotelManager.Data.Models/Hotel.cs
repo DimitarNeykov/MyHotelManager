@@ -16,20 +16,20 @@
 
         public int CityId { get; set; }
 
-        public virtual City City { get; set; }
+        public City City { get; set; }
 
         public string Address { get; set; }
 
         public int StarsId { get; set; }
 
-        public virtual Stars Stars { get; set; }
+        public Stars Stars { get; set; }
 
         public int CompanyId { get; set; }
 
-        public virtual Company Company { get; set; }
+        public Company Company { get; set; }
 
-        public virtual ICollection<Room> Rooms { get; set; }
+        public ICollection<Room> Rooms { get; set; }
 
-        public virtual ICollection<UserHotel> UsersHotels { get; set; }
+        public ICollection<UserHotel> UsersHotels { get; set; }
     }
 }

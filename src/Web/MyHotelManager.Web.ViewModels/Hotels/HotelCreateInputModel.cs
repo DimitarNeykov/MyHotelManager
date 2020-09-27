@@ -9,26 +9,26 @@
 
     public class HotelCreateInputModel : IMapTo<Hotel>
     {
-        [DisplayName("Hotel Name")]
-        [MinLength(3)]
-        [MaxLength(30)]
-        [Required(ErrorMessage = "Name of the hotel is required!")]
+        [DisplayName("Име на хотела")]
+        [MinLength(3, ErrorMessage = "Полето трябва да съдържа поне 3 символа!")]
+        [MaxLength(30, ErrorMessage = "Максимално позволени символи: 30!")]
+        [Required(ErrorMessage = "Полето е задължително!")]
         public string Name { get; set; }
 
-        [DisplayName("City")]
-        [Required(ErrorMessage = "City of the hotel is required!")]
+        [DisplayName("Град / Област")]
+        [Required(ErrorMessage = "Полето е задължително!")]
         public int CityId { get; set; }
 
-        [DisplayName("Address")]
-        [Required(ErrorMessage = "Address of the hotel is required!")]
+        [DisplayName("Адрес")]
+        [Required(ErrorMessage = "Полето е задължително!")]
         public string Address { get; set; }
 
-        [DisplayName("Hotel Stars")]
-        [Required(ErrorMessage = "Stars of the hotel is required!")]
+        [DisplayName("Звезди")]
+        [Required(ErrorMessage = "Полето е задължително!")]
         public int StarsId { get; set; }
 
-        [DisplayName("Company Name")]
-        [Required(ErrorMessage = "Company of the hotel is required!")]
+        [DisplayName("Име на фирмата")]
+        [Required(ErrorMessage = "Полето е задължително!")]
         public int CompanyId { get; set; }
 
         public IEnumerable<CityDropDownViewModel> Cities { get; set; }

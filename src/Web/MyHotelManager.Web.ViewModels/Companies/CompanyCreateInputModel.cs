@@ -6,38 +6,39 @@
 
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Mapping;
+    using MyHotelManager.Web.Infrastructure.Attributes;
 
     public class CompanyCreateInputModel : IMapTo<Company>
     {
-        [Required(ErrorMessage = "Name of the company is required!")]
-        [MinLength(3)]
-        [MaxLength(60)]
-        [DisplayName("Company Name")]
+        [Required(ErrorMessage = "Полето е задължително!")]
+        [MinLength(3, ErrorMessage = "Полето трябва да съдържа поне 3 символа!")]
+        [MaxLength(60, ErrorMessage = "Максимално позволени символи: 60!")]
+        [DisplayName("Име на фирмата")]
         public string Name { get; set; }
 
-        // TODO..
-        [Required(ErrorMessage = "Bulstat of the company is required!")]
-        [DisplayName("Bulstat")]
+        [Required(ErrorMessage = "Полето е задължително!")]
+        [DisplayName("Булстат / ЕИК")]
+        [ValidBulstat("Невалиден булстат!")]
         public string Bulstat { get; set; }
 
-        [Required(ErrorMessage = "Phone number of the company is required!")]
+        [Required(ErrorMessage = "Полето е задължително!")]
         [RegularExpression(@"^\d{10}$")]
-        [DisplayName("Phone Number")]
+        [DisplayName("Телефонен номер")]
         public string PhoneNumber { get; set; }
 
-        [Required(ErrorMessage = "Email of the company is required!")]
-        [EmailAddress]
+        [Required(ErrorMessage = "Полето е задължително!")]
+        [EmailAddress(ErrorMessage = "Невалиден E-Mail адрес!")]
         [DisplayName("E-Mail")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Address of the company is required!")]
-        [MinLength(10)]
-        [MaxLength(60)]
-        [DisplayName("Address")]
+        [Required(ErrorMessage = "Полето е задължително!")]
+        [MinLength(10, ErrorMessage = "Полето трябва да съдържа поне 10 символа!")]
+        [MaxLength(60, ErrorMessage = "Максимално позволени символи: 60!")]
+        [DisplayName("Адрес")]
         public string Address { get; set; }
 
-        [DisplayName("City")]
-        [Required(ErrorMessage = "City of the company is required!")]
+        [DisplayName("Град / Област")]
+        [Required(ErrorMessage = "Полето е задължително!")]
         public int CityId { get; set; }
 
         public IEnumerable<CityDropDownViewModel> Cities { get; set; }

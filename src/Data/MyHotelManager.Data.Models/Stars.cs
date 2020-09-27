@@ -15,6 +15,6 @@
 
         public int StarsInNumbers { get; set; }
 
-        public virtual ICollection<Hotel> Hotels { get; set; }
+        public ICollection<Hotel> Hotels { get; set; }
     }
 }

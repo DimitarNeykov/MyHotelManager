@@ -801,7 +801,7 @@ namespace MyHotelManager.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("MyHotelManager.Data.Models.ApplicationUser", "User")
-                        .WithMany()
+                        .WithMany("Companies")
                         .HasForeignKey("UserId");
                 });
 

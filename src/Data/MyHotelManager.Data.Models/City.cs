@@ -21,10 +21,10 @@
 
         public string CountryCode { get; set; }
 
-        public virtual ICollection<Hotel> Hotels { get; set; }
+        public ICollection<Hotel> Hotels { get; set; }
 
-        public virtual ICollection<Guest> Guests { get; set; }
+        public ICollection<Guest> Guests { get; set; }
 
-        public virtual ICollection<Company> Companies { get; set; }
+        public ICollection<Company> Companies { get; set; }
     }
 }

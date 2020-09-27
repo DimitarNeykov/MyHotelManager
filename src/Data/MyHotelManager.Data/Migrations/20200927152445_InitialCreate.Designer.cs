@@ -10,7 +10,7 @@ using MyHotelManager.Data;
 namespace MyHotelManager.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200925163357_InitialCreate")]
+    [Migration("20200927152445_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -803,7 +803,7 @@ namespace MyHotelManager.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("MyHotelManager.Data.Models.ApplicationUser", "User")
-                        .WithMany()
+                        .WithMany("Companies")
                         .HasForeignKey("UserId");
                 });
 

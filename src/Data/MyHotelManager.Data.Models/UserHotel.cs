@@ -6,10 +6,10 @@
     {
         public string UserId { get; set; }
 
-        public virtual ApplicationUser User { get; set; }
+        public ApplicationUser User { get; set; }
 
         public int HotelId { get; set; }
 
-        public virtual Hotel Hotel { get; set; }
+        public Hotel Hotel { get; set; }
     }
 }

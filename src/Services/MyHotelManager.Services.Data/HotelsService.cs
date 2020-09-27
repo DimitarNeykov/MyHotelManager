@@ -1,9 +1,12 @@
 ﻿namespace MyHotelManager.Services.Data
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using MyHotelManager.Data.Common.Repositories;
     using MyHotelManager.Data.Models;
+    using MyHotelManager.Services.Mapping;
 
     public class HotelsService : IHotelsService
     {
@@ -35,6 +38,22 @@
 
             await this.hotelRepository.AddAsync(hotel);
             await this.hotelRepository.SaveChangesAsync();
+        }
+
+        public IEnumerable<T> GetByUserId<T>(string userId)
+        {
+            var hotel = this.hotelRepository
+                .All()
+                .Where(h => h.UsersHotels.Any(uh => uh.UserId == userId));
+
+            return hotel.To<T>();
+        }
+
+        public T GetById<T>(int id)
+        {
+            var post = this.hotelRepository.All().Where(x => x.Id == id)
+                .To<T>().FirstOrDefault();
+            return post;
         }
     }
 }

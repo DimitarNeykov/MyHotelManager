@@ -19,13 +19,13 @@
 
         public int? GenderId { get; set; }
 
-        public virtual Gender Gender { get; set; }
+        public Gender Gender { get; set; }
 
         public string PhoneNumber { get; set; }
 
         public int CityId { get; set; }
 
-        public virtual City City { get; set; }
+        public City City { get; set; }
 
         public string UCN { get; set; }
 
@@ -37,6 +37,6 @@
 
         public DateTime DateOfExpiry { get; set; }
 
-        public virtual ICollection<GuestReservation> GuestsReservations { get; set; }
+        public ICollection<GuestReservation> GuestsReservations { get; set; }
     }
 }

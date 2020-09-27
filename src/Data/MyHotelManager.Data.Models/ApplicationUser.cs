@@ -15,6 +15,7 @@ namespace MyHotelManager.Data.Models
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
+            this.Companies = new HashSet<Company>();
             this.UsersHotels = new HashSet<UserHotel>();
         }
 
@@ -36,14 +37,16 @@ namespace MyHotelManager.Data.Models
 
         public int? GenderId { get; set; }
 
-        public virtual Gender Gender { get; set; }
+        public Gender Gender { get; set; }
 
-        public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
+        public ICollection<IdentityUserRole<string>> Roles { get; set; }
 
-        public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
+        public ICollection<IdentityUserClaim<string>> Claims { get; set; }
 
-        public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
+        public ICollection<IdentityUserLogin<string>> Logins { get; set; }
 
-        public virtual ICollection<UserHotel> UsersHotels { get; set; }
+        public ICollection<Company> Companies { get; set; }
+
+        public ICollection<UserHotel> UsersHotels { get; set; }
     }
 }
