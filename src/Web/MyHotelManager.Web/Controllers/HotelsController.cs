@@ -17,19 +17,22 @@
         private readonly ICitiesService citiesService;
         private readonly IStarsService starsService;
         private readonly ICompaniesService companiesService;
+        private readonly IApplicationUsersService usersService;
 
         public HotelsController(
             UserManager<ApplicationUser> userManager,
             IHotelsService hotelsService,
             ICitiesService citiesService,
             IStarsService starsService,
-            ICompaniesService companiesService)
+            ICompaniesService companiesService,
+            IApplicationUsersService usersService)
         {
             this.userManager = userManager;
             this.hotelsService = hotelsService;
             this.citiesService = citiesService;
             this.starsService = starsService;
             this.companiesService = companiesService;
+            this.usersService = usersService;
         }
 
         [Authorize]
@@ -46,6 +49,7 @@
 
             if (user.UsersHotels.Any(x => x.HotelId == id))
             {
+                await this.usersService.UpdateSelectedHotel(user.Id, id);
                 return this.View(hotelViewModel);
             }
 
@@ -98,15 +102,18 @@
                 return this.View(input);
             }
 
-            await this.hotelsService.CreateAsync(
+            var hotelId = await this.hotelsService.CreateAsync(
                 input.Name,
                 input.CityId,
                 input.Address,
                 input.StarsId,
                 input.CompanyId,
-                user);
+                user,
+                input.ImgUrl);
 
-            return this.Redirect("https://localhost:44319");
+            await this.usersService.UpdateSelectedHotel(user.Id, hotelId);
+
+            return this.RedirectToAction("Index", "Home");
         }
     }
 }

@@ -39,6 +39,10 @@ namespace MyHotelManager.Data.Models
 
         public Gender Gender { get; set; }
 
+        public int? SelectedHotelId { get; set; }
+
+        public Hotel SelectedHotel { get; set; }
+
         public ICollection<IdentityUserRole<string>> Roles { get; set; }
 
         public ICollection<IdentityUserClaim<string>> Claims { get; set; }

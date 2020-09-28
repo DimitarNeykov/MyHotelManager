@@ -28,6 +28,8 @@
 
         public Company Company { get; set; }
 
+        public string ImgUrl { get; set; }
+
         public ICollection<Room> Rooms { get; set; }
 
         public ICollection<UserHotel> UsersHotels { get; set; }

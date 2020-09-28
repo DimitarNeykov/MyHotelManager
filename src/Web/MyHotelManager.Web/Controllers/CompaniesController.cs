@@ -26,7 +26,6 @@
         }
 
         [Authorize]
-        [HttpGet]
         public IActionResult Create()
         {
             var cities = this.citiesService.GetAll<CityDropDownViewModel>();
