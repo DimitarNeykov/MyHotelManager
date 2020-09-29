@@ -6,7 +6,7 @@
 
 <div class="float-left btn-group-vertical border border-primary rounded-lg bg-light p-2">
     <a class="btn btn-outline-primary btn-sm rounded-pill font-weight-bold p-2" asp-controller="Hotels" asp-action="ById" asp-route-id="@Model.Id">Статистика</a>
-    <a class="btn btn-outline-primary mt-3 btn-sm rounded-pill font-weight-bold p-2">Нова резервация</a>
+    <a class="btn btn-outline-primary mt-3 btn-sm rounded-pill font-weight-bold p-2" asp-controller="Reservations" asp-action="Create">Нова резервация</a>
     <a class="btn btn-outline-primary mt-3 btn-sm rounded-pill font-weight-bold p-2" href="#">Регистрация на гост</a>
     <a class="btn btn-outline-primary mt-3 btn-sm rounded-pill font-weight-bold p-2" href="#">Списък с резервации</a>
     <a class="btn btn-outline-primary mt-3 btn-sm rounded-pill font-weight-bold p-2" href="#">Свободни стаи</a>
@@ -15,7 +15,7 @@
     <a class="btn btn-outline-primary mt-3 btn-sm rounded-pill font-weight-bold p-2" href="#">Заикуска</a>
     <a class="btn btn-outline-primary mt-3 btn-sm rounded-pill font-weight-bold p-2" href="#">Вечеря</a>
     <a class="btn btn-outline-primary mt-3 btn-sm rounded-pill font-weight-bold p-2" href="#">Архив</a>
-    <a class="btn btn-outline-primary mt-3 btn-sm rounded-pill font-weight-bold p-2" asp-controller="Rooms" asp-action="Create" asp-route-hotelId="@Model.Id">Нова стая</a>
+    <a class="btn btn-outline-primary mt-3 btn-sm rounded-pill font-weight-bold p-2" asp-controller="Rooms" asp-action="Create">Нова стая</a>
 </div>
 
 <div class="float-left btn-group-vertical border border-dark rounded-lg bg-light w-75 p-2 mx-2">
