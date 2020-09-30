@@ -1,0 +1,38 @@
+﻿@model IEnumerable<MyHotelManager.Web.ViewModels.Reservations.ReservationViewModel>
+
+@{
+    this.ViewData["Title"] = "Reservations";
+    Layout = "_SelectedHotelLayout";
+}
+
+<table class="table table-responsive table-hover table-dark ">
+    <thead>
+        <tr>
+            <th scope="col" class="align-middle text-center">Room</th>
+            <th scope="col" class="align-middle text-center">Name</th>
+            <th scope="col" class="align-middle text-center">Book</th>
+            <th scope="col" class="align-middle text-center">Arrival</th>
+            <th scope="col" class="align-middle text-center">Return</th>
+            <th scope="col" class="align-middle text-center">Register</th>
+            <th scope="col" class="align-middle text-center">Update</th>
+            <th scope="col" class="align-middle text-center">Remove</th>
+        </tr>
+    </thead>
+    @{
+        foreach (var reservation in Model)
+        {
+            <thead>
+                    <tr>
+                        <th scope="col" class="align-middle text-center">@reservation.Room.Number</th>
+                        <th scope="col" class="align-middle text-center">dimitarda hristozov</th>
+                        <th scope="col" class="align-middle">@reservation.BookDate.ToString("MM.dd.yyyy")</th>
+                        <th scope="col" class="align-middle">@reservation.ArrivalDate.ToString("MM.dd.yyyy")</th>
+                        <th scope="col" class="align-middle">@reservation.ReturnDate.ToString("MM.dd.yyyy")</th>
+                        <th class="align-middle text-center"><a class="btn btn-success btn-sm">Register</a></th>
+                        <th class="align-middle text-center"><a class="btn btn-info btn-sm align-middle">Update</a></th>
+                        <th class="align-middle text-center"><a class="btn btn-danger btn-sm align-middle">Remove</a></th>
+                    </tr>
+            </thead>
+        }
+    }
+</table>

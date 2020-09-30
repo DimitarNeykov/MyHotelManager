@@ -25,6 +25,15 @@
             this.roomsService = roomsService;
         }
 
+        public IActionResult Index()
+        {
+            var user = this.userManager.GetUserId(this.User);
+
+            var viewModel = this.reservationsService.GetAll<ReservationViewModel>(user);
+
+            return this.View(viewModel);
+        }
+
         [Authorize]
         public IActionResult Create()
         {
@@ -59,7 +68,6 @@
 
             await this.reservationsService.CreateAsync(
                 input.RoomId,
-                input.BookDate,
                 input.ArrivalDate,
                 input.ReturnDate,
                 input.GuestInfo.FirstName,

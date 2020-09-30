@@ -6,18 +6,16 @@
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Mapping;
 
-    public class ReservationCreateInputModel : IMapTo<Reservation>
+    public class ReservationViewModel : IMapFrom<Reservation>
     {
-        public int RoomId { get; set; }
+        public Room Room { get; set; }
+
+        public DateTime BookDate { get; set; }
 
         public DateTime ArrivalDate { get; set; }
 
         public DateTime ReturnDate { get; set; }
 
-        public string Description { get; set; }
-
-        public ReservationGuestInfoInputModel GuestInfo { get; set; }
-
-        public IEnumerable<RoomsDropDownViewModel> Rooms { get; set; }
+        public ICollection<GuestReservation> GuestsReservations { get; set; }
     }
 }

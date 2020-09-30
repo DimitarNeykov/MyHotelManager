@@ -5,7 +5,7 @@
     <a class="btn btn-outline-primary btn-sm rounded-pill font-weight-bold p-2" asp-controller="Hotels" asp-action="ById">Статистика</a>
     <a class="btn btn-outline-primary mt-3 btn-sm rounded-pill font-weight-bold p-2" asp-controller="Reservations" asp-action="Create">Нова резервация</a>
     <a class="btn btn-outline-primary mt-3 btn-sm rounded-pill font-weight-bold p-2" href="#">Регистрация на гост</a>
-    <a class="btn btn-outline-primary mt-3 btn-sm rounded-pill font-weight-bold p-2" href="#">Списък с резервации</a>
+    <a class="btn btn-outline-primary mt-3 btn-sm rounded-pill font-weight-bold p-2" asp-controller="Reservations" asp-action="Index">Списък с резервации</a>
     <a class="btn btn-outline-primary mt-3 btn-sm rounded-pill font-weight-bold p-2" asp-controller="Rooms" asp-action="FreeForThePeriod">Свободни стаи</a>
     <a class="btn btn-outline-primary mt-3 btn-sm rounded-pill font-weight-bold p-2" href="#">Заети стаи</a>
     <a class="btn btn-outline-primary mt-3 btn-sm rounded-pill font-weight-bold p-2" href="#">Почистване</a>
@@ -15,6 +15,6 @@
     <a class="btn btn-outline-primary mt-3 btn-sm rounded-pill font-weight-bold p-2" asp-controller="Rooms" asp-action="Create">Нова стая</a>
 </div>
 
-<div class="float-right border border-dark rounded-lg bg-light w-75 p-2">
+<div class="float-right border border-dark rounded-lg bg-light w-75">
     @this.RenderBody()
 </div>
