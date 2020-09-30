@@ -2,28 +2,5 @@
 
 @{
     this.ViewData["Title"] = Model.Name;
+    Layout = "_SelectedHotelLayout";
 }
-
-<div class="float-left btn-group-vertical border border-primary rounded-lg bg-light p-2">
-    <a class="btn btn-outline-primary btn-sm rounded-pill font-weight-bold p-2" asp-controller="Hotels" asp-action="ById" asp-route-id="@Model.Id">Статистика</a>
-    <a class="btn btn-outline-primary mt-3 btn-sm rounded-pill font-weight-bold p-2" asp-controller="Reservations" asp-action="Create">Нова резервация</a>
-    <a class="btn btn-outline-primary mt-3 btn-sm rounded-pill font-weight-bold p-2" href="#">Регистрация на гост</a>
-    <a class="btn btn-outline-primary mt-3 btn-sm rounded-pill font-weight-bold p-2" href="#">Списък с резервации</a>
-    <a class="btn btn-outline-primary mt-3 btn-sm rounded-pill font-weight-bold p-2" href="#">Свободни стаи</a>
-    <a class="btn btn-outline-primary mt-3 btn-sm rounded-pill font-weight-bold p-2" href="#">Заети стаи</a>
-    <a class="btn btn-outline-primary mt-3 btn-sm rounded-pill font-weight-bold p-2" href="#">Почистване</a>
-    <a class="btn btn-outline-primary mt-3 btn-sm rounded-pill font-weight-bold p-2" href="#">Заикуска</a>
-    <a class="btn btn-outline-primary mt-3 btn-sm rounded-pill font-weight-bold p-2" href="#">Вечеря</a>
-    <a class="btn btn-outline-primary mt-3 btn-sm rounded-pill font-weight-bold p-2" href="#">Архив</a>
-    <a class="btn btn-outline-primary mt-3 btn-sm rounded-pill font-weight-bold p-2" asp-controller="Rooms" asp-action="Create">Нова стая</a>
-</div>
-
-<div class="float-left btn-group-vertical border border-dark rounded-lg bg-light w-75 p-2 mx-2">
-    <div class="card border-primary mb-3" style="max-width: 18rem;">
-        <div class="card-header">Header</div>
-        <div class="card-body text-primary">
-            <h5 class="card-title">Primary card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        </div>
-    </div>
-</div>

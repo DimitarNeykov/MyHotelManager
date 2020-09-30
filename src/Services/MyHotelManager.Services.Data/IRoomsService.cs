@@ -1,5 +1,6 @@
 ﻿namespace MyHotelManager.Services.Data
 {
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
@@ -12,5 +13,7 @@
         IEnumerable<T> GetAll<T>(string userId);
 
         Room GetById<T>(int id);
+
+        IEnumerable<T> GetFromPeriod<T>(string userId, DateTime from, DateTime to);
     }
 }

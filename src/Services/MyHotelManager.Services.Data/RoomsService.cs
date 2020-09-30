@@ -1,5 +1,6 @@
 ﻿namespace MyHotelManager.Services.Data
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -55,6 +56,23 @@
             var room = this.roomRepository.All().FirstOrDefault(x => x.Id == id);
 
             return room;
+        }
+
+        public IEnumerable<T> GetFromPeriod<T>(string userId, DateTime from, DateTime to)
+        {
+            var user = this.userManager.Users.First(x => x.Id == userId);
+
+            var days = from - to;
+
+            var rooms = this.roomRepository
+                .All()
+                .Where(x => x.HotelId == user.SelectedHotelId && x.Reservations
+                    .FirstOrDefault(r =>
+                        r.ReturnDate <= from && r.ArrivalDate >= to && r.CancelDate == null) == null)
+                .To<T>()
+                .ToList();
+
+            return rooms;
         }
     }
 }

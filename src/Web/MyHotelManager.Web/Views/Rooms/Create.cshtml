@@ -3,13 +3,13 @@
 @{
     var roomTypes = Model.RoomTypes.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
     this.ViewData["Title"] = "New Room";
+    Layout = "_SelectedHotelLayout";
 }
 
-<h1 class="text-black-50 text-lg-center mt-5">Create New Room</h1>
-
-<div class="card-footer col mt-5">
+<div class="card-footer col">
+    <h1 class="text-black-50 mb-5 text-center">Create New Room</h1>
     <div class="media flex-wrap w-100 justify-content-center text-lg-center">
-        <form asp-action="Create" method="post" class="col-md-4 img-thumbnail">
+        <form asp-action="Create" method="post" class="col-md-5 img-thumbnail">
             <div class="mt-2">
                 <label asp-for="Number"></label>
                 <input asp-for="Number" class="form-control mt-2" />

@@ -1,0 +1,18 @@
+﻿namespace MyHotelManager.Web.ViewModels.Rooms
+{
+    using MyHotelManager.Data.Models;
+    using MyHotelManager.Services.Mapping;
+
+    public class RoomViewModel : IMapFrom<Room>
+    {
+        public int Id { get; set; }
+
+        public string Number { get; set; }
+
+        public string Description { get; set; }
+
+        public decimal Price { get; set; }
+
+        public RoomType RoomType { get; set; }
+    }
+}
