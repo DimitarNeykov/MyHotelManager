@@ -3,7 +3,6 @@
 @{
     var roomTypes = Model.RoomTypes.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
     this.ViewData["Title"] = "New Room";
-    Layout = "_SelectedHotelLayout";
 }
 
 <div class="card-footer col">

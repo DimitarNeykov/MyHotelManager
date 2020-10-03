@@ -2,19 +2,17 @@
 
 @{
     this.ViewData["Title"] = "Free Room";
-    Layout = "_SelectedHotelLayout";
 }
 
-<div class="row row-cols-1 row-cols-md-4 p-4">
+<div class="row row-cols-1 row-cols-md-4 p-5">
     @{
         foreach (var room in Model)
         {
-        <div class="card text-white bg-primary mb-3 mr-1" style="max-width: 12rem;">
-            <div class="card-header font-weight-bold"><h4>@room.Number</h4></div>
+        <div class="card text-white bg-primary mb-3 mr-1" style="max-width: 11rem; max-height: 11rem;">
+            <div class="card-header font-weight-bold"><h5>@room.Number</h5></div>
             <div class="card-body">
                 <h5 class="card-title text-center">@room.RoomType.Name</h5>
                 <h5 class="card-footer text-center">@room.Price лв.</h5>
-                <p class="card-text">@room.Description</p>
             </div>
         </div>
         }

@@ -2,37 +2,31 @@
 
 @{
     this.ViewData["Title"] = "Reservations";
-    Layout = "_SelectedHotelLayout";
 }
 
-<table class="table table-responsive table-hover table-dark ">
-    <thead>
-        <tr>
-            <th scope="col" class="align-middle text-center">Room</th>
-            <th scope="col" class="align-middle text-center">Name</th>
-            <th scope="col" class="align-middle text-center">Book</th>
-            <th scope="col" class="align-middle text-center">Arrival</th>
-            <th scope="col" class="align-middle text-center">Return</th>
-            <th scope="col" class="align-middle text-center">Register</th>
-            <th scope="col" class="align-middle text-center">Update</th>
-            <th scope="col" class="align-middle text-center">Remove</th>
-        </tr>
-    </thead>
+
+<div class="accordion " id="accordionExample">
     @{
         foreach (var reservation in Model)
         {
-            <thead>
-                    <tr>
-                        <th scope="col" class="align-middle text-center">@reservation.Room.Number</th>
-                        <th scope="col" class="align-middle text-center">dimitarda hristozov</th>
-                        <th scope="col" class="align-middle">@reservation.BookDate.ToString("MM.dd.yyyy")</th>
-                        <th scope="col" class="align-middle">@reservation.ArrivalDate.ToString("MM.dd.yyyy")</th>
-                        <th scope="col" class="align-middle">@reservation.ReturnDate.ToString("MM.dd.yyyy")</th>
-                        <th class="align-middle text-center"><a class="btn btn-success btn-sm">Register</a></th>
-                        <th class="align-middle text-center"><a class="btn btn-info btn-sm align-middle">Update</a></th>
-                        <th class="align-middle text-center"><a class="btn btn-danger btn-sm align-middle">Remove</a></th>
-                    </tr>
-            </thead>
+            <div class="card">
+                <div class="card-header" id="@reservation.Id">
+                    <h2 class="mb-0">
+                        <button class="btn btn-dark btn-block text-left" type="button" data-toggle="collapse" data-target="#@reservation.Id" aria-expanded="true" aria-controls="">
+                            <span class="col-md-5 float-left">@reservation.Room.Number</span>
+                            <span class="col-md-5 float-none">Petar Hadjiev</span>
+                            <span class="col-md-2 float-right">@reservation.ArrivalDate.ToString("dd.MM.yyyy")</span>
+                        </button>
+                    </h2>
+                </div>
+                <div id="@reservation.Id" class="collapse" aria-labelledby="@reservation.Id" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <a class="btn btn-success btn-lg col-md-4 float-left">Register</a>
+                        <a class="btn btn-info btn-lg col-md-4 float-none">Update</a>
+                        <a class="btn btn-danger btn-lg col-md-4 float-right ">Remove</a>
+                    </div>
+                </div>
+            </div>
         }
     }
-</table>
+</div>

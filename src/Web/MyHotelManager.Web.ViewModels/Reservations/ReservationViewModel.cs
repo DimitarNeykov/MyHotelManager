@@ -1,4 +1,6 @@
-﻿namespace MyHotelManager.Web.ViewModels.Reservations
+﻿using System.Linq;
+
+namespace MyHotelManager.Web.ViewModels.Reservations
 {
     using System;
     using System.Collections.Generic;
@@ -8,6 +10,8 @@
 
     public class ReservationViewModel : IMapFrom<Reservation>
     {
+        public string Id { get; set; }
+
         public Room Room { get; set; }
 
         public DateTime BookDate { get; set; }
