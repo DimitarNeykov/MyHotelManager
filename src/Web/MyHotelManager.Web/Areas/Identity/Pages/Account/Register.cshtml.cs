@@ -18,10 +18,9 @@
     using Microsoft.Extensions.Logging;
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Data;
-    using MyHotelManager.Services.Mapping;
 
     [AllowAnonymous]
-    public class RegisterModel : PageModel
+    public partial class RegisterModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -53,21 +52,29 @@
         public class InputModel
         {
             [Required]
+            [MinLength(3)]
+            [MaxLength(30)]
             public string FirstName { get; set; }
 
             [Required]
+            [MinLength(3)]
+            [MaxLength(30)]
             public string LastName { get; set; }
 
             [Required]
             public DateTime BirthDate { get; set; }
 
             [Required]
+            [Range(1, 3)]
             public int GenderId { get; set; }
 
             [Required]
+            [Phone(ErrorMessage = "Invalid Phone number")]
             public string PhoneNumber { get; set; }
 
             [Required]
+            [MinLength(3)]
+            [MaxLength(30)]
             public string Username { get; set; }
 
             [Required]
@@ -85,15 +92,6 @@
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
-
-            public IEnumerable<GenderDropDownViewModel> Genders { get; set; }
-        }
-
-        public class GenderDropDownViewModel : IMapFrom<Gender>
-        {
-            public int Id { get; set; }
-
-            public string Name { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)

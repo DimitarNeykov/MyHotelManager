@@ -2,7 +2,6 @@
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
-    //var gender = Model.Input.Genders.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
 }
 <body class="bg-gradient-primary">
     <div class="container">
@@ -10,7 +9,7 @@
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
                 <div class="row">
-                    <img class="col-lg-5 d-none d-lg-block" style="background-position: center; background-size: cover;" src="https://scontent.fsof6-1.fna.fbcdn.net/v/t1.15752-9/120744205_342508240415243_1516323735056097198_n.png?_nc_cat=103&_nc_sid=ae9488&_nc_ohc=WVuE1uJohtMAX9KysEa&_nc_ht=scontent.fsof6-1.fna&oh=e14c9f16b694e03e08632e3c588ce7c1&oe=5F9E597E"></img>
+                    <img class="col-lg-5 d-none d-lg-block" style="background-position: center; background-size: cover;" src="https://scontent.fsof6-1.fna.fbcdn.net/v/t1.15752-9/120744205_342508240415243_1516323735056097198_n.png?_nc_cat=103&_nc_sid=ae9488&_nc_ohc=WVuE1uJohtMAX9KysEa&_nc_ht=scontent.fsof6-1.fna&oh=e14c9f16b694e03e08632e3c588ce7c1&oe=5F9E597E">
                     <div class="col-lg-7">
                         <div class="p-4">
                             <div class="text-center">
@@ -29,12 +28,15 @@
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input asp-for="Input.BirthDate" class="form-control form-control-user" id="exampleBirthDate" placeholder="Birth Date">
+                                        <input type="date" asp-for="Input.BirthDate" class="form-control form-control-user" id="exampleBirthDate" placeholder="Birth Date">
                                         <span asp-validation-for="Input.BirthDate" class="text-danger"></span>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <select asp-for="Input.GenderId" class="form-control form-control-user" id="exampleGender">
+                                    <div class="col-sm-6 h-100">
+                                        <select asp-for="Input.GenderId" class="form-control form-control-user p-3 w-100 h-100" id="exampleGender">
                                             <option disabled selected>--- SELECT ---</option>
+                                            <option value="1">Male</option>
+                                            <option value="2">Female</option>
+                                            <option value="3">Other</option>
                                         </select>
                                         <span asp-validation-for="Input.GenderId" class="text-danger"></span>
                                     </div>
