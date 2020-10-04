@@ -2,3 +2,6 @@
 
 # EF1001: Internal EF Core API usage.
 dotnet_diagnostic.EF1001.severity = silent
+
+# SA1309: Field names should not begin with underscore
+dotnet_diagnostic.SA1309.severity = silent

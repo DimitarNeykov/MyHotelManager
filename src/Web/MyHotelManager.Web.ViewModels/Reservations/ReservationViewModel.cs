@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace MyHotelManager.Web.ViewModels.Reservations
+﻿namespace MyHotelManager.Web.ViewModels.Reservations
 {
     using System;
     using System.Collections.Generic;
