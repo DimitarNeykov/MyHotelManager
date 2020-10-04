@@ -17,53 +17,34 @@
         private readonly ICitiesService citiesService;
         private readonly IStarsService starsService;
         private readonly ICompaniesService companiesService;
-        private readonly IApplicationUsersService usersService;
 
         public HotelsController(
             UserManager<ApplicationUser> userManager,
             IHotelsService hotelsService,
             ICitiesService citiesService,
             IStarsService starsService,
-            ICompaniesService companiesService,
-            IApplicationUsersService usersService)
+            ICompaniesService companiesService)
         {
             this.userManager = userManager;
             this.hotelsService = hotelsService;
             this.citiesService = citiesService;
             this.starsService = starsService;
             this.companiesService = companiesService;
-            this.usersService = usersService;
         }
 
         [Authorize]
         public async Task<IActionResult> ById(int id)
         {
-            var hotelViewModel = this.hotelsService.GetById<HotelViewModel>(id);
-
             var user = await this.userManager.GetUserAsync(this.User);
+
+            var hotelViewModel = this.hotelsService.GetById<HotelViewModel>((int)user.HotelId);
 
             if (hotelViewModel == null)
             {
                 return this.NotFound();
             }
 
-            if (user.UsersHotels.Any(x => x.HotelId == id))
-            {
-                await this.usersService.UpdateSelectedHotel(user.Id, id);
-                return this.View(hotelViewModel);
-            }
-
             return this.NotFound();
-        }
-
-        [Authorize]
-        public IActionResult Index()
-        {
-            var userId = this.userManager.GetUserId(this.User);
-
-            var hotelViewModel = this.hotelsService.GetByUserId<HotelViewModel>(userId);
-
-            return this.View(hotelViewModel);
         }
 
         [Authorize]
@@ -110,8 +91,6 @@
                 input.CompanyId,
                 user,
                 input.ImgUrl);
-
-            await this.usersService.UpdateSelectedHotel(user.Id, hotelId);
 
             return this.RedirectToAction("Index", "Home");
         }

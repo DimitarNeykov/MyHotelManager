@@ -198,6 +198,9 @@ namespace MyHotelManager.Data.Migrations
                     b.Property<int?>("GenderId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("HotelId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -233,9 +236,6 @@ namespace MyHotelManager.Data.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SelectedHotelId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
@@ -247,6 +247,8 @@ namespace MyHotelManager.Data.Migrations
 
                     b.HasIndex("GenderId");
 
+                    b.HasIndex("HotelId");
+
                     b.HasIndex("IsDeleted");
 
                     b.HasIndex("NormalizedEmail")
@@ -256,8 +258,6 @@ namespace MyHotelManager.Data.Migrations
                         .IsUnique()
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.HasIndex("SelectedHotelId");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -642,38 +642,6 @@ namespace MyHotelManager.Data.Migrations
                     b.ToTable("RoomTypes");
                 });
 
-            modelBuilder.Entity("MyHotelManager.Data.Models.Setting", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.ToTable("Settings");
-                });
-
             modelBuilder.Entity("MyHotelManager.Data.Models.Stars", b =>
                 {
                     b.Property<int>("Id")
@@ -704,42 +672,6 @@ namespace MyHotelManager.Data.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("Stars");
-                });
-
-            modelBuilder.Entity("MyHotelManager.Data.Models.UserHotel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("HotelId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("HotelId");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UsersHotels");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -799,9 +731,9 @@ namespace MyHotelManager.Data.Migrations
                         .WithMany("Users")
                         .HasForeignKey("GenderId");
 
-                    b.HasOne("MyHotelManager.Data.Models.Hotel", "SelectedHotel")
-                        .WithMany()
-                        .HasForeignKey("SelectedHotelId");
+                    b.HasOne("MyHotelManager.Data.Models.Hotel", "Hotel")
+                        .WithMany("Users")
+                        .HasForeignKey("HotelId");
                 });
 
             modelBuilder.Entity("MyHotelManager.Data.Models.Company", b =>
@@ -863,7 +795,7 @@ namespace MyHotelManager.Data.Migrations
             modelBuilder.Entity("MyHotelManager.Data.Models.Reservation", b =>
                 {
                     b.HasOne("MyHotelManager.Data.Models.Room", "Room")
-                        .WithMany()
+                        .WithMany("Reservations")
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -882,19 +814,6 @@ namespace MyHotelManager.Data.Migrations
                         .HasForeignKey("RoomTypeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("MyHotelManager.Data.Models.UserHotel", b =>
-                {
-                    b.HasOne("MyHotelManager.Data.Models.Hotel", "Hotel")
-                        .WithMany("UsersHotels")
-                        .HasForeignKey("HotelId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("MyHotelManager.Data.Models.ApplicationUser", "User")
-                        .WithMany("UsersHotels")
-                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

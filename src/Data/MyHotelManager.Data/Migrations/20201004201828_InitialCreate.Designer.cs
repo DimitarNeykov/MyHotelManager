@@ -10,7 +10,7 @@ using MyHotelManager.Data;
 namespace MyHotelManager.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200927152445_InitialCreate")]
+    [Migration("20201004201828_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -200,6 +200,9 @@ namespace MyHotelManager.Data.Migrations
                     b.Property<int?>("GenderId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("HotelId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -245,6 +248,8 @@ namespace MyHotelManager.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("GenderId");
+
+                    b.HasIndex("HotelId");
 
                     b.HasIndex("IsDeleted");
 
@@ -382,7 +387,7 @@ namespace MyHotelManager.Data.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("CityId")
+                    b.Property<int?>("CityId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
@@ -493,6 +498,9 @@ namespace MyHotelManager.Data.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("ImgUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -550,7 +558,7 @@ namespace MyHotelManager.Data.Migrations
                     b.Property<DateTime>("ReturnDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("RoomId")
+                    b.Property<int>("RoomId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -636,38 +644,6 @@ namespace MyHotelManager.Data.Migrations
                     b.ToTable("RoomTypes");
                 });
 
-            modelBuilder.Entity("MyHotelManager.Data.Models.Setting", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.ToTable("Settings");
-                });
-
             modelBuilder.Entity("MyHotelManager.Data.Models.Stars", b =>
                 {
                     b.Property<int>("Id")
@@ -698,42 +674,6 @@ namespace MyHotelManager.Data.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("Stars");
-                });
-
-            modelBuilder.Entity("MyHotelManager.Data.Models.UserHotel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("HotelId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("HotelId");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UsersHotels");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -792,6 +732,10 @@ namespace MyHotelManager.Data.Migrations
                     b.HasOne("MyHotelManager.Data.Models.Gender", "Gender")
                         .WithMany("Users")
                         .HasForeignKey("GenderId");
+
+                    b.HasOne("MyHotelManager.Data.Models.Hotel", "Hotel")
+                        .WithMany("Users")
+                        .HasForeignKey("HotelId");
                 });
 
             modelBuilder.Entity("MyHotelManager.Data.Models.Company", b =>
@@ -811,9 +755,7 @@ namespace MyHotelManager.Data.Migrations
                 {
                     b.HasOne("MyHotelManager.Data.Models.City", "City")
                         .WithMany("Guests")
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("CityId");
 
                     b.HasOne("MyHotelManager.Data.Models.Gender", "Gender")
                         .WithMany("Guests")
@@ -855,8 +797,10 @@ namespace MyHotelManager.Data.Migrations
             modelBuilder.Entity("MyHotelManager.Data.Models.Reservation", b =>
                 {
                     b.HasOne("MyHotelManager.Data.Models.Room", "Room")
-                        .WithMany()
-                        .HasForeignKey("RoomId");
+                        .WithMany("Reservations")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MyHotelManager.Data.Models.Room", b =>
@@ -872,19 +816,6 @@ namespace MyHotelManager.Data.Migrations
                         .HasForeignKey("RoomTypeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("MyHotelManager.Data.Models.UserHotel", b =>
-                {
-                    b.HasOne("MyHotelManager.Data.Models.Hotel", "Hotel")
-                        .WithMany("UsersHotels")
-                        .HasForeignKey("HotelId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("MyHotelManager.Data.Models.ApplicationUser", "User")
-                        .WithMany("UsersHotels")
-                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

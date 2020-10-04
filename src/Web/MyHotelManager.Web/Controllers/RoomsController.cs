@@ -1,7 +1,5 @@
 ﻿namespace MyHotelManager.Web.Controllers
 {
-    using System;
-    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
@@ -76,11 +74,6 @@
         {
             var user = await this.userManager.GetUserAsync(this.User);
 
-            if (user.SelectedHotelId == null)
-            {
-                return this.NotFound();
-            }
-
             if (!this.ModelState.IsValid)
             {
                 return this.View(input);
@@ -91,7 +84,7 @@
                 input.RoomTypeId,
                 input.Price,
                 input.Description,
-                (int)user.SelectedHotelId);
+                (int)user.HotelId);
 
             return this.Redirect("https://localhost:44319");
         }

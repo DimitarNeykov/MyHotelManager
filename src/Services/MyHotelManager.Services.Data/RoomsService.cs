@@ -44,7 +44,7 @@
 
             var rooms = this.roomRepository
                 .All()
-                .Where(x => x.HotelId == user.SelectedHotelId)
+                .Where(x => x.HotelId == user.HotelId)
                 .To<T>()
                 .ToList();
 
@@ -66,7 +66,7 @@
 
             var rooms = this.roomRepository
                 .All()
-                .Where(x => x.HotelId == user.SelectedHotelId && x.Reservations
+                .Where(x => x.HotelId == user.HotelId && x.Reservations
                     .FirstOrDefault(r =>
                         r.ReturnDate <= from && r.ArrivalDate >= to && r.CancelDate == null) == null)
                 .To<T>()

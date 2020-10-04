@@ -9,7 +9,7 @@
         public Hotel()
         {
             this.Rooms = new HashSet<Room>();
-            this.UsersHotels = new HashSet<UserHotel>();
+            this.Users = new HashSet<ApplicationUser>();
         }
 
         public string Name { get; set; }
@@ -32,6 +32,6 @@
 
         public ICollection<Room> Rooms { get; set; }
 
-        public ICollection<UserHotel> UsersHotels { get; set; }
+        public ICollection<ApplicationUser> Users { get; set; }
     }
 }

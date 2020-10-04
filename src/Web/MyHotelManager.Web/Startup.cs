@@ -62,14 +62,12 @@
 
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
-            services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<ICompaniesService, CompaniesService>();
             services.AddTransient<IHotelsService, HotelsService>();
             services.AddTransient<ICitiesService, CitiesService>();
             services.AddTransient<IStarsService, StarsService>();
             services.AddTransient<IRoomsService, RoomsService>();
             services.AddTransient<IRoomTypesService, RoomTypesService>();
-            services.AddTransient<IApplicationUsersService, ApplicationUsersService>();
             services.AddTransient<IReservationsService, ReservationsService>();
             services.AddTransient<IGendersService, GendersService>();
         }

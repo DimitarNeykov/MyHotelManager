@@ -58,7 +58,7 @@
 
             var reservations = this.reservationRepository
                 .All()
-                .Where(x => x.Room.HotelId == user.SelectedHotelId)
+                .Where(x => x.Room.HotelId == user.HotelId)
                 .OrderBy(x => x.ArrivalDate)
                 .To<T>()
                 .ToList();

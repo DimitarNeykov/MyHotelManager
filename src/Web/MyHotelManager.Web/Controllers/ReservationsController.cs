@@ -61,7 +61,7 @@
 
             var room = this.roomsService.GetById<Room>(input.RoomId);
 
-            if (room.HotelId != user.SelectedHotelId)
+            if (room.HotelId != user.HotelId)
             {
                 return this.NotFound();
             }

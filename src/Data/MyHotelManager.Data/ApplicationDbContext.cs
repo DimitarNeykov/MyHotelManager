@@ -23,8 +23,6 @@
         {
         }
 
-        public virtual DbSet<Setting> Settings { get; set; }
-
         public virtual DbSet<City> Cities { get; set; }
 
         public virtual DbSet<Company> Companies { get; set; }
@@ -38,8 +36,6 @@
         public virtual DbSet<Reservation> Reservations { get; set; }
 
         public virtual DbSet<Room> Rooms { get; set; }
-
-        public virtual DbSet<UserHotel> UsersHotels { get; set; }
 
         public virtual DbSet<Gender> Genders { get; set; }
 
