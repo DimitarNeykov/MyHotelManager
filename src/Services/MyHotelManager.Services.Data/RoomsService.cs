@@ -23,12 +23,14 @@
             this.userManager = userManager;
         }
 
-        public async Task CreateAsync(string number, int roomTypeId, decimal price, string description, int hotelId)
+        public async Task CreateAsync(string number, int roomTypeId, decimal price, int maxAdultCount, int maxChildCount, string description, int hotelId)
         {
             var room = new Room
             {
                 Number = number,
                 RoomTypeId = roomTypeId,
+                MaxAdultCount = maxAdultCount,
+                MaxChildCount = maxChildCount,
                 Price = price,
                 Description = description,
                 HotelId = hotelId,

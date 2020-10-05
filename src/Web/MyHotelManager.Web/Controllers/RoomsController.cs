@@ -74,8 +74,11 @@
         {
             var user = await this.userManager.GetUserAsync(this.User);
 
+            var roomTypes = this.roomTypesService.GetAll<RoomTypeDropDownViewModel>();
+
             if (!this.ModelState.IsValid)
             {
+                input.RoomTypes = roomTypes;
                 return this.View(input);
             }
 
@@ -83,10 +86,12 @@
                 input.Number,
                 input.RoomTypeId,
                 input.Price,
+                input.MaxAdultCount,
+                input.MaxChildCount,
                 input.Description,
                 (int)user.HotelId);
 
-            return this.Redirect("https://localhost:44319");
+            return this.RedirectToAction("Index", "Home");
         }
     }
 }

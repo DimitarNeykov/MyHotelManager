@@ -15,6 +15,10 @@
 
         public string Description { get; set; }
 
+        public int MaxAdultCount { get; set; }
+
+        public int MaxChildCount { get; set; }
+
         public int RoomTypeId { get; set; }
 
         public RoomType RoomType { get; set; }

@@ -16,7 +16,14 @@
         [Required]
         public string Number { get; set; }
 
+        [MaxLength(200)]
         public string Description { get; set; }
+
+        [Required]
+        public int MaxAdultCount { get; set; }
+
+        [Required]
+        public int MaxChildCount { get; set; }
 
         [Required]
         public int RoomTypeId { get; set; }

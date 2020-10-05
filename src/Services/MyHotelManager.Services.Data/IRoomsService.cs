@@ -8,7 +8,7 @@
 
     public interface IRoomsService
     {
-        Task CreateAsync(string number, int roomTypeId, decimal price, string description, int hotelId);
+        Task CreateAsync(string number, int roomTypeId, decimal price, int maxAdultCount, int maxChildCount, string description, int hotelId);
 
         IEnumerable<T> GetAll<T>(string userId);
 
