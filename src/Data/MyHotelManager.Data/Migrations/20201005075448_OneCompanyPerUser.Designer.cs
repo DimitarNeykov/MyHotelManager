@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyHotelManager.Data;
 
 namespace MyHotelManager.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201005075448_OneCompanyPerUser")]
+    partial class OneCompanyPerUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -175,6 +177,9 @@ namespace MyHotelManager.Data.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("CompanyId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -244,6 +249,8 @@ namespace MyHotelManager.Data.Migrations
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
 
                     b.HasIndex("GenderId");
 
@@ -482,7 +489,7 @@ namespace MyHotelManager.Data.Migrations
                     b.Property<int>("CityId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CompanyId")
+                    b.Property<int>("CompanyId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
@@ -722,6 +729,10 @@ namespace MyHotelManager.Data.Migrations
 
             modelBuilder.Entity("MyHotelManager.Data.Models.ApplicationUser", b =>
                 {
+                    b.HasOne("MyHotelManager.Data.Models.Company", "Company")
+                        .WithMany("Users")
+                        .HasForeignKey("CompanyId");
+
                     b.HasOne("MyHotelManager.Data.Models.Gender", "Gender")
                         .WithMany("Users")
                         .HasForeignKey("GenderId");
@@ -772,7 +783,9 @@ namespace MyHotelManager.Data.Migrations
 
                     b.HasOne("MyHotelManager.Data.Models.Company", "Company")
                         .WithMany("Hotels")
-                        .HasForeignKey("CompanyId");
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("MyHotelManager.Data.Models.Stars", "Stars")
                         .WithMany("Hotels")

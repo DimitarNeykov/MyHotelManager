@@ -17,7 +17,7 @@
             this.hotelRepository = hotelRepository;
         }
 
-        public async Task<int> CreateAsync(string name, int cityId, string address, int starsId, int companyId, ApplicationUser user, string imgUrl)
+        public async Task CreateAsync(string name, int cityId, string address, int starsId, ApplicationUser user, string imgUrl)
         {
             var hotel = new Hotel
             {
@@ -25,7 +25,6 @@
                 CityId = cityId,
                 Address = address,
                 StarsId = starsId,
-                CompanyId = companyId,
                 ImgUrl = imgUrl,
             };
 
@@ -33,8 +32,6 @@
 
             await this.hotelRepository.AddAsync(hotel);
             await this.hotelRepository.SaveChangesAsync();
-
-            return hotel.Id;
         }
 
         public T GetById<T>(int id)

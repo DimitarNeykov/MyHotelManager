@@ -1,25 +1,38 @@
 ﻿namespace MyHotelManager.Services.Data
 {
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
     using MyHotelManager.Data.Common.Repositories;
     using MyHotelManager.Data.Models;
-    using MyHotelManager.Services.Mapping;
 
     public class CompaniesService : ICompaniesService
     {
         private readonly IDeletableEntityRepository<Company> companyRepository;
+        private readonly IDeletableEntityRepository<Hotel> hotelRepository;
 
-        public CompaniesService(IDeletableEntityRepository<Company> companyRepository)
+        public CompaniesService(
+            IDeletableEntityRepository<Company> companyRepository,
+            IDeletableEntityRepository<Hotel> hotelRepository)
         {
             this.companyRepository = companyRepository;
+            this.hotelRepository = hotelRepository;
         }
 
-        public async Task CreateAsync(string name, string bulstat, string phoneNumber, string email, int cityId, string address, string userId)
+        public async Task CreateAsync(string name, string bulstat, string phoneNumber, string email, int cityId, string address, ApplicationUser user)
         {
-            var company = new Company
+            var company = this.companyRepository.All().FirstOrDefault(c => c.Bulstat == bulstat);
+
+            var hotel = this.hotelRepository.All().FirstOrDefault(h => h.Id == user.HotelId);
+
+            if (company != null)
+            {
+                company.Hotels.Add(hotel);
+                await this.companyRepository.SaveChangesAsync();
+                return;
+            }
+
+            company = new Company
             {
                 Name = name,
                 Bulstat = bulstat,
@@ -27,21 +40,11 @@
                 Email = email,
                 CityId = cityId,
                 Address = address,
-                UserId = userId,
             };
+            company.Hotels.Add(hotel);
 
             await this.companyRepository.AddAsync(company);
             await this.companyRepository.SaveChangesAsync();
-        }
-
-        public IEnumerable<T> GetAllByUserId<T>(string userId)
-        {
-            var query = this.companyRepository
-                .All()
-                .Where(c => c.UserId == userId)
-                .OrderBy(x => x.Name);
-
-            return query.To<T>().ToList();
         }
     }
 }

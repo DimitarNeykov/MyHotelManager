@@ -27,17 +27,11 @@
         [Required(ErrorMessage = "Полето е задължително!")]
         public int StarsId { get; set; }
 
-        [DisplayName("Име на фирмата")]
-        [Required(ErrorMessage = "Полето е задължително!")]
-        public int CompanyId { get; set; }
-
         [Url]
         public string ImgUrl { get; set; }
 
         public IEnumerable<CityDropDownViewModel> Cities { get; set; }
 
         public IEnumerable<StarsDropDownViewModel> Stars { get; set; }
-
-        public IEnumerable<CompanyDropDownViewModel> Companies { get; set; }
     }
 }

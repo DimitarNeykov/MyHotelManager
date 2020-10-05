@@ -25,10 +25,6 @@
 
         public City City { get; set; }
 
-        public string UserId { get; set; }
-
-        public ApplicationUser User { get; set; }
-
         public ICollection<Hotel> Hotels { get; set; }
     }
 }

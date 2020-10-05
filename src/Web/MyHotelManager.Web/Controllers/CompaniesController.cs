@@ -26,8 +26,15 @@
         }
 
         [Authorize]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            if (user.HotelId == null)
+            {
+                return this.RedirectToAction("Create", "Hotels");
+            }
+
             var cities = this.citiesService.GetAll<CityDropDownViewModel>();
 
             var viewModel = new CompanyCreateInputModel()
@@ -63,9 +70,9 @@
                 input.Email,
                 input.CityId,
                 input.Address,
-                user.Id);
+                user);
 
-            return this.Redirect("https://localhost:44319/Hotels/Create");
+            return this.RedirectToAction("Index", "Home");
         }
     }
 }
