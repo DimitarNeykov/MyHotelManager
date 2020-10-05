@@ -26,6 +26,16 @@
         }
 
         [Authorize]
+        public IActionResult AllRooms()
+        {
+            var userId = this.userManager.GetUserId(this.User);
+
+            var viewModel = this.roomsService.GetAll<RoomViewModel>(userId);
+
+            return this.View(viewModel);
+        }
+
+        [Authorize]
         public IActionResult ViewFreeRooms(RoomForThePeriodInputModel input)
         {
             var userId = this.userManager.GetUserId(this.User);

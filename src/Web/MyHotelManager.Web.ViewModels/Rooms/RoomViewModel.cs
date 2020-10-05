@@ -9,6 +9,10 @@
 
         public string Number { get; set; }
 
+        public int MaxAdultCount { get; set; }
+
+        public int MaxChildCount { get; set; }
+
         public string Description { get; set; }
 
         public decimal Price { get; set; }
