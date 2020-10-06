@@ -47,6 +47,7 @@
             var rooms = this.roomRepository
                 .All()
                 .Where(x => x.HotelId == user.HotelId)
+                .OrderBy(x => x.Number)
                 .To<T>()
                 .ToList();
 
@@ -60,7 +61,7 @@
             return room;
         }
 
-        public IEnumerable<T> GetFromPeriod<T>(string userId, DateTime from, DateTime to)
+        public IEnumerable<T> AvailableRooms<T>(string userId, DateTime from, DateTime to)
         {
             var user = this.userManager.Users.First(x => x.Id == userId);
 
@@ -69,8 +70,9 @@
             var rooms = this.roomRepository
                 .All()
                 .Where(x => x.HotelId == user.HotelId && x.Reservations
-                    .FirstOrDefault(r =>
+                .FirstOrDefault(r =>
                         r.ReturnDate <= from && r.ArrivalDate >= to && r.CancelDate == null) == null)
+                .OrderBy(x => x.Number)
                 .To<T>()
                 .ToList();
 

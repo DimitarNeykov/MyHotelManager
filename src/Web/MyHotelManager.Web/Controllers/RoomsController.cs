@@ -1,5 +1,7 @@
 ﻿namespace MyHotelManager.Web.Controllers
 {
+    using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
@@ -36,33 +38,34 @@
         }
 
         [Authorize]
-        public IActionResult ViewFreeRooms(RoomForThePeriodInputModel input)
+        public IActionResult AvailableRooms()
         {
-            var userId = this.userManager.GetUserId(this.User);
-
-            var viewModel = this.roomsService.GetFromPeriod<RoomViewModel>(userId, input.From, input.To);
-
-            return this.View(viewModel);
-        }
-
-        [Authorize]
-        public IActionResult FreeForThePeriod()
-        {
-            var viewModel = new RoomForThePeriodInputModel();
+            var viewModel = new AvailableRoomsViewModel()
+            {
+                From = null,
+                To = null,
+                Rooms = new List<RoomViewModel>(),
+            };
 
             return this.View(viewModel);
         }
 
         [Authorize]
         [HttpPost]
-        public IActionResult FreeForThePeriod(RoomForThePeriodInputModel input)
+        public IActionResult AvailableRooms(AvailableRoomsViewModel input)
         {
-            if (!this.ModelState.IsValid)
-            {
-                return this.View(input);
-            }
+            var userId = this.userManager.GetUserId(this.User);
 
-            return this.RedirectToAction("ViewFreeRooms", input);
+            var rooms = this.roomsService.AvailableRooms<RoomViewModel>(userId, (DateTime)input.From, (DateTime)input.To);
+
+            var viewModel = new AvailableRoomsViewModel
+            {
+                From = input.From,
+                To = input.To,
+                Rooms = rooms,
+            };
+
+            return this.View(viewModel);
         }
 
         [Authorize]

@@ -14,6 +14,6 @@
 
         Room GetById<T>(int id);
 
-        IEnumerable<T> GetFromPeriod<T>(string userId, DateTime from, DateTime to);
+        IEnumerable<T> AvailableRooms<T>(string userId, DateTime from, DateTime to);
     }
 }
