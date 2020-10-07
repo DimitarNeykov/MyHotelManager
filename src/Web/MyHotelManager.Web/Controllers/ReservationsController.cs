@@ -35,39 +35,29 @@
         }
 
         [Authorize]
-        public IActionResult Create()
+        public IActionResult Create(int roomId)
         {
             var user = this.userManager.GetUserId(this.User);
 
-            var rooms = this.roomsService.GetAll<RoomsDropDownViewModel>(user);
-
             var viewModel = new ReservationCreateInputModel
             {
-                Rooms = rooms,
+                RoomId = roomId,
             };
+
             return this.View(viewModel);
         }
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Create(ReservationCreateInputModel input)
+        public async Task<IActionResult> Create(ReservationCreateInputModel input, int roomId)
         {
-            var user = await this.userManager.GetUserAsync(this.User);
-
             if (!this.ModelState.IsValid)
             {
                 return this.View(input);
             }
 
-            var room = this.roomsService.GetById<Room>(input.RoomId);
-
-            if (room.HotelId != user.HotelId)
-            {
-                return this.NotFound();
-            }
-
             await this.reservationsService.CreateAsync(
-                input.RoomId,
+                roomId,
                 input.ArrivalDate,
                 input.ReturnDate,
                 input.GuestInfo.FirstName,

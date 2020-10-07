@@ -17,7 +17,5 @@
         public string Description { get; set; }
 
         public ReservationGuestInfoInputModel GuestInfo { get; set; }
-
-        public IEnumerable<RoomsDropDownViewModel> Rooms { get; set; }
     }
 }

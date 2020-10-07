@@ -65,13 +65,12 @@
         {
             var user = this.userManager.Users.First(x => x.Id == userId);
 
-            var days = from - to;
-
             var rooms = this.roomRepository
                 .All()
                 .Where(x => x.HotelId == user.HotelId && x.Reservations
-                .FirstOrDefault(r =>
-                        r.ReturnDate <= from && r.ArrivalDate >= to && r.CancelDate == null) == null)
+                .FirstOrDefault(r => from <= r.ReturnDate && from >= r.ArrivalDate ||
+                                     r.ArrivalDate <= to && r.ArrivalDate >= from
+                                                         && r.CancelDate == null) == null)
                 .OrderBy(x => x.Number)
                 .To<T>()
                 .ToList();
