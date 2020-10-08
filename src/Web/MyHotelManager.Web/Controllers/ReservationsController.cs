@@ -25,6 +25,7 @@
             this.roomsService = roomsService;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
             var user = this.userManager.GetUserId(this.User);
@@ -60,11 +61,21 @@
                 roomId,
                 input.ArrivalDate,
                 input.ReturnDate,
+                input.AdultCount,
+                input.ChildCount,
                 input.GuestInfo.FirstName,
                 input.GuestInfo.LastName,
                 input.Description);
 
             return this.RedirectToAction("Index", "Home");
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Delete(string reservationId)
+        {
+            await this.reservationsService.Delete(reservationId);
+
+            return this.RedirectToAction("Index");
         }
     }
 }

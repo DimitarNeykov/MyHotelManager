@@ -18,6 +18,12 @@
 
         public DateTime ReturnDate { get; set; }
 
+        public int AdultCount { get; set; }
+
+        public int ChildCount { get; set; }
+
+        public string Description { get; set; }
+
         public ICollection<GuestReservation> GuestsReservations { get; set; }
     }
 }

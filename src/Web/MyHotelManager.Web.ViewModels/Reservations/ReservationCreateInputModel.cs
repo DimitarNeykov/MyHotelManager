@@ -16,6 +16,10 @@
 
         public string Description { get; set; }
 
+        public int AdultCount { get; set; }
+
+        public int ChildCount { get; set; }
+
         public ReservationGuestInfoInputModel GuestInfo { get; set; }
     }
 }

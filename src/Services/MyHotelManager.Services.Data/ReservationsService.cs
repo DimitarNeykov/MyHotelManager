@@ -1,4 +1,6 @@
-﻿namespace MyHotelManager.Services.Data
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace MyHotelManager.Services.Data
 {
     using System;
     using System.Collections.Generic;
@@ -23,7 +25,7 @@
             this.userManager = userManager;
         }
 
-        public async Task CreateAsync(int roomId, DateTime arrivalDate, DateTime returnDate, string firstName, string lastName, string description)
+        public async Task CreateAsync(int roomId, DateTime arrivalDate, DateTime returnDate, int adultCount, int childCount, string firstName, string lastName, string description)
         {
             var reservation = new Reservation
             {
@@ -31,6 +33,8 @@
                 BookDate = DateTime.UtcNow,
                 ArrivalDate = arrivalDate,
                 ReturnDate = returnDate,
+                AdultCount = adultCount,
+                ChildCount = childCount,
                 Description = description,
             };
 
@@ -52,13 +56,24 @@
             await this.reservationRepository.SaveChangesAsync();
         }
 
+        public async Task Delete(string reservationId)
+        {
+            var reservation = this.reservationRepository.All().FirstOrDefault(x => x.Id == reservationId);
+
+            this.reservationRepository.Delete(reservation);
+
+            await this.reservationRepository.SaveChangesAsync();
+        }
+
         public IEnumerable<T> GetAll<T>(string userId)
         {
             var user = this.userManager.Users.First(x => x.Id == userId);
 
             var reservations = this.reservationRepository
                 .All()
-                .Where(x => x.Room.HotelId == user.HotelId)
+                .Include(x => x.GuestsReservations)
+                .ThenInclude(g => g.Guest)
+                .Where(x => x.Room.HotelId == user.HotelId && x.GuestsReservations.First() != null)
                 .OrderBy(x => x.ArrivalDate)
                 .To<T>()
                 .ToList();
