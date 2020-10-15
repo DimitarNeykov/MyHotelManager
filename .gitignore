@@ -354,5 +354,3 @@ MigrationBackup/
 
 # Custom ignores
 appsettings.Production.json
-*.min.css
-*.min.js
