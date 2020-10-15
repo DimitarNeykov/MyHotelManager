@@ -9,11 +9,18 @@
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\towns.json" />
+  </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\.editorconfig" Link=".editorconfig" />
+    <None Include="wwwroot\JsonInput\towns.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -44,5 +51,11 @@
     <ProjectReference Include="..\..\Services\MyHotelManager.Services\MyHotelManager.Services.csproj" />
     <ProjectReference Include="..\MyHotelManager.Web.Infrastructure\MyHotelManager.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\MyHotelManager.Web.ViewModels\MyHotelManager.Web.ViewModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\js\sb-admin-2.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>

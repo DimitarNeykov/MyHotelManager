@@ -16,7 +16,7 @@
         {
             if (!dbContext.Cities.Any())
             {
-                var json = JsonConvert.DeserializeObject<List<CitiesImportDto>>(await File.ReadAllTextAsync(@"D:\MyHotelManager\src\Data\MyHotelManager.Data\towns.json"));
+                var json = JsonConvert.DeserializeObject<List<CitiesImportDto>>(await File.ReadAllTextAsync(@"wwwroot\JsonInput\towns.json"));
 
                 var cities = new List<City>();
 

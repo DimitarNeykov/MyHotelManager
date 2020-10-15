@@ -44,10 +44,4 @@
     <ProjectReference Include="..\MyHotelManager.Data.Models\MyHotelManager.Data.Models.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="towns.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>
