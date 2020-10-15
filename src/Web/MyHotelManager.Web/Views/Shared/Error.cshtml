@@ -14,10 +14,3 @@
     </div>
 
 </div>
-
-@if (this.Model.ShowRequestId && Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
-{
-    <p>
-        <strong> Request ID:</strong> <code>@this.Model.RequestId</code>
-    </p>
-}
