@@ -9,15 +9,22 @@
 
     public class HomeController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<ApplicationUser> userManager;
 
         public HomeController(UserManager<ApplicationUser> userManager)
         {
-            this._userManager = userManager;
+            this.userManager = userManager;
         }
 
         public IActionResult Index()
         {
+            var userId = this.userManager.GetUserId(this.User);
+
+            if (userId != null)
+            {
+                return this.RedirectToAction("Index", "Hotels");
+            }
+
             return this.View();
         }
 

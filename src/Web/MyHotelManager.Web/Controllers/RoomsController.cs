@@ -45,11 +45,16 @@
         }
 
         [Authorize]
-        public IActionResult AvailableRooms(DateTime from, DateTime to)
+        public IActionResult AvailableRooms(DateTime? from, DateTime? to)
         {
+            if (from == null || to == null)
+            {
+                return null;
+            }
+
             var userId = this.userManager.GetUserId(this.User);
 
-            var viewModel = this.roomsService.AvailableRooms<RoomViewModel>(userId, from, to);
+            var viewModel = this.roomsService.AvailableRooms<RoomViewModel>(userId, (DateTime)from, (DateTime)to);
 
             return this.PartialView(viewModel);
         }
