@@ -1,46 +1,11 @@
-﻿@model MyHotelManager.Web.ViewModels.Rooms.AvailableRoomsViewModel
+﻿@model IEnumerable<MyHotelManager.Web.ViewModels.Rooms.RoomViewModel>
 
 @{
 
     this.ViewData["Title"] = "New Room";
 }
-<div class="container">
-    <div class="card o-hidden border-0 shadow-lg my-5">
-        <div class="card-body p-0">
-            <!-- Nested Row within Card Body -->
-            <div class="row justify-content-center">
-                <div class="col-lg-6">
-                    <div class="p-4">
-                        <div class="text-center">
-                            <h1 class="h4 text-gray-900 mb-4">Search from Period!</h1>
-                        </div>
-                        <form class="user" method="post">
-                            <div class="form-group row was-validated">
-                                <div class="col-sm-6 mb-3 mb-sm-0 text-center">
-                                    <label asp-for="From"></label>
-                                    <input type="date" asp-for="From" class="form-control form-control-user is-invalid" id="exampleRoomNumber" placeholder="Room Number" required>
-                                    <span asp-validation-for="From" class="text-danger"></span>
-                                </div>
-                                <div class="col-sm-6 text-center">
-                                    <label asp-for="To"></label>
-                                    <input type="date" asp-for="To" class="form-control form-control-user is-invalid" id="exampleRoomPrice" placeholder="Room Price" required>
-                                    <span asp-validation-for="To" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-user btn-block">
-                                Search
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@if (Model.Rooms.Any())
-{
     <div class="row">
-        @foreach (var room in Model.Rooms)
+        @foreach (var room in Model)
         {
             <div class="col-md-2 mb-4" title="@room.Description">
                 <div class="card border-left-primary border-bottom-primary shadow h-100 py-1">
@@ -93,4 +58,3 @@
             </div>
         }
     </div>
-}

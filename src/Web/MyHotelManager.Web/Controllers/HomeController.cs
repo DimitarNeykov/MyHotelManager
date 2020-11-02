@@ -2,11 +2,20 @@
 {
     using System.Diagnostics;
 
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using MyHotelManager.Data.Models;
     using MyHotelManager.Web.ViewModels;
 
-    public class HomeController : BaseController
+    public class HomeController : Controller
     {
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public HomeController(UserManager<ApplicationUser> userManager)
+        {
+            this._userManager = userManager;
+        }
+
         public IActionResult Index()
         {
             return this.View();

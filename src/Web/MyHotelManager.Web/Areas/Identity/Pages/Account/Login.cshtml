@@ -1,24 +1,20 @@
 ﻿@page
-@using Microsoft.CodeAnalysis
 @model LoginModel
 
 @{
     ViewData["Title"] = "Log in";
+    Layout = "_BasicLayout";
 }
 <body class="bg-gradient-primary">
     <div class="container">
         <!-- Outer Row -->
         <div class="row justify-content-center">
 
-            <div class="col-xl-10 col-lg-12 col-md-9">
+            <div class="col-xl-6 col-lg-12 col-md-9">
 
                 <div class="card o-hidden border-0 shadow-lg my-5">
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
-                        <div class="row">
-                            <img class="col-lg-6 d-none d-lg-block" style="background-position: center; background-size: cover;" src="https://scontent.xx.fbcdn.net/v/t1.15752-0/p480x480/120818038_1095824624207389_8136349132509596790_n.png?_nc_cat=107&_nc_sid=ae9488&_nc_ohc=3wceSwEUXn4AX9vx9OL&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=1b9a36fc1cd2b4cf80b10f56f136f5b4&oe=5F9F6C3A">
-
-                            <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
@@ -57,8 +53,6 @@
                                         <a class="small" asp-page="./Register">Create an Account!</a>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

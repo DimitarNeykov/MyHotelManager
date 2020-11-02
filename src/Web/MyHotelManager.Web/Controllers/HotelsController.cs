@@ -1,6 +1,5 @@
 ﻿namespace MyHotelManager.Web.Controllers
 {
-    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
@@ -16,20 +15,22 @@
         private readonly IHotelsService hotelsService;
         private readonly ICitiesService citiesService;
         private readonly IStarsService starsService;
+        private readonly ICompaniesService companiesService;
 
         public HotelsController(
             UserManager<ApplicationUser> userManager,
             IHotelsService hotelsService,
             ICitiesService citiesService,
-            IStarsService starsService)
+            IStarsService starsService,
+            ICompaniesService companiesService)
         {
             this.userManager = userManager;
             this.hotelsService = hotelsService;
             this.citiesService = citiesService;
             this.starsService = starsService;
+            this.companiesService = companiesService;
         }
 
-        [Authorize]
         public async Task<IActionResult> Index()
         {
             var user = await this.userManager.GetUserAsync(this.User);
@@ -40,14 +41,21 @@
                 return this.View(hotelViewModel);
             }
 
-            return this.View("~/Views/Shared/Error.cshtml");
+            return this.RedirectToAction("Create", "Hotels");
         }
 
         [Authorize]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var user = await this.userManager.GetUserAsync(this.User);
+
             var cities = this.citiesService.GetAll<CityDropDownViewModel>();
             var stars = this.starsService.GetAll<StarsDropDownViewModel>();
+
+            if (user.HotelId != null)
+            {
+                return this.RedirectToAction("Index");
+            }
 
             var viewModel = new HotelCreateInputModel
             {
@@ -64,8 +72,15 @@
         {
             var user = await this.userManager.GetUserAsync(this.User);
 
+            if (user.HotelId != null)
+            {
+                return this.RedirectToAction("Index");
+            }
+
             if (!this.ModelState.IsValid)
             {
+                input.Cities = this.citiesService.GetAll<CityDropDownViewModel>();
+                input.Stars = this.starsService.GetAll<StarsDropDownViewModel>();
                 return this.View(input);
             }
 
@@ -77,7 +92,16 @@
                 user,
                 input.ImgUrl);
 
-            return this.RedirectToAction("Create", "Companies");
+            await this.companiesService.CreateAsync(
+                input.Company.Name,
+                input.Company.Bulstat,
+                input.Company.PhoneNumber,
+                input.Company.Email,
+                input.Company.CityId,
+                input.Company.Address,
+                user);
+
+            return this.RedirectToAction("Index");
         }
     }
 }

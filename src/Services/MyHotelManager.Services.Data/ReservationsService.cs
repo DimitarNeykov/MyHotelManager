@@ -80,5 +80,18 @@ namespace MyHotelManager.Services.Data
 
             return reservations;
         }
+
+        public T GetById<T>(string reservationId)
+        {
+            var reservation = this.reservationRepository
+                .All()
+                .Include(r => r.GuestsReservations)
+                .ThenInclude(gr => gr.Guest)
+                .Where(r => r.Id == reservationId)
+                .To<T>()
+                .FirstOrDefault();
+
+            return reservation;
+        }
     }
 }

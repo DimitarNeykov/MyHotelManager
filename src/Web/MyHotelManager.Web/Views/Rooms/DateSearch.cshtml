@@ -1,0 +1,63 @@
+﻿@model MyHotelManager.Web.ViewModels.Rooms.DatesInputViewModel
+@{
+
+    this.ViewData["Title"] = "";
+}
+    <div class="container">
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="p-4">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Search from Period!</h1>
+                            </div>
+                            <form class="user">
+                                <div class="form-group row was-validated">
+                                    <div class="col-sm-6 mb-3 mb-sm-0 text-center">
+                                        <label asp-for="From"></label>
+                                        <input value="" type="date" asp-for="From" class="form-control form-control-user is-invalid" id="from-input" placeholder="Room Number" required>
+                                        <span asp-validation-for="From" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-6 text-center">
+                                        <label asp-for="To"></label>
+                                        <input value="" type="date" asp-for="To" class="form-control form-control-user is-invalid" id="to-input" placeholder="Room Price" required>
+                                        <span asp-validation-for="To" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </form>
+                            <button id="btnSearch" onclick="test()" class="btn btn-primary btn-user btn-block">
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div id="availableRooms"></div>
+
+@section Scripts {
+    <script>
+        function test()
+        {
+            var from = $("#from-input").val();
+            var to = $("#to-input").val();  
+
+            $.ajax({  
+                cache: false,  
+                type: "GET",  
+                url: "@Url.Action("AvailableRooms","Rooms")",  
+                data: { "from": from, "to": to },  
+                success: function (data) { 
+                    $('#availableRooms').html(data);  
+                },  
+                error: function (xhr, ajaxOptions, thrownError) {  
+                    alert('Failed to retrieve books.');  
+                }  
+            });  
+        };
+    </script>
+}

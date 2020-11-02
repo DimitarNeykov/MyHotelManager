@@ -10,6 +10,8 @@
 
         IEnumerable<T> GetAll<T>(string userId);
 
+        T GetById<T>(string reservationId);
+
         Task Delete(string reservationId);
     }
 }

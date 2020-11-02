@@ -1,7 +1,6 @@
 ﻿namespace MyHotelManager.Web.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
@@ -11,7 +10,7 @@
     using MyHotelManager.Services.Data;
     using MyHotelManager.Web.ViewModels.Rooms;
 
-    public class RoomsController : BaseController
+    public class RoomsController : Controller
     {
         private readonly IRoomsService roomsService;
         private readonly IRoomTypesService roomTypesService;
@@ -38,34 +37,21 @@
         }
 
         [Authorize]
-        public IActionResult AvailableRooms()
+        public IActionResult DateSearch()
         {
-            var viewModel = new AvailableRoomsViewModel()
-            {
-                From = null,
-                To = null,
-                Rooms = new List<RoomViewModel>(),
-            };
+            var viewModel = new DatesInputViewModel();
 
             return this.View(viewModel);
         }
 
         [Authorize]
-        [HttpPost]
-        public IActionResult AvailableRooms(AvailableRoomsViewModel input)
+        public IActionResult AvailableRooms(DateTime from, DateTime to)
         {
             var userId = this.userManager.GetUserId(this.User);
 
-            var rooms = this.roomsService.AvailableRooms<RoomViewModel>(userId, (DateTime)input.From, (DateTime)input.To);
+            var viewModel = this.roomsService.AvailableRooms<RoomViewModel>(userId, from, to);
 
-            var viewModel = new AvailableRoomsViewModel
-            {
-                From = input.From,
-                To = input.To,
-                Rooms = rooms,
-            };
-
-            return this.View(viewModel);
+            return this.PartialView(viewModel);
         }
 
         [Authorize]

@@ -37,6 +37,10 @@
 
         public DateTime DateOfExpiry { get; set; }
 
+        public int? HotelId { get; set; }
+
+        public Hotel Hotel { get; set; }
+
         public ICollection<GuestReservation> GuestsReservations { get; set; }
     }
 }

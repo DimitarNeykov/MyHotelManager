@@ -1,4 +1,4 @@
-﻿namespace MyHotelManager.Web.ViewModels.Companies
+﻿namespace MyHotelManager.Web.ViewModels.Hotels
 {
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -19,6 +19,8 @@
         [Required(ErrorMessage = "Полето е задължително!")]
         [DisplayName("Булстат / ЕИК")]
         [ValidBulstat("Невалиден булстат!")]
+        [MinLength(7)]
+        [MaxLength(13)]
         public string Bulstat { get; set; }
 
         [Required(ErrorMessage = "Полето е задължително!")]
@@ -39,6 +41,7 @@
 
         [DisplayName("Град / Област")]
         [Required(ErrorMessage = "Полето е задължително!")]
+        [Range(1, 257)]
         public int CityId { get; set; }
 
         public IEnumerable<CityDropDownViewModel> Cities { get; set; }

@@ -71,6 +71,28 @@
         }
 
         [Authorize]
+        public IActionResult Update(string reservationId)
+        {
+            var reservation = this.reservationsService.GetById<ReservationUpdateViewModel>(reservationId);
+
+            var viewModel = reservation;
+
+            return this.View(viewModel);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Update(ReservationUpdateViewModel input, int roomId)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(input);
+            }
+
+            return this.RedirectToAction("Index", "Home");
+        }
+
+        [Authorize]
         public async Task<IActionResult> Delete(string reservationId)
         {
             await this.reservationsService.Delete(reservationId);

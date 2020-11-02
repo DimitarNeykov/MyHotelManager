@@ -8,12 +8,6 @@
 
     public class AvailableRoomsViewModel
     {
-        [Required]
-        public DateTime? From { get; set; }
-
-        [Required]
-        public DateTime? To { get; set; }
-
         public IEnumerable<RoomViewModel> Rooms { get; set; }
 
         public ICollection<Reservation> Reservations { get; set; }

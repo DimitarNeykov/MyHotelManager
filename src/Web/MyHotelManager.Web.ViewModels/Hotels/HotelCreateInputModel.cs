@@ -17,6 +17,7 @@
 
         [DisplayName("Град / Област")]
         [Required(ErrorMessage = "Полето е задължително!")]
+        [Range(1, 257)]
         public int CityId { get; set; }
 
         [DisplayName("Адрес")]
@@ -25,6 +26,7 @@
 
         [DisplayName("Звезди")]
         [Required(ErrorMessage = "Полето е задължително!")]
+        [Range(1, 6)]
         public int StarsId { get; set; }
 
         [Url]
@@ -33,5 +35,8 @@
         public IEnumerable<CityDropDownViewModel> Cities { get; set; }
 
         public IEnumerable<StarsDropDownViewModel> Stars { get; set; }
+
+        [Required]
+        public CompanyCreateInputModel Company { get; set; }
     }
 }
