@@ -14,27 +14,27 @@
                     <!-- Nested Row within Card Body -->
                     <div class="p-5">
                         <div class="text-center">
-                            <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                            <h1 class="h3 text-gray-900 mb-4 font-italic">Create an Account!</h1>
                         </div>
                         <form class="user" method="post">
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input asp-for="Input.FirstName" class="form-control form-control-user" id="exampleFirstName" placeholder="First Name">
+                                    <input asp-for="Input.FirstName" class="form-control form-control-user text-center" placeholder="First Name">
                                     <span asp-validation-for="Input.FirstName" class="text-danger"></span>
                                 </div>
                                 <div class="col-sm-6">
-                                    <input asp-for="Input.LastName" class="form-control form-control-user" id="exampleLastName" placeholder="Last Name">
+                                    <input asp-for="Input.LastName" class="form-control form-control-user text-center" placeholder="Last Name">
                                     <span asp-validation-for="Input.LastName" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input type="date" asp-for="Input.BirthDate" class="form-control form-control-user" id="exampleBirthDate" placeholder="Birth Date">
+                                    <input type="date" asp-for="Input.BirthDate" class="form-control form-control-user text-center" placeholder="Birth Date">
                                     <span asp-validation-for="Input.BirthDate" class="text-danger"></span>
                                 </div>
                                 <div class="col-sm-6 h-100">
-                                    <select asp-for="Input.GenderId" class="form-control form-control-user p-3 w-100 h-100" id="exampleGender">
-                                        <option disabled selected>--- SELECT ---</option>
+                                    <select asp-for="Input.GenderId" class="form-control form-control-user p-3 w-100 h-100" style="text-align-last: center; text-align: center; -ms-text-align-last: center; -moz-text-align-last: center;">
+                                        <option disabled selected>Select Sex</option>
                                         <option value="1">Male</option>
                                         <option value="2">Female</option>
                                         <option value="3">Other</option>
@@ -43,31 +43,31 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <input asp-for="Input.PhoneNumber" class="form-control form-control-user" id="exampleInputPhoneNumber" placeholder="Phone Number">
+                                <input asp-for="Input.PhoneNumber" class="form-control form-control-user text-center" placeholder="Phone Number">
                                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input asp-for="Input.Username" class="form-control form-control-user" id="exampleInputUsername" placeholder="Username">
+                                    <input asp-for="Input.Username" class="form-control form-control-user text-center" placeholder="Username">
                                     <span asp-validation-for="Input.Username" class="text-danger"></span>
                                 </div>
                                 <div class="col-sm-6">
-                                    <input asp-for="Input.Email" class="form-control form-control-user" id="exampleInputEmail" placeholder="Email Address">
+                                    <input asp-for="Input.Email" class="form-control form-control-user text-center" placeholder="Email Address">
                                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input asp-for="Input.Password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                                    <input asp-for="Input.Password" class="form-control form-control-user text-center" placeholder="Password">
                                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                                 </div>
                                 <div class="col-sm-6">
-                                    <input asp-for="Input.ConfirmPassword" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Repeat Password">
+                                    <input asp-for="Input.ConfirmPassword" class="form-control form-control-user text-center" placeholder="Repeat Password">
                                     <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="row justify-content-center">
-                                <div class="col-6">
+                                <div class="col-8">
                                     <button type="submit" class="btn btn-primary btn-user btn-block">
                                         Register Account
                                     </button>

@@ -7,15 +7,15 @@
     <div class="row">
         @foreach (var room in Model)
         {
-            <div class="col-md-2 mb-4" title="@room.Description">
+            <div class="col-xl-3 col-md-6 mb-4" title="@room.Description">
                 <div class="card border-left-primary border-bottom-primary shadow h-100 py-1">
                     <div class="card-header border-bottom-primary">
-                        <div class="row">
+                        <div class="row text-center">
                             <div class="col-sm-6">
                                 <div class="h3 font-weight-bold text-primary text-uppercase">@room.Number</div>
                             </div>
                             <div class="col-sm-6">
-                                <div class="dropdown no-arrow float-right">
+                                <div class="dropdown no-arrow">
                                     <a class="dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fas fa-chevron-circle-down fa-2x text-primary" title="More options"></i>
                                     </a>
@@ -41,8 +41,8 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <div class="row">
-                            <div class="col-sm-6 text-right">
+                        <div class="row text-center">
+                            <div class="col-sm-6">
                                 <div class="svg-inline--fa">
                                     <i class="fas fa-male text-primary"></i>
                                     <i class="fas fa-female text-primary"> x @room.MaxAdultCount</i>

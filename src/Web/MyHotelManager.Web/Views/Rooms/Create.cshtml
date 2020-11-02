@@ -5,44 +5,44 @@
     this.ViewData["Title"] = "New Room";
 }
 <div class="container">
-    <div class="card o-hidden border-0 shadow-lg my-5">
+    <div class="card o-hidden border-0 shadow-lg my-5 bg-gradient-primary">
         <div class="card-body p-0">
             <!-- Nested Row within Card Body -->
             <div class="row justify-content-center">
                 <div class="col-lg-6">
                     <div class="p-4">
                         <div class="text-center">
-                            <h1 class="h4 text-gray-900 mb-4">Create new Room!</h1>
+                            <h1 class="h3 mb-4 font-italic text-white-50">Create New Room!</h1>
                         </div>
                         <form class="user" method="post">
                             <div class="form-group row was-validated">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input asp-for="Number" class="form-control form-control-user is-invalid" id="exampleRoomNumber" placeholder="Room Number" required>
+                                    <input asp-for="Number" class="form-control form-control-user is-invalid text-center" placeholder="Room Number" required>
                                     <span asp-validation-for="Number" class="text-danger"></span>
                                 </div>
                                 <div class="col-sm-6">
-                                    <input value="" asp-for="Price" class="form-control form-control-user is-invalid" id="exampleRoomPrice" placeholder="Room Price" required>
+                                    <input value="" asp-for="Price" class="form-control form-control-user is-invalid text-center" placeholder="Room Price" required>
                                     <span asp-validation-for="Price" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="form-group row was-validated">
                                 <div class="col-sm-6 mb-3 mb-sm-0 text-center">
-                                    <input value="" asp-for="MaxAdultCount" class="form-control form-control-user is-invalid" id="exampleMaxAdultCount" placeholder="Max Adult Count" required>
+                                    <input value="" asp-for="MaxAdultCount" class="form-control form-control-user is-invalid text-center" placeholder="Max Adult Count" required>
                                     <span asp-validation-for="MaxAdultCount" class="text-danger"></span>
                                 </div>
                                 <div class="col-sm-6 text-center">
-                                    <input value="" asp-for="MaxChildCount" class="form-control form-control-user is-invalid" id="exampleMaxChildCount" placeholder="Max Child Count" required>
+                                    <input value="" asp-for="MaxChildCount" class="form-control form-control-user is-invalid text-center" placeholder="Max Child Count" required>
                                     <span asp-validation-for="MaxChildCount" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="form-group was-validated">
-                                <select asp-for="RoomTypeId" asp-items="roomTypes" class="form-control form-control-user p-3 w-100 h-100 custom-select" id="exampleRoomType" required>
-                                    <option value="" disabled selected>--- SELECT ---</option>
+                                <select asp-for="RoomTypeId" asp-items="roomTypes" class="form-control form-control-user p-3 w-100 h-100 custom-select" style="text-align-last: center; text-align: center; -ms-text-align-last: center; -moz-text-align-last: center;" required>
+                                    <option value="" disabled selected>Select Room Type</option>
                                 </select>
                                 <span asp-validation-for="RoomTypeId" class="text-danger"></span>
                             </div>
                             <div class="form-group was-validated">
-                                <textarea asp-for="Description" class="form-control" id="exampleDescription" placeholder="Description" maxlength="200"></textarea>
+                                <textarea asp-for="Description" class="form-control text-center" placeholder="Description" maxlength="200"></textarea>
                                 <span asp-validation-for="Description" class="text-danger"></span>
                             </div>
 

@@ -7,72 +7,76 @@
 
 @{
     this.ViewData["Title"] = "New Hotel";
-    Layout = "_BasicLayout";
 }
 <body class="bg-gradient-primary">
     <div class="container">
         <div class="row justify-content-center">
 
-            <div class="col-xl-10 col-lg-12 col-md-9">
-                <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="col-xl-12 col-lg-12 col-md-9">
+                <div class="card o-hidden border-0 shadow-lg my-5 bg-gradient-primary">
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
-                        <div class="p-5">
+                        <div class="p-2">
                             <form class="user" method="post">
-                                <div class="text-center">
-                                    <h1 class="h4 text-gray-900 mb-4">Hotel</h1>
+                                <div class="form-row">
+                                    <div class="col-md-6 p-3">
+                                        <div class="text-center">
+                                            <h1 class="h3 mb-4 text-white-50 font-italic">Hotel</h1>
+                                        </div>
+                                        <div class="form-group was-validated">
+                                            <input asp-for="Name" class="form-control form-control-user text-center" placeholder="Hotel Name" required>
+                                            <span asp-validation-for="Name" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group was-validated">
+                                            <input asp-for="Address" class="form-control form-control-user text-center" placeholder="Hotel Address" required>
+                                            <span asp-validation-for="Address" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group was-validated">
+                                            <select  asp-for="CityId" asp-items="cities" class="form-control form-control-user p-3 w-100 h-100 custom-select text-center" style="text-align-last: center; text-align: center; -ms-text-align-last: center; -moz-text-align-last: center;" required>
+                                                <option value="" disabled selected>Select Hotel City</option>
+                                            </select>
+                                            <span asp-validation-for="CityId" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group was-validated">
+                                            <select asp-for="StarsId" asp-items="stars" class="form-control form-control-user p-3 w-100 h-100 custom-select text-center" style="text-align-last: center; text-align: center; -ms-text-align-last: center; -moz-text-align-last: center;" required>
+                                                <option value="" disabled selected>Select Hotel Stars</option>
+                                            </select>
+                                            <span asp-validation-for="StarsId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 p-3">
+                                        <div class="text-center">
+                                            <h1 class="h3 mb-4 text-white-50 font-italic">Company</h1>
+                                        </div>
+                                        <div class="form-group was-validated">
+                                            <input asp-for="Company.Name" class="form-control form-control-user text-center" placeholder="Company Name" required>
+                                            <span asp-validation-for="Company.Name" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group was-validated">
+                                            <input asp-for="Company.Bulstat" class="form-control form-control-user text-center" placeholder="Company Bulstat" required>
+                                            <span asp-validation-for="Company.Bulstat" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group was-validated">
+                                            <select asp-for="Company.CityId" asp-items="cities" class="form-control form-control-user p-3 w-100 h-100 custom-select" style="text-align-last: center; text-align: center; -ms-text-align-last: center; -moz-text-align-last: center;" required>
+                                                <option value="" selected disabled>Select Company City</option>
+                                            </select>
+                                            <span asp-validation-for="Company.CityId" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group was-validated">
+                                            <input asp-for="Company.PhoneNumber" class="form-control form-control-user text-center" placeholder="Company Phone Number" required>
+                                            <span asp-validation-for="Company.PhoneNumber" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group was-validated">
+                                            <input asp-for="Company.Email" class="form-control form-control-user text-center" placeholder="Company E-Mail" required>
+                                            <span asp-validation-for="Company.Email" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group was-validated">
+                                            <input asp-for="Company.Address" class="form-control form-control-user text-center" placeholder="Company Address" required>
+                                            <span asp-validation-for="Company.Address" class="text-danger"></span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group was-validated">
-                                    <input asp-for="Name" class="form-control form-control-user" placeholder="Phone Number" required>
-                                    <span asp-validation-for="Name" class="text-danger"></span>
-                                </div>
-                                <div class="form-group was-validated">
-                                    <input asp-for="Address" class="form-control form-control-user" placeholder="Phone Number" required>
-                                    <span asp-validation-for="Address" class="text-danger"></span>
-                                </div>
-                                <div class="form-group was-validated">
-                                    <select asp-for="CityId" asp-items="cities" class="form-control form-control-user p-3 w-100 h-100 custom-select" required>
-                                        <option value="" disabled selected>--- SELECT ---</option>
-                                    </select>
-                                    <span asp-validation-for="CityId" class="text-danger"></span>
-                                </div>
-                                <div class="form-group was-validated">
-                                    <select asp-for="StarsId" asp-items="stars" class="form-control form-control-user p-3 w-100 h-100 custom-select" required>
-                                        <option value="" disabled selected>--- SELECT ---</option>
-                                    </select>
-                                    <span asp-validation-for="StarsId" class="text-danger"></span>
-                                </div>
-
-                                <div class="text-center">
-                                    <h1 class="h4 text-gray-900 mb-4">Company</h1>
-                                </div>
-                                <div class="form-group was-validated">
-                                    <input asp-for="Company.Name" class="form-control form-control-user" placeholder="Phone Number" required>
-                                    <span asp-validation-for="Company.Name" class="text-danger"></span>
-                                </div>
-                                <div class="form-group was-validated">
-                                    <input asp-for="Company.Bulstat" class="form-control form-control-user" placeholder="Phone Number" required>
-                                    <span asp-validation-for="Company.Bulstat" class="text-danger"></span>
-                                </div>
-                                <div class="form-group was-validated">
-                                    <select asp-for="Company.CityId" asp-items="cities" class="form-control form-control-user p-3 w-100 h-100 custom-select" required>
-                                        <option value="" selected disabled>--- SELECT ---</option>
-                                    </select>
-                                    <span asp-validation-for="Company.CityId" class="text-danger"></span>
-                                </div>
-                                <div class="form-group was-validated">
-                                    <input asp-for="Company.PhoneNumber" class="form-control form-control-user" placeholder="Phone Number" required>
-                                    <span asp-validation-for="Company.PhoneNumber" class="text-danger"></span>
-                                </div>
-                                <div class="form-group was-validated">
-                                    <input asp-for="Company.Email" class="form-control form-control-user" placeholder="Phone Number" required>
-                                    <span asp-validation-for="Company.Email" class="text-danger"></span>
-                                </div>
-                                <div class="form-group was-validated">
-                                    <input asp-for="Company.Address" class="form-control form-control-user" placeholder="Phone Number" required>
-                                    <span asp-validation-for="Company.Address" class="text-danger"></span>
-                                </div>
-                                <div class="row justify-content-center">
+                                <div class="row justify-content-center mt-4">
                                     <div class="col-6">
                                         <button type="submit" class="btn btn-primary btn-user btn-block">
                                             Create Hotel

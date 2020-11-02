@@ -4,32 +4,32 @@
     this.ViewData["Title"] = "";
 }
     <div class="container">
-        <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card o-hidden border-0 shadow-lg my-5 bg-gradient-primary">
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
                 <div class="row justify-content-center">
                     <div class="col-lg-6">
                         <div class="p-4">
                             <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Search from Period!</h1>
+                                <h1 class="h3 mb-4 text-white-50 font-italic">Search from Period!</h1>
                             </div>
                             <form class="user">
                                 <div class="form-group row was-validated">
                                     <div class="col-sm-6 mb-3 mb-sm-0 text-center">
-                                        <label asp-for="From"></label>
+                                        <label class="text-white" asp-for="From"></label>
                                         <input value="" type="date" asp-for="From" class="form-control form-control-user is-invalid" id="from-input" placeholder="Room Number" required>
                                         <span asp-validation-for="From" class="text-danger"></span>
                                     </div>
                                     <div class="col-sm-6 text-center">
-                                        <label asp-for="To"></label>
+                                        <label class="text-white" asp-for="To"></label>
                                         <input value="" type="date" asp-for="To" class="form-control form-control-user is-invalid" id="to-input" placeholder="Room Price" required>
                                         <span asp-validation-for="To" class="text-danger"></span>
                                     </div>
                                 </div>
+                                <a id="btnSearch" onclick="availableRooms()" class="btn btn-primary btn-user btn-block text-white">
+                                    Search
+                                </a>
                             </form>
-                            <button id="btnSearch" onclick="test()" class="btn btn-primary btn-user btn-block">
-                                Search
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
 
 @section Scripts {
     <script>
-        function test()
+        function availableRooms()
         {
             var from = $("#from-input").val();
             var to = $("#to-input").val();  
