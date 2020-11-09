@@ -54,9 +54,9 @@
             return rooms;
         }
 
-        public Room GetById<T>(int id)
+        public T GetById<T>(int id)
         {
-            var room = this.roomRepository.All().FirstOrDefault(x => x.Id == id);
+            var room = this.roomRepository.All().Where(x => x.Id == id).To<T>().FirstOrDefault();
 
             return room;
         }

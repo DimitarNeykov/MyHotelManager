@@ -56,6 +56,12 @@
 
             var viewModel = this.roomsService.AvailableRooms<RoomViewModel>(userId, (DateTime)from, (DateTime)to);
 
+            foreach (var roomViewModel in viewModel)
+            {
+                roomViewModel.ArrivalDate = (DateTime)from;
+                roomViewModel.ReturnDate = (DateTime)to;
+            }
+
             return this.PartialView(viewModel);
         }
 

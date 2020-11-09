@@ -2,52 +2,105 @@
 
 @{
     this.ViewData["Title"] = "New Reservation";
-    var p = Model.ReturnDate - Model.ArrivalDate;
 }
+
 <div class="container">
-    <div class="card o-hidden border-0 shadow-lg my-5">
+    <div class="card o-hidden border-0 shadow-lg my-5 bg-gradient-primary">
         <div class="card-body p-0">
             <!-- Nested Row within Card Body -->
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="p-4">
                         <div class="text-center">
-                            <h1 class="h4 text-gray-900 mb-4">Create new Reservation!</h1>
+                            <h1 class="h3 mb-4 text-white-50 font-italic">Create new Reservation!</h1>
                         </div>
                         <form class="user" method="post">
-                            <div class="form-group row was-validated">
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input type="date" value="" asp-for="ArrivalDate" class="form-control form-control-user is-invalid" placeholder="Arrival Date" required>
-                                    <span asp-validation-for="ArrivalDate" class="text-danger"></span>
+                            <div class="form-group row was-validated text-center text-white-50">
+                                <div class="col-sm-5 mb-3 mb-sm-0">
+                                    <label asp-for="ArrivalDate"></label>
+                                    <input type="text" value="@Model.ShortArrivalDate" asp-for="ArrivalDate" disabled="" class="form-control form-control-user text-center is-valid" placeholder="Arrival Date">
                                 </div>
-                                <div class="col-sm-6">
-                                    <input type="date" value="" asp-for="ReturnDate" class="form-control form-control-user is-invalid" placeholder="Return Date" required>
-                                    <span asp-validation-for="ReturnDate" class="text-danger"></span>
+                                <div class="col-sm-5 mb-3 mb-sm-0">
+                                    <label asp-for="ReturnDate"></label>
+                                    <input type="text" value="@Model.ShortReturnDate" asp-for="ReturnDate" disabled="" class="form-control form-control-user text-center is-valid" placeholder="Return Date">
+                                </div>
+                                <div class="col-sm-2">
+                                    <label asp-for="Nights"></label>
+                                    <input asp-for="Nights" id="nights" class="form-control form-control-user text-center is-valid" disabled="" placeholder="Nights" required>
                                 </div>
                             </div>
-                            <div class="form-group row was-validated">
+                            <div class="form-group row was-validated text-center text-white-50">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input asp-for="GuestInfo.FirstName" class="form-control form-control-user is-invalid" placeholder="First Name" required>
+                                    <label asp-for="GuestInfo.FirstName"></label>
+                                    <input asp-for="GuestInfo.FirstName" class="form-control form-control-user text-center is-invalid" placeholder="First Name" required>
                                     <span asp-validation-for="GuestInfo.FirstName" class="text-danger"></span>
                                 </div>
                                 <div class="col-sm-6">
-                                    <input value="" asp-for="GuestInfo.LastName" class="form-control form-control-user is-invalid" placeholder="Last Name" required>
+                                    <label asp-for="GuestInfo.LastName"></label>
+                                    <input value="" asp-for="GuestInfo.LastName" class="form-control form-control-user text-center is-invalid" placeholder="Last Name" required>
                                     <span asp-validation-for="GuestInfo.LastName" class="text-danger"></span>
                                 </div>
                             </div>
-                            <div class="form-group row was-validated">
+                            <div class="form-group row was-validated text-center text-white-50">
                                 <div class="col-sm-6 mb-3 mb-sm-0 text-center">
-                                    <input value="" asp-for="AdultCount" class="form-control form-control-user is-invalid" placeholder="Adult Count" required>
+                                    <label asp-for="AdultCount"></label>
+                                    <input value="" asp-for="AdultCount" class="form-control form-control-user text-center is-invalid" placeholder="Adult Count" required>
                                     <span asp-validation-for="AdultCount" class="text-danger"></span>
                                 </div>
                                 <div class="col-sm-6 text-center">
-                                    <input value="" asp-for="ChildCount" class="form-control form-control-user is-invalid" placeholder="Child Count" required>
+                                    <label asp-for="AdultCount"></label>
+                                    <input value="" asp-for="ChildCount" class="form-control form-control-user text-center is-invalid" placeholder="Child Count" required>
                                     <span asp-validation-for="ChildCount" class="text-danger"></span>
                                 </div>
                             </div>
 
+                            <div class="form-group row was-validated text-center text-white-50">
+                                <div class="col-sm-6 mb-3 mb-sm-0 text-center">
+                                    <label asp-for="RoomNumber"></label>
+                                    <input asp-for="RoomNumber" disabled="" class="form-control form-control-user text-center is-valid">
+                                </div>
+                                <div class="col-sm-6 text-center">
+                                    <label asp-for="RoomType"></label>
+                                    <input asp-for="RoomType" disabled="" class="form-control form-control-user text-center is-valid">
+                                </div>
+                            </div>
+
+                            <div class="form-group row was-validated text-center text-white-50">
+                                <div class="col-sm-4 mb-3 mb-sm-0">
+                                    <label asp-for="RoomPrice"></label>
+                                    <input value="@Model.RoomPrice" asp-for="RoomPrice" id="roomPrice" disabled="" class="form-control form-control-user text-center is-valid" placeholder="Room Price">
+                                </div>
+                                <div class="col-sm-4 mb-3 mb-sm-0">
+                                    <label asp-for="CustomPrice"></label>
+                                    <input asp-for="CustomPrice" id="customPrice" class="form-control form-control-user text-center is-valid" placeholder="Custom Price">
+                                    <span asp-validation-for="CustomPrice" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label asp-for="AllPrice"></label>
+                                    <input asp-for="AllPrice" disabled="" id="allPrice" class="form-control form-control-user text-center is-valid" placeholder="All Price" required>
+                                    <span asp-validation-for="AllPrice" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <div class="form-group row text-center was-validated">
+                                <div class="col-sm-4 custom-control custom-checkbox">
+                                    <input type="checkbox" asp-for="HasBreakfast" class="custom-control-input">
+                                    <label asp-for="HasBreakfast" class="custom-control-label text-white"></label>
+                                </div>
+                                <div class="col-sm-4 custom-control custom-checkbox">
+                                    <input type="checkbox" asp-for="HasLunch" class="custom-control-input">
+                                    <label asp-for="HasLunch" class="custom-control-label text-white"></label>
+                                </div>
+                                <div class="col-sm-4 custom-control custom-checkbox">
+                                    <input type="checkbox" asp-for="HasDinner" class="custom-control-input">
+                                    <label asp-for="HasDinner" class="custom-control-label text-white"></label>
+                                </div>
+                            </div>
+                            <hr />
                             <div class="form-group was-validated">
-                                <textarea asp-for="Description" class="form-control" placeholder="Description" maxlength="200"></textarea>
+                                <textarea asp-for="Description" class="form-control text-center" placeholder="Description" maxlength="200"></textarea>
                                 <span asp-validation-for="Description" class="text-danger"></span>
                             </div>
 
@@ -61,3 +114,18 @@
         </div>
     </div>
 </div>
+
+<script>
+    var customPrice = document.getElementById('customPrice');
+    var allPrice = document.getElementById('allPrice');
+    var nights = document.getElementById('nights');
+    var roomPrice = document.getElementById('roomPrice');
+
+    customPrice.oninput = function () {
+        if (customPrice.value>0) {
+            allPrice.value = customPrice.value * nights.value;
+        } else {
+            allPrice.value = roomPrice.value * nights.value;
+        }
+    };
+</script>

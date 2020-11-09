@@ -29,6 +29,14 @@
 
         public int ChildCount { get; set; }
 
+        public decimal Price { get; set; }
+
+        public bool HasBreakfast { get; set; }
+
+        public bool HasLunch { get; set; }
+
+        public bool HasDinner { get; set; }
+
         public string Description { get; set; }
 
         public ICollection<GuestReservation> GuestsReservations { get; set; }

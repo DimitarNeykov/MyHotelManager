@@ -21,7 +21,7 @@
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in p-3" aria-labelledby="dropdownMenuLink">
                                         <div class="dropdown-header">More options:</div>
-                                        <a asp-controller="Reservations" asp-action="Create" asp-route-roomId="@room.Id" class="btn btn-success btn-icon-split w-100 mb-2">
+                                        <a asp-controller="Reservations" asp-action="Create" asp-route-roomId="@room.Id" asp-route-arrivalDate="@room.ArrivalDate" asp-route-returnDate="@room.ReturnDate" class="btn btn-success btn-icon-split w-100 mb-2">
                                             <span class="icon text-white-50">
                                                 <i class="fas fa-arrow-right"></i>
                                             </span>

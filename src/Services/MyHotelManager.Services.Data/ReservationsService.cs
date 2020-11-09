@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace MyHotelManager.Services.Data
+﻿namespace MyHotelManager.Services.Data
 {
     using System;
     using System.Collections.Generic;
@@ -8,6 +6,7 @@ namespace MyHotelManager.Services.Data
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
     using MyHotelManager.Data.Common.Repositories;
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Mapping;
@@ -25,7 +24,7 @@ namespace MyHotelManager.Services.Data
             this.userManager = userManager;
         }
 
-        public async Task CreateAsync(int roomId, DateTime arrivalDate, DateTime returnDate, int adultCount, int childCount, string firstName, string lastName, string description)
+        public async Task CreateAsync(int roomId, DateTime arrivalDate, DateTime returnDate, int adultCount, int childCount, string firstName, string lastName, string description, decimal price, bool hasBreakfast, bool hasLunch, bool hasDinner)
         {
             var reservation = new Reservation
             {
@@ -35,6 +34,10 @@ namespace MyHotelManager.Services.Data
                 ReturnDate = returnDate,
                 AdultCount = adultCount,
                 ChildCount = childCount,
+                Price = price,
+                HasBreakfast = hasBreakfast,
+                HasLunch = hasLunch,
+                HasDinner = hasDinner,
                 Description = description,
             };
 

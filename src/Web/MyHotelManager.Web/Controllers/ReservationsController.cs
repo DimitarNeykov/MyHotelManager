@@ -1,5 +1,6 @@
 ﻿namespace MyHotelManager.Web.Controllers
 {
+    using System;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
@@ -8,6 +9,7 @@
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Data;
     using MyHotelManager.Web.ViewModels.Reservations;
+    using MyHotelManager.Web.ViewModels.Rooms;
 
     public class ReservationsController : Controller
     {
@@ -36,13 +38,20 @@
         }
 
         [Authorize]
-        public IActionResult Create(int roomId)
+        public IActionResult Create(int roomId, string arrivalDate, string returnDate)
         {
             var user = this.userManager.GetUserId(this.User);
+
+            var room = this.roomsService.GetById<RoomViewModel>(roomId);
 
             var viewModel = new ReservationCreateInputModel
             {
                 RoomId = roomId,
+                ArrivalDate = arrivalDate,
+                ReturnDate = returnDate,
+                RoomType = room.RoomType.Name,
+                RoomNumber = room.Number,
+                RoomPrice = room.Price,
             };
 
             return this.View(viewModel);
@@ -50,22 +59,39 @@
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Create(ReservationCreateInputModel input, int roomId)
+        public async Task<IActionResult> Create(ReservationCreateInputModel input)
         {
             if (!this.ModelState.IsValid)
             {
                 return this.View(input);
             }
 
+            var room = this.roomsService.GetById<RoomViewModel>(input.RoomId);
+
+            decimal allPrice = 0.0M;
+
+            if (input.CustomPrice > 0)
+            {
+                allPrice = input.CustomPrice * input.Nights;
+            }
+            else
+            {
+                allPrice = room.Price * input.Nights;
+            }
+
             await this.reservationsService.CreateAsync(
-                roomId,
-                input.ArrivalDate,
-                input.ReturnDate,
+                input.RoomId,
+                Convert.ToDateTime(input.ArrivalDate),
+                Convert.ToDateTime(input.ReturnDate),
                 input.AdultCount,
                 input.ChildCount,
                 input.GuestInfo.FirstName,
                 input.GuestInfo.LastName,
-                input.Description);
+                input.Description,
+                allPrice,
+                input.HasBreakfast,
+                input.HasLunch,
+                input.HasDinner);
 
             return this.RedirectToAction("Index", "Home");
         }
