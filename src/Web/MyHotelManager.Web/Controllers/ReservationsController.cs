@@ -1,6 +1,7 @@
 ﻿namespace MyHotelManager.Web.Controllers
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
@@ -38,11 +39,16 @@
         }
 
         [Authorize]
-        public IActionResult Create(int roomId, string arrivalDate, string returnDate)
+        public async Task<IActionResult> Create(int roomId, string arrivalDate, string returnDate)
         {
-            var user = this.userManager.GetUserId(this.User);
+            var user = await this.userManager.GetUserAsync(this.User);
 
             var room = this.roomsService.GetById<RoomViewModel>(roomId);
+
+            if (room.HotelId != user.HotelId)
+            {
+                return this.RedirectToAction("DateSearch", "Rooms");
+            }
 
             var viewModel = new ReservationCreateInputModel
             {
@@ -66,7 +72,32 @@
                 return this.View(input);
             }
 
+            var user = await this.userManager.GetUserAsync(this.User);
+
             var room = this.roomsService.GetById<RoomViewModel>(input.RoomId);
+
+            var availableRooms = this.roomsService.AvailableRooms<RoomViewModel>(
+                user.Id,
+                Convert.ToDateTime(input.ArrivalDate), Convert.ToDateTime(input.ReturnDate));
+
+            if (!availableRooms.Any(x => x.Id == room.Id))
+            {
+                return this.RedirectToAction("DateSearch", "Rooms");
+            }
+
+            if (room.HotelId != user.HotelId)
+            {
+                return this.RedirectToAction("DateSearch", "Rooms");
+            }
+
+            if (room.MaxAdultCount < input.AdultCount || input.AdultCount < 1 || room.MaxChildCount < input.ChildCount || input.ChildCount < 0)
+            {
+                input.RoomId = room.Id;
+                input.RoomType = room.RoomType.Name;
+                input.RoomNumber = room.Number;
+                input.RoomPrice = room.Price;
+                return this.View(input);
+            }
 
             decimal allPrice = 0.0M;
 
@@ -93,7 +124,7 @@
                 input.HasLunch,
                 input.HasDinner);
 
-            return this.RedirectToAction("Index", "Home");
+            return this.RedirectToAction("Index", "Reservations");
         }
 
         [Authorize]

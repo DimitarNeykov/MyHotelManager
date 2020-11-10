@@ -40,7 +40,7 @@
         [DisplayName("Lunch")]
         public bool HasLunch { get; set; }
 
-        [DisplayName("Breakfast")]
+        [DisplayName("Dinner")]
         public bool HasDinner { get; set; }
 
         public string Description { get; set; }
