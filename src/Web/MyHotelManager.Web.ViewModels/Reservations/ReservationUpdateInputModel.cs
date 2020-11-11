@@ -1,24 +1,20 @@
 ﻿namespace MyHotelManager.Web.ViewModels.Reservations
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Linq;
 
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Mapping;
 
-    public class ReservationCreateInputModel : IMapTo<Reservation>
+    public class ReservationUpdateInputModel : IMapTo<Reservation>
     {
+        public string Id { get; set; }
+
         public int RoomId { get; set; }
 
-        public string ArrivalDate { get; set; }
+        public DateTime ArrivalDate { get; set; }
 
-        public string ShortArrivalDate => Convert.ToDateTime(this.ArrivalDate).ToString("dd.MM.yyyy");
-
-        public string ReturnDate { get; set; }
-
-        public string ShortReturnDate => Convert.ToDateTime(this.ReturnDate).ToString("dd.MM.yyyy");
+        public DateTime ReturnDate { get; set; }
 
         public int Nights => (int)(Convert.ToDateTime(this.ReturnDate) - Convert.ToDateTime(this.ArrivalDate)).TotalDays;
 
@@ -34,7 +30,7 @@
 
         public decimal CustomPrice { get; set; }
 
-        public decimal AllPrice => this.Nights * this.RoomPrice;
+        public decimal AllPrice { get; set; }
 
         [DisplayName("Breakfast")]
         public bool HasBreakfast { get; set; }
@@ -47,6 +43,8 @@
 
         public string Description { get; set; }
 
-        public ReservationGuestInfoInputModel GuestInfo { get; set; }
+        public string GuestFirstName { get; set; }
+
+        public string GuestLastName { get; set; }
     }
 }

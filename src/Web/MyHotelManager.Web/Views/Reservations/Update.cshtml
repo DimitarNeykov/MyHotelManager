@@ -1,88 +1,148 @@
-﻿@using System.Linq
-@model MyHotelManager.Web.ViewModels.Reservations.ReservationUpdateViewModel
+﻿@model MyHotelManager.Web.ViewModels.Reservations.ReservationUpdateInputModel
 
 @{
-    this.ViewData["Title"] = "Update Reservation";
-    var p = Model.ReturnDate - Model.ArrivalDate;
+    this.ViewData["Title"] = "New Reservation";
 }
+
 <div class="container">
-    <div class="card o-hidden border-0 shadow-lg my-5">
+    <div class="card o-hidden border-0 shadow-lg my-5 bg-gradient-primary">
         <div class="card-body p-0">
             <!-- Nested Row within Card Body -->
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="p-4">
                         <div class="text-center">
-                            <h1 class="h4 text-gray-900 mb-4">Update Reservation!</h1>
+                            <h1 class="h3 mb-4 text-white-50 font-italic">Update Reservation!</h1>
                         </div>
 
                         <form class="user" method="post">
-                            <div class="form-group row was-validated">
-                                <div class="col-sm-5 mb-3 mb-sm-0 text-center">
+                            <div class="form-group row was-validated text-center text-white-50">
+                                <div class="col-sm-5 mb-3 mb-sm-0">
                                     <label asp-for="ArrivalDate"></label>
-                                    <input type="date" asp-for="ArrivalDate" class="form-control form-control-user is-invalid" placeholder="Arrival Date" id="arrivalDate-input" required>
-                                    <span asp-validation-for="ArrivalDate" class="text-danger"></span>
+                                    <input type="date" asp-for="ArrivalDate" class="form-control form-control-user text-center is-valid" placeholder="Arrival Date">
                                 </div>
-                                <div class="col-sm-5 mb-3 text-center">
+
+                                <div class="col-sm-5 mb-3 mb-sm-0">
                                     <label asp-for="ReturnDate"></label>
-                                    <input type="date" asp-for="ReturnDate" class="form-control form-control-user is-invalid" placeholder="Return Date" id="returnDate-input" required>
-                                    <span asp-validation-for="ReturnDate" class="text-danger"></span>
+                                    <input type="date" asp-for="ReturnDate" class="form-control form-control-user text-center is-valid" placeholder="Return Date">
                                 </div>
-                                <div class="col-sm-2 text-center">
-                                    <label> Nights:</label>
-                                    <input id="Nights" class="form-control form-control-user is-valid">
+
+                                <div class="col-sm-2">
+                                    <label asp-for="Nights"></label>
+                                    <input asp-for="Nights" id="nights" class="form-control form-control-user text-center is-valid" readonly="readonly" placeholder="Nights" required>
                                 </div>
                             </div>
-                            <div class="form-group row was-validated">
+                            <div class="form-group row was-validated text-center text-white-50">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input asp-for="GuestsReservations.First().Guest.FirstName" class="form-control form-control-user is-invalid" placeholder="First Name" required>
-                                    <span asp-validation-for="GuestsReservations.First().Guest.FirstName" class="text-danger"></span>
+                                    <label asp-for="GuestFirstName"></label>
+                                    <input asp-for="GuestFirstName" class="form-control form-control-user text-center is-invalid" placeholder="First Name" required>
+                                    <span asp-validation-for="GuestFirstName" class="text-danger"></span>
                                 </div>
+
                                 <div class="col-sm-6">
-                                    <input asp-for="GuestsReservations.First().Guest.LastName" class="form-control form-control-user is-invalid" placeholder="Last Name" required>
-                                    <span asp-validation-for="GuestsReservations.First().Guest.LastName" class="text-danger"></span>
+                                    <label asp-for="GuestLastName"></label>
+                                    <input asp-for="GuestLastName" class="form-control form-control-user text-center is-invalid" placeholder="Last Name" required>
+                                    <span asp-validation-for="GuestLastName" class="text-danger"></span>
                                 </div>
                             </div>
-                            <div class="form-group row was-validated">
+                            <div class="form-group row was-validated text-center text-white-50">
                                 <div class="col-sm-6 mb-3 mb-sm-0 text-center">
-                                    <input asp-for="AdultCount" class="form-control form-control-user is-invalid" placeholder="Adult Count" required>
+                                    <label asp-for="AdultCount"></label>
+                                    <input asp-for="AdultCount" class="form-control form-control-user text-center is-invalid" placeholder="Adult Count" required>
                                     <span asp-validation-for="AdultCount" class="text-danger"></span>
                                 </div>
+
                                 <div class="col-sm-6 text-center">
-                                    <input asp-for="ChildCount" class="form-control form-control-user is-invalid" placeholder="Child Count" required>
+                                    <label asp-for="AdultCount"></label>
+                                    <input asp-for="ChildCount" class="form-control form-control-user text-center is-invalid" placeholder="Child Count" required>
                                     <span asp-validation-for="ChildCount" class="text-danger"></span>
                                 </div>
                             </div>
 
-                            <div class="form-group row was-validated">
-                                <div class="col-sm-4 mb-3 mb-sm-0 text-center">
-                                    <input asp-for="Room.Number" class="form-control form-control-user" required>
-                                    <span asp-validation-for="Room.Number" class="text-danger"></span>
+                            <div class="form-group row was-validated text-center text-white-50">
+                                <div class="col-sm-6 mb-3 mb-sm-0 text-center">
+                                    <label asp-for="RoomNumber"></label>
+                                    <input asp-for="RoomNumber" readonly="readonly" class="form-control form-control-user text-center is-valid">
                                 </div>
-                                <div class="col-sm-4 mb-3 mb-sm-0 text-center">
-                                    <input asp-for="Room.Price" class="form-control form-control-user" id="price-input" disabled="" required>
-                                    <span asp-validation-for="Room.Price" class="text-danger"></span>
-                                </div>
-                                <div class="col-sm-4 text-center">
-                                    <input id="Price" class="form-control form-control-user is-valid" disabled="">
+
+                                <div class="col-sm-6 text-center">
+                                    <label asp-for="RoomType"></label>
+                                    <input asp-for="RoomType" readonly="readonly" class="form-control form-control-user text-center is-valid">
                                 </div>
                             </div>
 
+                            <div class="form-group row was-validated text-center text-white-50">
+                                <div class="col-sm-4 mb-3 mb-sm-0">
+                                    <label asp-for="RoomPrice"></label>
+                                    <input value="@Model.RoomPrice" asp-for="RoomPrice" id="roomPrice" readonly="readonly" class="form-control form-control-user text-center is-valid" placeholder="Room Price">
+                                </div>
+
+                                <div class="col-sm-4 mb-3 mb-sm-0">
+                                    <label asp-for="CustomPrice"></label>
+                                    <input asp-for="CustomPrice" id="customPrice" class="form-control form-control-user text-center is-valid" placeholder="Custom Price">
+                                    <span asp-validation-for="CustomPrice" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <label asp-for="AllPrice"></label>
+                                    <input asp-for="AllPrice" readonly="readonly" id="allPrice" class="form-control form-control-user text-center is-valid" placeholder="All Price" required>
+                                    <span asp-validation-for="AllPrice" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <div class="form-group row text-center was-validated">
+                                <div class="col-sm-4 custom-control custom-checkbox">
+                                    <input type="checkbox" asp-for="HasBreakfast" class="custom-control-input">
+                                    <label asp-for="HasBreakfast" class="custom-control-label text-white"></label>
+                                </div>
+
+                                <div class="col-sm-4 custom-control custom-checkbox">
+                                    <input type="checkbox" asp-for="HasLunch" class="custom-control-input">
+                                    <label asp-for="HasLunch" class="custom-control-label text-white"></label>
+                                </div>
+
+                                <div class="col-sm-4 custom-control custom-checkbox">
+                                    <input type="checkbox" asp-for="HasDinner" class="custom-control-input">
+                                    <label asp-for="HasDinner" class="custom-control-label text-white"></label>
+                                </div>
+                            </div>
+
+                            <hr />
+
                             <div class="form-group was-validated">
-                                <textarea asp-for="Description" class="form-control" placeholder="Description" maxlength="200"></textarea>
+                                <textarea asp-for="Description" class="form-control text-center" placeholder="Description" maxlength="200"></textarea>
                                 <span asp-validation-for="Description" class="text-danger"></span>
                             </div>
-                            <button type="submit" class="btn btn-success btn-user btn-block" asp-route="@Model.Room.Id">
+
+                            <input asp-for="RoomId" hidden="" readonly="readonly" class="custom-control-input">
+                            <input asp-for="Id" hidden="" readonly="readonly" class="custom-control-input">
+
+                            <button type="submit" class="btn btn-success btn-user btn-block" asp-route="@Model.RoomId">
                                 Create Reservation
                             </button>
                         </form>
-                        <button class="btn btn-success btn-user btn-block" id="button1">
-                            Calculate
-                        </button>
-                        <div id="div1"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        var customPrice = document.getElementById('customPrice');
+        var allPrice = document.getElementById('allPrice');
+        var nights = document.getElementById('nights');
+        var roomPrice = document.getElementById('roomPrice');
+
+        customPrice.oninput = function() {
+            if (customPrice.value > 0) {
+                allPrice.value = customPrice.value * nights.value;
+            } else {
+                allPrice.value = roomPrice.value * nights.value;
+            }
+        };
+    </script>
+}

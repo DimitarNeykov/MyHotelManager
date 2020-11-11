@@ -65,6 +65,8 @@
 
             this.reservationRepository.Delete(reservation);
 
+            reservation.CancelDate = DateTime.UtcNow;
+
             await this.reservationRepository.SaveChangesAsync();
         }
 
@@ -95,6 +97,30 @@
                 .FirstOrDefault();
 
             return reservation;
+        }
+
+        public async Task UpdateAsync(string reservationId, int roomId, DateTime arrivalDate, DateTime returnDate, int adultCount, int childCount, string firstName, string lastName, string description, decimal price, bool hasBreakfast, bool hasLunch, bool hasDinner)
+        {
+            var reservation = this.reservationRepository
+                .All()
+                .Include(r => r.GuestsReservations)
+                .ThenInclude(gr => gr.Guest)
+                .First(x => x.Id == reservationId);
+
+            reservation.RoomId = roomId;
+            reservation.ArrivalDate = arrivalDate;
+            reservation.ReturnDate = returnDate;
+            reservation.AdultCount = adultCount;
+            reservation.ChildCount = childCount;
+            reservation.GuestsReservations.First().Guest.FirstName = firstName;
+            reservation.GuestsReservations.First().Guest.LastName = lastName;
+            reservation.Description = description;
+            reservation.Price = price;
+            reservation.HasBreakfast = hasBreakfast;
+            reservation.HasLunch = hasLunch;
+            reservation.HasDinner = hasDinner;
+
+            await this.reservationRepository.SaveChangesAsync();
         }
     }
 }

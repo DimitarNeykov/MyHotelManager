@@ -10,7 +10,6 @@
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Data;
     using MyHotelManager.Web.ViewModels.Reservations;
-    using MyHotelManager.Web.ViewModels.Rooms;
 
     public class ReservationsController : Controller
     {
@@ -29,7 +28,7 @@
         }
 
         [Authorize]
-        public IActionResult Index()
+        public IActionResult Manager()
         {
             var user = this.userManager.GetUserId(this.User);
 
@@ -43,7 +42,7 @@
         {
             var user = await this.userManager.GetUserAsync(this.User);
 
-            var room = this.roomsService.GetById<RoomViewModel>(roomId);
+            var room = this.roomsService.GetById<RoomModel>(roomId);
 
             if (room.HotelId != user.HotelId)
             {
@@ -74,9 +73,9 @@
 
             var user = await this.userManager.GetUserAsync(this.User);
 
-            var room = this.roomsService.GetById<RoomViewModel>(input.RoomId);
+            var room = this.roomsService.GetById<RoomModel>(input.RoomId);
 
-            var availableRooms = this.roomsService.AvailableRooms<RoomViewModel>(
+            var availableRooms = this.roomsService.AvailableRooms<RoomModel>(
                 user.Id,
                 Convert.ToDateTime(input.ArrivalDate), Convert.ToDateTime(input.ReturnDate));
 
@@ -99,7 +98,7 @@
                 return this.View(input);
             }
 
-            decimal allPrice = 0.0M;
+            var allPrice = 0.0M;
 
             if (input.CustomPrice > 0)
             {
@@ -124,29 +123,103 @@
                 input.HasLunch,
                 input.HasDinner);
 
-            return this.RedirectToAction("Index", "Reservations");
+            return this.RedirectToAction("Manager", "Reservations");
         }
 
         [Authorize]
         public IActionResult Update(string reservationId)
         {
             var reservation = this.reservationsService.GetById<ReservationUpdateViewModel>(reservationId);
+            var room = this.roomsService.GetById<RoomModel>(reservation.RoomId);
+            var customPrice = 0.0M;
 
-            var viewModel = reservation;
+            if (room.Price * reservation.Nights != reservation.Price)
+            {
+                customPrice = reservation.Price / reservation.Nights;
+            }
+
+            var viewModel = new ReservationUpdateInputModel
+            {
+                Id = reservation.Id,
+                RoomId = room.Id,
+                RoomNumber = room.Number,
+                GuestFirstName = reservation.GuestsReservations.First().Guest.FirstName,
+                GuestLastName = reservation.GuestsReservations.First().Guest.LastName,
+                ArrivalDate = reservation.ArrivalDate,
+                ReturnDate = reservation.ReturnDate,
+                AdultCount = reservation.AdultCount,
+                ChildCount = reservation.ChildCount,
+                RoomType = room.RoomType.Name,
+                HasBreakfast = reservation.HasBreakfast,
+                HasLunch = reservation.HasLunch,
+                HasDinner = reservation.HasDinner,
+                AllPrice = reservation.Price,
+                RoomPrice = room.Price,
+                CustomPrice = customPrice,
+            };
 
             return this.View(viewModel);
         }
 
         [HttpPost]
         [Authorize]
-        public IActionResult Update(ReservationUpdateViewModel input, int roomId)
+        public async Task<IActionResult> Update(ReservationUpdateInputModel input)
         {
             if (!this.ModelState.IsValid)
             {
                 return this.View(input);
             }
 
-            return this.RedirectToAction("Index", "Home");
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            var room = this.roomsService.GetById<RoomModel>(input.RoomId);
+
+            var availableRooms = this.roomsService.AvailableRooms<RoomModel>(
+                user.Id,
+                Convert.ToDateTime(input.ArrivalDate), Convert.ToDateTime(input.ReturnDate));
+
+            if (!availableRooms.Any(x => x.Id == room.Id))
+            {
+                return this.RedirectToAction("Manager", "Reservations");
+            }
+
+            if (room.HotelId != user.HotelId)
+            {
+                return this.RedirectToAction("Manager", "Reservations");
+            }
+
+            if (room.MaxAdultCount < input.AdultCount || input.AdultCount < 1 || room.MaxChildCount < input.ChildCount || input.ChildCount < 0)
+            {
+                return this.View(input);
+            }
+
+            var allPrice = 0.0M;
+
+            if (input.CustomPrice > 0)
+            {
+                allPrice = input.CustomPrice * input.Nights;
+            }
+            else
+            {
+                allPrice = room.Price * input.Nights;
+            }
+
+            await this.reservationsService.UpdateAsync(
+                input.Id,
+                input.RoomId,
+                input.ArrivalDate,
+                input.ReturnDate,
+                input.AdultCount,
+                input.ChildCount,
+                input.GuestFirstName,
+                input.GuestLastName,
+                input.Description,
+                allPrice,
+                input.HasBreakfast,
+                input.HasLunch,
+                input.HasDinner);
+
+            return this.RedirectToAction("Manager", "Reservations");
         }
 
         [Authorize]
@@ -154,7 +227,7 @@
         {
             await this.reservationsService.Delete(reservationId);
 
-            return this.RedirectToAction("Index");
+            return this.RedirectToAction("Manager");
         }
     }
 }

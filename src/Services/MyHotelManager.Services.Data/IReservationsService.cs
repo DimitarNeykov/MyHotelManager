@@ -13,5 +13,7 @@
         T GetById<T>(string reservationId);
 
         Task Delete(string reservationId);
+
+        Task UpdateAsync(string reservationId, int roomId, DateTime arrivalDate, DateTime returnDate, int adultCount, int childCount, string firstName, string lastName, string description, decimal price, bool hasBreakfast, bool hasLunch, bool hasDinner);
     }
 }

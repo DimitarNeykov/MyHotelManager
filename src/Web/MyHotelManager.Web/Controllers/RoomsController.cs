@@ -8,6 +8,7 @@
     using Microsoft.AspNetCore.Mvc;
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Data;
+    using MyHotelManager.Web.ViewModels.Reservations;
     using MyHotelManager.Web.ViewModels.Rooms;
 
     public class RoomsController : Controller
@@ -31,7 +32,7 @@
         {
             var userId = this.userManager.GetUserId(this.User);
 
-            var viewModel = this.roomsService.GetAll<RoomViewModel>(userId);
+            var viewModel = this.roomsService.GetAll<ViewModels.Rooms.RoomViewModel>(userId);
 
             return this.View(viewModel);
         }
@@ -54,7 +55,7 @@
 
             var userId = this.userManager.GetUserId(this.User);
 
-            var viewModel = this.roomsService.AvailableRooms<RoomViewModel>(userId, (DateTime)from, (DateTime)to);
+            var viewModel = this.roomsService.AvailableRooms<ViewModels.Rooms.RoomViewModel>(userId, (DateTime)from, (DateTime)to);
 
             foreach (var roomViewModel in viewModel)
             {
