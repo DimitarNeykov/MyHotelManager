@@ -12,6 +12,8 @@
 
         public int RoomId { get; set; }
 
+        public int OldRoomId { get; set; }
+
         public DateTime ArrivalDate { get; set; }
 
         public DateTime ReturnDate { get; set; }

@@ -67,6 +67,21 @@
         }
 
         [Authorize]
+        public IActionResult AvailableRoomsAvailableRoomsWithReservationRoom(DateTime? from, DateTime? to, string reservationId)
+        {
+            if (from == null || to == null)
+            {
+                return null;
+            }
+
+            var userId = this.userManager.GetUserId(this.User);
+
+            var viewModel = this.roomsService.AvailableRoomsWithReservationRoom<RoomViewModel>(userId, (DateTime)from, (DateTime)to, reservationId);
+
+            return this.PartialView(viewModel);
+        }
+
+        [Authorize]
         public IActionResult Create()
         {
             var roomTypes = this.roomTypesService.GetAll<RoomTypeDropDownViewModel>();

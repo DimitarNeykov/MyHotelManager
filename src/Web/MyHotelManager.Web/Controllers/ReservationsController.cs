@@ -142,6 +142,7 @@
             {
                 Id = reservation.Id,
                 RoomId = room.Id,
+                OldRoomId = room.Id,
                 RoomNumber = room.Number,
                 GuestFirstName = reservation.GuestsReservations.First().Guest.FirstName,
                 GuestLastName = reservation.GuestsReservations.First().Guest.LastName,
@@ -178,7 +179,7 @@
                 user.Id,
                 Convert.ToDateTime(input.ArrivalDate), Convert.ToDateTime(input.ReturnDate));
 
-            if (!availableRooms.Any(x => x.Id == room.Id))
+            if (input.OldRoomId != input.RoomId && !availableRooms.Any(x => x.Id == room.Id))
             {
                 return this.RedirectToAction("Manager", "Reservations");
             }

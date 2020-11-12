@@ -1,6 +1,5 @@
 ﻿namespace MyHotelManager.Services.Data
 {
-    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using MyHotelManager.Data.Models;

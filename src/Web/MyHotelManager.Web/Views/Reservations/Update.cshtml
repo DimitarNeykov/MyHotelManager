@@ -4,7 +4,7 @@
     this.ViewData["Title"] = "New Reservation";
 }
 
-<div class="container">
+<div class="container" id="form">
     <div class="card o-hidden border-0 shadow-lg my-5 bg-gradient-primary">
         <div class="card-body p-0">
             <!-- Nested Row within Card Body -->
@@ -19,12 +19,12 @@
                             <div class="form-group row was-validated text-center text-white-50">
                                 <div class="col-sm-5 mb-3 mb-sm-0">
                                     <label asp-for="ArrivalDate"></label>
-                                    <input type="date" asp-for="ArrivalDate" class="form-control form-control-user text-center is-valid" placeholder="Arrival Date">
+                                    <input type="date" asp-for="ArrivalDate" id="from-input" class="form-control form-control-user text-center is-valid" placeholder="Arrival Date">
                                 </div>
 
                                 <div class="col-sm-5 mb-3 mb-sm-0">
                                     <label asp-for="ReturnDate"></label>
-                                    <input type="date" asp-for="ReturnDate" class="form-control form-control-user text-center is-valid" placeholder="Return Date">
+                                    <input type="date" asp-for="ReturnDate" oninput="availableRooms()" id="to-input" class="form-control form-control-user text-center is-valid" placeholder="Return Date">
                                 </div>
 
                                 <div class="col-sm-2">
@@ -118,6 +118,8 @@
 
                             <input asp-for="RoomId" hidden="" readonly="readonly" class="custom-control-input">
                             <input asp-for="Id" hidden="" readonly="readonly" class="custom-control-input">
+                            <input asp-for="OldRoomId" hidden="" readonly="readonly" class="custom-control-input">
+                            <input asp-for="Id" hidden="" id="reservationId" readonly="readonly" class="custom-control-input">
 
                             <button type="submit" class="btn btn-success btn-user btn-block" asp-route="@Model.RoomId">
                                 Create Reservation
@@ -129,6 +131,8 @@
         </div>
     </div>
 </div>
+
+<div id="availableRooms"></div>
 
 @section Scripts {
     <script>
@@ -143,6 +147,24 @@
             } else {
                 allPrice.value = roomPrice.value * nights.value;
             }
+        };
+
+        function availableRooms()
+        {
+            var from = $("#from-input").val();
+            var to = $("#to-input").val();
+            var reservationId = $("#reservationId").val();
+            $.ajax({  
+                cache: false,  
+                type: "GET",  
+                url: "@Url.Action("AvailableRoomsAvailableRoomsWithReservationRoom","Rooms")",  
+                data: { "from": from, "to": to, "reservationId": reservationId},  
+                success: function (data) { 
+                    $('#availableRooms').html(data);
+                },  
+                error: function (xhr, ajaxOptions, thrownError) { 
+                }  
+            });  
         };
     </script>
 }

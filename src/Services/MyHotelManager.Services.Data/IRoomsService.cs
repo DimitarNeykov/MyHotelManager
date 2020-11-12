@@ -13,5 +13,7 @@
         T GetById<T>(int id);
 
         IEnumerable<T> AvailableRooms<T>(string userId, DateTime from, DateTime to);
+
+        IEnumerable<T> AvailableRoomsWithReservationRoom<T>(string userId, DateTime from, DateTime to, string reservationId);
     }
 }
