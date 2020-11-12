@@ -98,17 +98,6 @@
                 return this.View(input);
             }
 
-            var allPrice = 0.0M;
-
-            if (input.CustomPrice > 0)
-            {
-                allPrice = input.CustomPrice * input.Nights;
-            }
-            else
-            {
-                allPrice = room.Price * input.Nights;
-            }
-
             await this.reservationsService.CreateAsync(
                 input.RoomId,
                 Convert.ToDateTime(input.ArrivalDate),
@@ -118,7 +107,7 @@
                 input.GuestInfo.FirstName,
                 input.GuestInfo.LastName,
                 input.Description,
-                allPrice,
+                input.AllPrice,
                 input.HasBreakfast,
                 input.HasLunch,
                 input.HasDinner);
@@ -175,15 +164,6 @@
 
             var room = this.roomsService.GetById<RoomModel>(input.RoomId);
 
-            var availableRooms = this.roomsService.AvailableRooms<RoomModel>(
-                user.Id,
-                Convert.ToDateTime(input.ArrivalDate), Convert.ToDateTime(input.ReturnDate));
-
-            if (input.OldRoomId != input.RoomId && !availableRooms.Any(x => x.Id == room.Id))
-            {
-                return this.RedirectToAction("Manager", "Reservations");
-            }
-
             if (room.HotelId != user.HotelId)
             {
                 return this.RedirectToAction("Manager", "Reservations");
@@ -192,17 +172,6 @@
             if (room.MaxAdultCount < input.AdultCount || input.AdultCount < 1 || room.MaxChildCount < input.ChildCount || input.ChildCount < 0)
             {
                 return this.View(input);
-            }
-
-            var allPrice = 0.0M;
-
-            if (input.CustomPrice > 0)
-            {
-                allPrice = input.CustomPrice * input.Nights;
-            }
-            else
-            {
-                allPrice = room.Price * input.Nights;
             }
 
             await this.reservationsService.UpdateAsync(
@@ -215,7 +184,7 @@
                 input.GuestFirstName,
                 input.GuestLastName,
                 input.Description,
-                allPrice,
+                input.AllPrice,
                 input.HasBreakfast,
                 input.HasLunch,
                 input.HasDinner);

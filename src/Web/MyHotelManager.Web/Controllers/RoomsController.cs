@@ -8,7 +8,6 @@
     using Microsoft.AspNetCore.Mvc;
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Data;
-    using MyHotelManager.Web.ViewModels.Reservations;
     using MyHotelManager.Web.ViewModels.Rooms;
 
     public class RoomsController : Controller
@@ -32,9 +31,19 @@
         {
             var userId = this.userManager.GetUserId(this.User);
 
-            var viewModel = this.roomsService.GetAll<ViewModels.Rooms.RoomViewModel>(userId);
+            var viewModel = this.roomsService.GetAll<RoomViewModel>(userId);
 
             return this.View(viewModel);
+        }
+
+        [Authorize]
+        public IActionResult GetRoomByIdJson(int roomId)
+        {
+            var userId = this.userManager.GetUserId(this.User);
+
+            var viewModel = this.roomsService.GetById<RoomViewModel>(roomId);
+
+            return this.Json(viewModel);
         }
 
         [Authorize]
@@ -55,7 +64,7 @@
 
             var userId = this.userManager.GetUserId(this.User);
 
-            var viewModel = this.roomsService.AvailableRooms<ViewModels.Rooms.RoomViewModel>(userId, (DateTime)from, (DateTime)to);
+            var viewModel = this.roomsService.AvailableRooms<RoomViewModel>(userId, (DateTime)from, (DateTime)to);
 
             foreach (var roomViewModel in viewModel)
             {
@@ -76,7 +85,9 @@
 
             var userId = this.userManager.GetUserId(this.User);
 
-            var viewModel = this.roomsService.AvailableRoomsWithReservationRoom<RoomViewModel>(userId, (DateTime)from, (DateTime)to, reservationId);
+            var viewModel =
+                this.roomsService.AvailableRoomsWithReservationRoom<AvailableRoomsForReservationViewModel>(
+                    userId, (DateTime)from, (DateTime)to, reservationId);
 
             return this.PartialView(viewModel);
         }

@@ -10,8 +10,8 @@ using MyHotelManager.Data;
 namespace MyHotelManager.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201109165801_FunctionalityInReservation")]
-    partial class FunctionalityInReservation
+    [Migration("20201112175850_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

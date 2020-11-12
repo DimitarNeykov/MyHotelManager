@@ -1,7 +1,7 @@
 ﻿@model MyHotelManager.Web.ViewModels.Reservations.ReservationUpdateInputModel
 
 @{
-    this.ViewData["Title"] = "New Reservation";
+    this.ViewData["Title"] = "Edit Reservation";
 }
 
 <div class="container" id="form">
@@ -12,14 +12,14 @@
                 <div class="col-lg-8">
                     <div class="p-4">
                         <div class="text-center">
-                            <h1 class="h3 mb-4 text-white-50 font-italic">Update Reservation!</h1>
+                            <h1 class="h3 mb-4 text-white-50 font-italic">Edit Reservation!</h1>
                         </div>
 
                         <form class="user" method="post">
                             <div class="form-group row was-validated text-center text-white-50">
                                 <div class="col-sm-5 mb-3 mb-sm-0">
                                     <label asp-for="ArrivalDate"></label>
-                                    <input type="date" asp-for="ArrivalDate" id="from-input" class="form-control form-control-user text-center is-valid" placeholder="Arrival Date">
+                                    <input type="date" asp-for="ArrivalDate" oninput="availableRooms()" id="from-input" class="form-control form-control-user text-center is-valid" placeholder="Arrival Date">
                                 </div>
 
                                 <div class="col-sm-5 mb-3 mb-sm-0">
@@ -35,7 +35,7 @@
                             <div class="form-group row was-validated text-center text-white-50">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label asp-for="GuestFirstName"></label>
-                                    <input asp-for="GuestFirstName" class="form-control form-control-user text-center is-invalid" placeholder="First Name" required>
+                                    <input asp-for="GuestFirstName" id="guests" class="form-control form-control-user text-center is-invalid" placeholder="First Name" required>
                                     <span asp-validation-for="GuestFirstName" class="text-danger"></span>
                                 </div>
 
@@ -62,12 +62,12 @@
                             <div class="form-group row was-validated text-center text-white-50">
                                 <div class="col-sm-6 mb-3 mb-sm-0 text-center">
                                     <label asp-for="RoomNumber"></label>
-                                    <input asp-for="RoomNumber" readonly="readonly" class="form-control form-control-user text-center is-valid">
+                                    <input asp-for="RoomNumber" id="roomNumber" readonly="readonly" class="form-control form-control-user text-center is-valid">
                                 </div>
 
                                 <div class="col-sm-6 text-center">
                                     <label asp-for="RoomType"></label>
-                                    <input asp-for="RoomType" readonly="readonly" class="form-control form-control-user text-center is-valid">
+                                    <input asp-for="RoomType" id="roomType" readonly="readonly" class="form-control form-control-user text-center is-valid">
                                 </div>
                             </div>
 
@@ -112,17 +112,15 @@
                             <hr />
 
                             <div class="form-group was-validated">
-                                <textarea asp-for="Description" class="form-control text-center" placeholder="Description" maxlength="200"></textarea>
+                                <textarea asp-for="Description" id="description" class="form-control text-center" placeholder="Description" maxlength="200"></textarea>
                                 <span asp-validation-for="Description" class="text-danger"></span>
                             </div>
 
-                            <input asp-for="RoomId" hidden="" readonly="readonly" class="custom-control-input">
-                            <input asp-for="Id" hidden="" readonly="readonly" class="custom-control-input">
-                            <input asp-for="OldRoomId" hidden="" readonly="readonly" class="custom-control-input">
+                            <input asp-for="RoomId" id="roomId" hidden="" readonly="readonly" class="custom-control-input">
                             <input asp-for="Id" hidden="" id="reservationId" readonly="readonly" class="custom-control-input">
 
                             <button type="submit" class="btn btn-success btn-user btn-block" asp-route="@Model.RoomId">
-                                Create Reservation
+                                Save
                             </button>
                         </form>
                     </div>
@@ -149,22 +147,56 @@
             }
         };
 
-        function availableRooms()
-        {
+        function availableRooms() {
             var from = $("#from-input").val();
             var to = $("#to-input").val();
+
+            var diffDays = (date, otherDate) => Math.ceil(Math.abs(date - otherDate) / (1000 * 60 * 60 * 24));
+
+            document.getElementById('nights').value = diffDays(new Date(to), new Date(from));
+
+            if (customPrice.value > 0) {
+                allPrice.value = customPrice.value * nights.value;
+            } else {
+                allPrice.value = roomPrice.value * nights.value;
+            }
             var reservationId = $("#reservationId").val();
-            $.ajax({  
-                cache: false,  
-                type: "GET",  
-                url: "@Url.Action("AvailableRoomsAvailableRoomsWithReservationRoom","Rooms")",  
-                data: { "from": from, "to": to, "reservationId": reservationId},  
-                success: function (data) { 
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@Url.Action("AvailableRoomsAvailableRoomsWithReservationRoom", "Rooms")",
+                data: { "from": from, "to": to, "reservationId": reservationId },
+                success: function(data) {
                     $('#availableRooms').html(data);
-                },  
-                error: function (xhr, ajaxOptions, thrownError) { 
-                }  
-            });  
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                }
+            });
         };
+
+        function selectRoom() {
+            var roomId = arguments[0];
+
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@Url.Action("GetRoomByIdJson", "Rooms")",
+                data: { "roomId": roomId },
+                success: function (data) {
+                    document.getElementById('roomId').value = data['id'];
+                    document.getElementById('roomNumber').value = data['number'];
+                    document.getElementById('roomType').value = data['roomType']['name'];
+                    document.getElementById('roomPrice').value = data['price'];
+                    if (customPrice.value > 0) {
+                        allPrice.value = customPrice.value * nights.value;
+                    } else {
+                        allPrice.value = roomPrice.value * nights.value;
+                    }
+                },
+                error:
+                    function(xhr, ajaxOptions, thrownError) {
+                    }
+            });
+        }
     </script>
 }
