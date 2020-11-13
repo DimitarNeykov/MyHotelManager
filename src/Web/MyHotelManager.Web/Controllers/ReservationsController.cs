@@ -10,6 +10,7 @@
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Data;
     using MyHotelManager.Web.ViewModels.Reservations;
+    using MyHotelManager.Web.ViewModels.Rooms;
 
     public class ReservationsController : Controller
     {
@@ -75,7 +76,7 @@
 
             var room = this.roomsService.GetById<RoomModel>(input.RoomId);
 
-            var availableRooms = this.roomsService.AvailableRooms<RoomModel>(
+            var availableRooms = this.roomsService.AvailableRooms<AvailableRoomViewModel>(
                 user.Id,
                 Convert.ToDateTime(input.ArrivalDate), Convert.ToDateTime(input.ReturnDate));
 
@@ -116,10 +117,17 @@
         }
 
         [Authorize]
-        public IActionResult Update(string reservationId)
+        public async Task<IActionResult> Update(string reservationId)
         {
+            var user = await this.userManager.GetUserAsync(this.User);
             var reservation = this.reservationsService.GetById<ReservationUpdateViewModel>(reservationId);
             var room = this.roomsService.GetById<RoomModel>(reservation.RoomId);
+
+            if (user.HotelId != room.HotelId)
+            {
+                return this.RedirectToAction("Manager", "Reservations");
+            }
+
             var customPrice = 0.0M;
 
             if (room.Price * reservation.Nights != reservation.Price)

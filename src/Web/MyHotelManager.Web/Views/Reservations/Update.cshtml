@@ -155,6 +155,11 @@
 
             document.getElementById('nights').value = diffDays(new Date(to), new Date(from));
 
+            document.getElementById('roomId').value = null;
+            document.getElementById('roomNumber').value = null;
+            document.getElementById('roomType').value = null;
+            document.getElementById('roomPrice').value = 0;
+
             if (customPrice.value > 0) {
                 allPrice.value = customPrice.value * nights.value;
             } else {
@@ -164,7 +169,7 @@
             $.ajax({
                 cache: false,
                 type: "GET",
-                url: "@Url.Action("AvailableRoomsAvailableRoomsWithReservationRoom", "Rooms")",
+                url: "@Url.Action("AvailableRoomsWithReservationRoom", "Rooms")",
                 data: { "from": from, "to": to, "reservationId": reservationId },
                 success: function(data) {
                     $('#availableRooms').html(data);

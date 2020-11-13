@@ -3,7 +3,7 @@
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Mapping;
 
-    public class AvailableRoomsForReservationViewModel : IMapFrom<Room>
+    public class AvailableRoomViewModel : IMapFrom<Room>
     {
         public int Id { get; set; }
 
@@ -12,6 +12,8 @@
         public int MaxAdultCount { get; set; }
 
         public int MaxChildCount { get; set; }
+
+        public int HotelId { get; set; }
 
         public string Description { get; set; }
 

@@ -1,6 +1,7 @@
 ﻿namespace MyHotelManager.Web.Controllers
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
@@ -37,11 +38,16 @@
         }
 
         [Authorize]
-        public IActionResult GetRoomByIdJson(int roomId)
+        public async Task<IActionResult> GetRoomByIdJson(int roomId)
         {
-            var userId = this.userManager.GetUserId(this.User);
+            var user = await this.userManager.GetUserAsync(this.User);
 
-            var viewModel = this.roomsService.GetById<RoomViewModel>(roomId);
+            var viewModel = this.roomsService.GetById<AvailableRoomViewModel>(roomId);
+
+            if (viewModel.HotelId != user.HotelId)
+            {
+                return this.RedirectToAction("Manager", "Reservations");
+            }
 
             return this.Json(viewModel);
         }
@@ -76,18 +82,23 @@
         }
 
         [Authorize]
-        public IActionResult AvailableRoomsAvailableRoomsWithReservationRoom(DateTime? from, DateTime? to, string reservationId)
+        public async Task<IActionResult> AvailableRoomsWithReservationRoom(DateTime? from, DateTime? to, string reservationId)
         {
             if (from == null || to == null)
             {
                 return null;
             }
 
-            var userId = this.userManager.GetUserId(this.User);
+            var user = await this.userManager.GetUserAsync(this.User);
 
             var viewModel =
-                this.roomsService.AvailableRoomsWithReservationRoom<AvailableRoomsForReservationViewModel>(
-                    userId, (DateTime)from, (DateTime)to, reservationId);
+                this.roomsService.AvailableRoomsWithReservationRoom<AvailableRoomViewModel>(
+                    user.Id, (DateTime)from, (DateTime)to, reservationId);
+
+            if (!viewModel.All(r => r.HotelId == user.HotelId))
+            {
+                return this.RedirectToAction("Manager", "Reservations");
+            }
 
             return this.PartialView(viewModel);
         }
