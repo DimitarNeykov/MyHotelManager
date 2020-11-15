@@ -24,10 +24,11 @@
             this.userManager = userManager;
         }
 
-        public async Task CreateAsync(int roomId, DateTime arrivalDate, DateTime returnDate, int adultCount, int childCount, string firstName, string lastName, string description, decimal price, bool hasBreakfast, bool hasLunch, bool hasDinner)
+        public async Task CreateAsync(string phoneNumber, string userId, int roomId, DateTime arrivalDate, DateTime returnDate, int adultCount, int childCount, string firstName, string lastName, string description, decimal price, bool hasBreakfast, bool hasLunch, bool hasDinner)
         {
             var reservation = new Reservation
             {
+                CreatorId = userId,
                 RoomId = roomId,
                 BookDate = DateTime.UtcNow,
                 ArrivalDate = arrivalDate,
@@ -45,6 +46,7 @@
             {
                 FirstName = firstName,
                 LastName = lastName,
+                PhoneNumber = phoneNumber,
             };
 
             var guestReservation = new GuestReservation
@@ -92,6 +94,10 @@
                 .All()
                 .Include(r => r.GuestsReservations)
                 .ThenInclude(gr => gr.Guest)
+                .Include(r => r.Room)
+                .ThenInclude(r => r.RoomType)
+                .Include(r => r.Creator)
+                .Include(r => r.Editor)
                 .Where(r => r.Id == reservationId)
                 .To<T>()
                 .FirstOrDefault();
@@ -99,7 +105,7 @@
             return reservation;
         }
 
-        public async Task UpdateAsync(string reservationId, int roomId, DateTime arrivalDate, DateTime returnDate, int adultCount, int childCount, string firstName, string lastName, string description, decimal price, bool hasBreakfast, bool hasLunch, bool hasDinner)
+        public async Task UpdateAsync(string userId, string reservationId, int roomId, DateTime arrivalDate, DateTime returnDate, int adultCount, int childCount, string firstName, string lastName, string description, decimal price, bool hasBreakfast, bool hasLunch, bool hasDinner)
         {
             var reservation = this.reservationRepository
                 .All()
@@ -107,6 +113,7 @@
                 .ThenInclude(gr => gr.Guest)
                 .First(x => x.Id == reservationId);
 
+            reservation.EditorId = userId;
             reservation.RoomId = roomId;
             reservation.ArrivalDate = arrivalDate;
             reservation.ReturnDate = returnDate;

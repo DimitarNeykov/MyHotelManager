@@ -33,9 +33,9 @@
 
         public string DocumentNumber { get; set; }
 
-        public DateTime DateOfIssue { get; set; }
+        public DateTime? DateOfIssue { get; set; }
 
-        public DateTime DateOfExpiry { get; set; }
+        public DateTime? DateOfExpiry { get; set; }
 
         public int? HotelId { get; set; }
 

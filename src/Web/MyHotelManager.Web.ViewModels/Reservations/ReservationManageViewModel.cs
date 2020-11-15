@@ -6,7 +6,7 @@
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Mapping;
 
-    public class ReservationViewModel : IMapFrom<Reservation>
+    public class ReservationManageViewModel : IMapFrom<Reservation>
     {
         public string Id { get; set; }
 
@@ -18,29 +18,11 @@
 
         public DateTime ReturnDate { get; set; }
 
-        public DateTime ModifiedOn { get; set; }
-
-        public ApplicationUser Creator { get; set; }
-
-        public ApplicationUser Editor { get; set; }
-
         public int AdultCount { get; set; }
 
         public int ChildCount { get; set; }
 
-        public decimal Price { get; set; }
-
-        public decimal CustomPrice { get; set; }
-
-        public int Nights => (this.ReturnDate - this.ArrivalDate).Days;
-
         public string Description { get; set; }
-
-        public bool HasBreakfast { get; set; }
-
-        public bool HasLunch { get; set; }
-
-        public bool HasDinner { get; set; }
 
         public ICollection<GuestReservation> GuestsReservations { get; set; }
     }

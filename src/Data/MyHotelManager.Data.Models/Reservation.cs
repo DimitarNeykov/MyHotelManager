@@ -39,6 +39,14 @@
 
         public string Description { get; set; }
 
+        public string CreatorId { get; set; }
+
+        public ApplicationUser Creator { get; set; }
+
+        public string EditorId { get; set; }
+
+        public ApplicationUser Editor { get; set; }
+
         public ICollection<GuestReservation> GuestsReservations { get; set; }
     }
 }

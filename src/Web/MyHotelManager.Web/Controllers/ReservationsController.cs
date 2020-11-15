@@ -29,11 +29,40 @@
         }
 
         [Authorize]
+        public IActionResult Details(string id)
+        {
+            var user = this.userManager.GetUserId(this.User);
+
+            var viewModel = this.reservationsService.GetById<ReservationViewModel>(id);
+
+            var customPrice = 0.0M;
+
+            if (viewModel.Room.Price * viewModel.Nights != viewModel.Price)
+            {
+                customPrice = viewModel.Price / viewModel.Nights;
+            }
+
+            viewModel.CustomPrice = customPrice;
+
+            return this.View(viewModel);
+        }
+
+        [Authorize]
+        public IActionResult Index()
+        {
+            var userId = this.userManager.GetUserId(this.User);
+
+            var viewModel = this.reservationsService.GetAll<ReservationViewModel>(userId);
+
+            return this.View(viewModel);
+        }
+
+        [Authorize]
         public IActionResult Manager()
         {
             var user = this.userManager.GetUserId(this.User);
 
-            var viewModel = this.reservationsService.GetAll<ReservationViewModel>(user);
+            var viewModel = this.reservationsService.GetAll<ReservationManageViewModel>(user);
 
             return this.View(viewModel);
         }
@@ -58,6 +87,8 @@
                 RoomType = room.RoomType.Name,
                 RoomNumber = room.Number,
                 RoomPrice = room.Price,
+                MaxChildCount = room.MaxChildCount,
+                MaxAdultCount = room.MaxAdultCount,
             };
 
             return this.View(viewModel);
@@ -96,10 +127,14 @@
                 input.RoomType = room.RoomType.Name;
                 input.RoomNumber = room.Number;
                 input.RoomPrice = room.Price;
+                input.MaxChildCount = room.MaxChildCount;
+                input.MaxAdultCount = room.MaxAdultCount;
                 return this.View(input);
             }
 
             await this.reservationsService.CreateAsync(
+                input.GuestInfo.PhoneNumber,
+                user.Id,
                 input.RoomId,
                 Convert.ToDateTime(input.ArrivalDate),
                 Convert.ToDateTime(input.ReturnDate),
@@ -183,6 +218,7 @@
             }
 
             await this.reservationsService.UpdateAsync(
+                user.Id,
                 input.Id,
                 input.RoomId,
                 input.ArrivalDate,

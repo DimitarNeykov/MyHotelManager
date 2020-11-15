@@ -64,6 +64,17 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Reservation>(entity =>
+            {
+                entity.HasOne(e => e.Creator)
+                    .WithMany(u => u.CreatorReservations)
+                    .HasForeignKey(e => e.CreatorId);
+
+                entity.HasOne(e => e.Editor)
+                    .WithMany(u => u.EditorReservations)
+                    .HasForeignKey(e => e.EditorId);
+            });
+
             // Needed for Identity models configuration
             base.OnModelCreating(builder);
 

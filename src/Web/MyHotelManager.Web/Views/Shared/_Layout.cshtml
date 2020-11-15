@@ -33,8 +33,9 @@
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" asp-controller="Rooms" asp-action="DateSearch">New Reservation</a>
                 <a class="collapse-item" asp-controller="Reservations" asp-action="Manager">Reservations Manager</a>
-                <a class="collapse-item" asp-controller="Reservations" asp-action="Info">Reservations Info</a>
+                <a class="collapse-item" asp-controller="Reservations" asp-action="Index">Reservations Info</a>
             </div>
         </div>
     </li>
@@ -46,7 +47,6 @@
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" asp-controller="Rooms" asp-action="DateSearch">Available Rooms</a>
                 <a class="collapse-item" asp-controller="Rooms" asp-action="Create">Create New Room</a>
                 <a class="collapse-item" asp-controller="Rooms" asp-action="AllRooms">All Rooms</a>
             </div>

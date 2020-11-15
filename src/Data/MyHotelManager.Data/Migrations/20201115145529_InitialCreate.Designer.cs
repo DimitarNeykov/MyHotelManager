@@ -10,7 +10,7 @@ using MyHotelManager.Data;
 namespace MyHotelManager.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201112175850_InitialCreate")]
+    [Migration("20201115145529_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -388,10 +388,10 @@ namespace MyHotelManager.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateOfExpiry")
+                    b.Property<DateTime?>("DateOfExpiry")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateOfIssue")
+                    b.Property<DateTime?>("DateOfIssue")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeletedOn")
@@ -549,11 +549,17 @@ namespace MyHotelManager.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("CreatorId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EditorId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("HasBreakfast")
                         .HasColumnType("bit");
@@ -580,6 +586,10 @@ namespace MyHotelManager.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatorId");
+
+                    b.HasIndex("EditorId");
 
                     b.HasIndex("IsDeleted");
 
@@ -818,6 +828,14 @@ namespace MyHotelManager.Data.Migrations
 
             modelBuilder.Entity("MyHotelManager.Data.Models.Reservation", b =>
                 {
+                    b.HasOne("MyHotelManager.Data.Models.ApplicationUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId");
+
+                    b.HasOne("MyHotelManager.Data.Models.ApplicationUser", "Editor")
+                        .WithMany()
+                        .HasForeignKey("EditorId");
+
                     b.HasOne("MyHotelManager.Data.Models.Room", "Room")
                         .WithMany("Reservations")
                         .HasForeignKey("RoomId")

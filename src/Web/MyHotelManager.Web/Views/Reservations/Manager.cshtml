@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MyHotelManager.Web.ViewModels.Reservations.ReservationViewModel>
+﻿@model IEnumerable<MyHotelManager.Web.ViewModels.Reservations.ReservationManageViewModel>
 
 @{
     this.ViewData["Title"] = "Reservations";
@@ -19,7 +19,7 @@
             <div class="table-responsive">
                 <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                     <thead>
-                    <tr>
+                    <tr class="bg-primary text-white-50">
                         <th>Room</th>
                         <th>Guest Name</th>
                         <th>Adult Count</th>
@@ -33,7 +33,7 @@
                     </tr>
                     </thead>
                     <tfoot>
-                    <tr>
+                    <tr class="bg-primary text-white-50">
                         <th>Room</th>
                         <th>Guest Name</th>
                         <th>Adult Count</th>

@@ -1,0 +1,302 @@
+﻿@model MyHotelManager.Web.ViewModels.Reservations.ReservationViewModel
+
+@{
+    this.ViewData["Title"] = "Reservations";
+}
+
+<div class="container-fluid">
+
+<!-- Operating info -->
+<div>
+    <div class="card o-hidden border-0 shadow-lg bg-primary">
+        <div class="card-body p-0">
+            <div class="row justify-content-center">
+                <div class="col-lg-11 mt-4">
+                    <form class="user" method="post">
+                        <div class="form-group row text-center text-white-50">
+                            <div class="col-sm-3 mb-3 mb-sm-0">
+                                <label asp-for="BookDate"></label>
+                                <input value="@Model.BookDate.ToLocalTime()" readonly="readonly" class="form-control form-control-user text-center">
+                            </div>
+
+                            <div class="col-sm-3 mb-3 mb-sm-0">
+                                <label asp-for="Creator"></label>
+                                <input value="@Model.Creator.FirstName @Model.Creator.LastName" readonly="readonly" class="form-control form-control-user text-center">
+                            </div>
+
+                            <div class="col-sm-3 mb-3 mb-sm-0">
+                                <label asp-for="ModifiedOn"></label>
+                                @if (@Model.ModifiedOn != new DateTime())
+                                {
+                                    <input value="@Model.ModifiedOn.ToLocalTime()" readonly="readonly" class="form-control form-control-user text-center">
+                                }
+                                else
+                                {
+                                    <input value="" readonly="readonly" class="form-control form-control-user text-center">
+                                }
+                            </div>
+
+                            <div class="col-sm-3 mb-3 mb-sm-0">
+                                <label asp-for="Editor"></label>
+                                @if (@Model.Editor != null)
+                                {
+                                    <input value="@Model.Editor.FirstName @Model.Editor.LastName" readonly="readonly" class="form-control form-control-user text-center">
+                                }
+                                else
+                                {
+                                    <input value="" readonly="readonly" class="form-control form-control-user text-center">
+                                }
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Reservation And Room Info -->
+<div class="row">
+
+    <!-- Reservation Info -->
+    <div class="col-xl-6 col-md-6">
+        <div class="card o-hidden border-0 shadow-lg my-4 bg-gradient-primary">
+            <div class="card-body p-0">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <div class="p-3">
+                            <div class="text-center">
+                                <h1 class="h3 mb-4 text-white-50 font-italic">Reservation Info</h1>
+                            </div>
+
+                            <form class="user" method="get">
+                                <div class="form-group row text-center text-white-50">
+                                    <div class="col-sm-5 mb-3 mb-sm-0">
+                                        <label asp-for="ArrivalDate"></label>
+                                        <input value="@Model.ArrivalDate.ToShortDateString()" readonly="readonly" class="form-control form-control-user text-center">
+                                    </div>
+
+                                    <div class="col-sm-5 mb-3 mb-sm-0">
+                                        <label asp-for="ReturnDate"></label>
+                                        <input value="@Model.ReturnDate.ToShortDateString()" readonly="readonly" class="form-control form-control-user text-center">
+                                    </div>
+
+                                    <div class="col-sm-2 mb-3 mb-sm-0">
+                                        <label asp-for="Nights"></label>
+                                        <input type="text" asp-for="Nights" readonly="readonly" class="form-control form-control-user text-center">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row text-center text-white-50">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label asp-for="CustomPrice">Custom Price</label>
+                                        <input value="@Model.CustomPrice" readonly="readonly" class="form-control form-control-user text-center">
+                                    </div>
+
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label asp-for="Price"></label>
+                                        <input value="@Model.Price" readonly="readonly" class="form-control form-control-user text-center">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row text-center text-white-50">
+                                    <div class="col-sm-6 mb-3 mb-sm-0 text-center">
+                                        <label asp-for="AdultCount"></label>
+                                        <input value="@Model.AdultCount" readonly="readonly" class="form-control form-control-user text-center">
+                                    </div>
+
+                                    <div class="col-sm-6 text-center">
+                                        <label asp-for="ChildCount"></label>
+                                        <input value="@Model.ChildCount" readonly="readonly" class="form-control form-control-user text-center">
+                                    </div>
+                                </div>
+
+                                <hr/>
+
+                                <div class="form-group text-center text-white-50">
+                                    <label asp-for="Description"></label>
+                                    <textarea asp-for="Description" readonly="readonly" class="form-control text-center"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Room Info -->
+    <div class="col-xl-6 col-md-6">
+        <div class="card o-hidden border-0 shadow-lg my-4 bg-gradient-primary">
+            <div class="card-body p-0">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <div class="p-3">
+                            <div class="text-center">
+                                <h1 class="h3 mb-4 text-white-50 font-italic">Room Info</h1>
+                            </div>
+
+                            <form class="user" method="get">
+                                <div class="form-group row text-center text-white-50">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label asp-for="Room.MaxAdultCount"></label>
+                                        <input value="@Model.Room.MaxAdultCount" readonly="readonly" class="form-control form-control-user text-center">
+                                    </div>
+
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label asp-for="Room.MaxChildCount"></label>
+                                        <input value="@Model.Room.MaxChildCount" readonly="readonly" class="form-control form-control-user text-center">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row text-center text-white-50">
+                                    <div class="col-sm-6 mb-3 mb-sm-0 text-center">
+                                        <label asp-for="Room.Number"></label>
+                                        <input value="@Model.Room.Number" readonly="readonly" class="form-control form-control-user text-center">
+                                    </div>
+
+                                    <div class="col-sm-6 text-center">
+                                        <label asp-for="Room.RoomType.Name"></label>
+                                        <input value="@Model.Room.RoomType.Name" readonly="readonly" class="form-control form-control-user text-center">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row text-center text-white-50">
+                                    <div class="col-sm-6 mb-3 mb-sm-0 text-center">
+                                        <label asp-for="Room.Price"></label>
+                                        <input value="@Model.Room.Price" readonly="readonly" class="form-control form-control-user text-center">
+                                    </div>
+
+                                    <div class="col-sm-6 text-center">
+                                        <label asp-for="Room.RoomType.Name"></label>
+                                        <input value="@Model.Room.RoomType.Name" readonly="readonly" class="form-control form-control-user text-center">
+                                    </div>
+                                </div>
+
+                                <hr/>
+
+                                <div class="form-group text-center text-white-50">
+                                    <label asp-for="Room.Description"></label>
+                                    <textarea asp-for="Room.Description" readonly="readonly" class="form-control text-center"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Restaurant Info -->
+<div class="container col-xl-6 col-md-6 mb-4">
+    <div class="card o-hidden border-0 shadow-lg bg-gradient-primary">
+        <div class="card-body p-0">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 mt-4">
+                    <div class="row">
+                        <div class="text-center col-xl-4 col-md-6">
+                            <h4 class="mb-4 text-white-50 font-italic">
+                                Breakfast:
+                                @if (@Model.HasBreakfast == true)
+                                {
+                                    <span class="text-success"><i class="fas fa-check"></i></span>
+                                }
+                                else
+                                {
+                                    <span class="text-danger"><i class="fas fa-times"></i></span>
+                                }
+                            </h4>
+                        </div>
+                        <div class="text-center col-xl-4 col-md-6">
+                            <h4 class="mb-4 text-white-50 font-italic">
+                                Lunch:
+                                @if (@Model.HasLunch == true)
+                                {
+                                    <span class="text-success"><i class="fas fa-check"></i></span>
+                                }
+                                else
+                                {
+                                    <span class="text-danger"><i class="fas fa-times"></i></span>
+                                }
+                            </h4>
+                        </div>
+                        <div class="text-center col-xl-4 col-md-6">
+                            <h4 class="mb-4 text-white-50 font-italic">
+                                Dinner:
+                                @if (@Model.HasDinner == true)
+                                {
+                                    <span class="text-success"><i class="fas fa-check"></i></span>
+                                }
+                                else
+                                {
+                                    <span class="text-danger"><i class="fas fa-times"></i></span>
+                                }
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header">
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover font-italic" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                <tr class="bg-primary text-white-50">
+                    <th class="text-center align-middle">First Name</th>
+                    <th class="text-center align-middle">Last Name</th>
+                    <th class="text-center align-middle">Phone Number</th>
+                    <th class="text-center align-middle">PNF/UCN</th>
+                    <th class="text-center align-middle">Document Number</th>
+                    <th class="text-center align-middle">Date Of Issue</th>
+                    <th class="text-center align-middle">Date Of Expiry</th>
+                    <th class="text-center align-middle">Edit</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr class="bg-primary text-white-50">
+                    <th class="text-center align-middle">First Name</th>
+                    <th class="text-center align-middle">Last Name</th>
+                    <th class="text-center align-middle">Phone Number</th>
+                    <th class="text-center align-middle">PNF/UCN</th>
+                    <th class="text-center align-middle">Document Number</th>
+                    <th class="text-center align-middle">Date Of Issue</th>
+                    <th class="text-center align-middle">Date Of Expiry</th>
+                    <th class="text-center align-middle">Edit</th>
+                </tr>
+                </tfoot>
+                <tbody>
+                @{
+                    foreach (var guest in Model.GuestsReservations)
+                    {
+                        <tr>
+                            <td class="text-center align-middle">@guest.Guest.FirstName</td>
+                            <td class="text-center align-middle">@guest.Guest.LastName</td>
+                            <td class="text-center align-middle">0888989844</td>
+                            <td class="text-center align-middle">@guest.Guest.PNF</td>
+                            <td class="text-center align-middle">@guest.Guest.DocumentNumber</td>
+                            <td class="text-center align-middle">@guest.Guest.DateOfIssue</td>
+                            <td class="text-center align-middle">@guest.Guest.DateOfExpiry</td>
+                            <td>
+                                <a class="btn btn-warning w-100">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</div>

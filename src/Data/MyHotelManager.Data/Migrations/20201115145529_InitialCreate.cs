@@ -249,8 +249,8 @@ namespace MyHotelManager.Data.Migrations
                     UCN = table.Column<string>(nullable: true),
                     PNF = table.Column<string>(nullable: true),
                     DocumentNumber = table.Column<string>(nullable: true),
-                    DateOfIssue = table.Column<DateTime>(nullable: false),
-                    DateOfExpiry = table.Column<DateTime>(nullable: false),
+                    DateOfIssue = table.Column<DateTime>(nullable: true),
+                    DateOfExpiry = table.Column<DateTime>(nullable: true),
                     HotelId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -416,11 +416,25 @@ namespace MyHotelManager.Data.Migrations
                     HasBreakfast = table.Column<bool>(nullable: false),
                     HasLunch = table.Column<bool>(nullable: false),
                     HasDinner = table.Column<bool>(nullable: false),
-                    Description = table.Column<string>(nullable: true)
+                    Description = table.Column<string>(nullable: true),
+                    CreatorId = table.Column<string>(nullable: true),
+                    EditorId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Reservations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Reservations_AspNetUsers_CreatorId",
+                        column: x => x.CreatorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Reservations_AspNetUsers_EditorId",
+                        column: x => x.EditorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Reservations_Rooms_RoomId",
                         column: x => x.RoomId,
@@ -594,6 +608,16 @@ namespace MyHotelManager.Data.Migrations
                 column: "StarsId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Reservations_CreatorId",
+                table: "Reservations",
+                column: "CreatorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reservations_EditorId",
+                table: "Reservations",
+                column: "EditorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Reservations_IsDeleted",
                 table: "Reservations",
                 column: "IsDeleted");
@@ -653,19 +677,19 @@ namespace MyHotelManager.Data.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Guests");
 
             migrationBuilder.DropTable(
                 name: "Reservations");
 
             migrationBuilder.DropTable(
-                name: "Genders");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Rooms");
+
+            migrationBuilder.DropTable(
+                name: "Genders");
 
             migrationBuilder.DropTable(
                 name: "Hotels");
