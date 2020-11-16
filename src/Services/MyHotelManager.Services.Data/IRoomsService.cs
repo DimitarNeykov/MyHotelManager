@@ -6,14 +6,18 @@
 
     public interface IRoomsService
     {
-        Task CreateAsync(string number, int roomTypeId, decimal price, int maxAdultCount, int maxChildCount, string description, int hotelId);
+        Task CreateAsync(int floor, string number, int roomTypeId, decimal price, int maxAdultCount, int maxChildCount, string description, int hotelId);
 
         IEnumerable<T> GetAll<T>(string userId);
 
         T GetById<T>(int id);
 
-        IEnumerable<T> AvailableRooms<T>(string userId, DateTime from, DateTime to);
+        Task Delete(int roomId);
 
-        IEnumerable<T> AvailableRoomsWithReservationRoom<T>(string userId, DateTime from, DateTime to, string reservationId);
+        IEnumerable<T> AvailableRooms<T>(string userId, DateTime arrivalDate, DateTime returnDate);
+
+        IEnumerable<T> AvailableRoomsWithReservationRoom<T>(string userId, DateTime arrivalDate, DateTime returnDate, string reservationId);
+
+        Task UpdateAsync(int roomId, int floor, string number, int roomTypeId, decimal price, int maxAdultCount, int maxChildCount, string description);
     }
 }

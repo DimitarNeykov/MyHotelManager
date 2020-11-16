@@ -10,8 +10,8 @@ using MyHotelManager.Data;
 namespace MyHotelManager.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201115152002_BugFix")]
-    partial class BugFix
+    [Migration("20201116141146_AddFloorInRoomModel")]
+    partial class AddFloorInRoomModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -613,6 +613,9 @@ namespace MyHotelManager.Data.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Floor")
+                        .HasColumnType("int");
 
                     b.Property<int>("HotelId")
                         .HasColumnType("int");

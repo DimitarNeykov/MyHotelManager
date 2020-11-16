@@ -19,12 +19,12 @@
                             <div class="form-group row was-validated text-center text-white-50">
                                 <div class="col-sm-5 mb-3 mb-sm-0">
                                     <label asp-for="ArrivalDate"></label>
-                                    <input type="date" asp-for="ArrivalDate" oninput="availableRooms()" id="from-input" class="form-control form-control-user text-center is-valid" placeholder="Arrival Date">
+                                    <input type="date" asp-for="ArrivalDate" oninput="availableRooms()" id="arrivalDate" class="form-control form-control-user text-center is-valid" placeholder="Arrival Date">
                                 </div>
 
                                 <div class="col-sm-5 mb-3 mb-sm-0">
                                     <label asp-for="ReturnDate"></label>
-                                    <input type="date" asp-for="ReturnDate" oninput="availableRooms()" id="to-input" class="form-control form-control-user text-center is-valid" placeholder="Return Date">
+                                    <input type="date" asp-for="ReturnDate" oninput="availableRooms()" id="returnDate" class="form-control form-control-user text-center is-valid" placeholder="Return Date">
                                 </div>
 
                                 <div class="col-sm-2">
@@ -148,35 +148,44 @@
         };
 
         function availableRooms() {
-            var from = $("#from-input").val();
-            var to = $("#to-input").val();
+            var arrivalDate = $("#arrivalDate").val();
+            var returnDate = $("#returnDate").val();
+            if (new Date(arrivalDate) < new Date(returnDate)) {
 
-            var diffDays = (date, otherDate) => Math.ceil(Math.abs(date - otherDate) / (1000 * 60 * 60 * 24));
+                var diffDays = (date, otherDate) => Math.ceil(Math.abs(date - otherDate) / (1000 * 60 * 60 * 24));
 
-            document.getElementById('nights').value = diffDays(new Date(to), new Date(from));
+                document.getElementById('nights').value = diffDays(new Date(returnDate), new Date(arrivalDate));
 
-            document.getElementById('roomId').value = null;
-            document.getElementById('roomNumber').value = null;
-            document.getElementById('roomType').value = null;
-            document.getElementById('roomPrice').value = 0;
+                document.getElementById('roomId').value = null;
+                document.getElementById('roomNumber').value = null;
+                document.getElementById('roomType').value = null;
+                document.getElementById('roomPrice').value = 0;
 
-            if (customPrice.value > 0) {
-                allPrice.value = customPrice.value * nights.value;
-            } else {
-                allPrice.value = roomPrice.value * nights.value;
-            }
-            var reservationId = $("#reservationId").val();
-            $.ajax({
-                cache: false,
-                type: "GET",
-                url: "@Url.Action("AvailableRoomsWithReservationRoom", "Rooms")",
-                data: { "from": from, "to": to, "reservationId": reservationId },
-                success: function(data) {
-                    $('#availableRooms').html(data);
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
+                if (customPrice.value > 0) {
+                    allPrice.value = customPrice.value * nights.value;
+                } else {
+                    allPrice.value = roomPrice.value * nights.value;
                 }
-            });
+                var reservationId = $("#reservationId").val();
+                $.ajax({
+                    cache: false,
+                    type: "GET",
+                    url: "@Url.Action("AvailableRoomsWithReservationRoom", "Rooms")",
+                    data: { "arrivalDate": arrivalDate, "returnDate": returnDate, "reservationId": reservationId },
+                    success: function(data) {
+                        $('#availableRooms').html(data);
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                    }
+                });
+            } else {
+                $('#availableRooms').html("");
+                document.getElementById('nights').value = 0;
+                document.getElementById('roomId').value = null;
+                document.getElementById('roomNumber').value = null;
+                document.getElementById('roomType').value = null;
+                document.getElementById('roomPrice').value = 0;
+            }
         };
 
         function selectRoom() {
@@ -187,7 +196,7 @@
                 type: "GET",
                 url: "@Url.Action("GetRoomByIdJson", "Rooms")",
                 data: { "roomId": roomId },
-                success: function (data) {
+                success: function(data) {
                     document.getElementById('roomId').value = data['id'];
                     document.getElementById('roomNumber').value = data['number'];
                     document.getElementById('roomType').value = data['roomType']['name'];

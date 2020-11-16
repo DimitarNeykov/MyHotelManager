@@ -1,4 +1,4 @@
-﻿@model MyHotelManager.Web.ViewModels.Rooms.RoomCreateInputModel
+﻿@model MyHotelManager.Web.ViewModels.Rooms.RoomUpdateInputModel
 
 @{
     var roomTypes = Model.RoomTypes.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
@@ -12,7 +12,7 @@
                 <div class="col-lg-8">
                     <div class="p-4">
                         <div class="text-center">
-                            <h1 class="h3 mb-4 font-italic text-white-50">Create New Room!</h1>
+                            <h1 class="h3 mb-4 font-italic text-white-50">Edit Room!</h1>
                         </div>
                         <form class="user" method="post">
                             <div class="form-group row was-validated">
@@ -21,21 +21,21 @@
                                     <span asp-validation-for="Number" class="text-danger"></span>
                                 </div>
                                 <div class="col-sm-4 mb-3 mb-sm-0">
-                                    <input value="" asp-for="Price" class="form-control form-control-user is-invalid text-center" placeholder="Room Price" required>
+                                    <input asp-for="Price" class="form-control form-control-user is-invalid text-center" placeholder="Room Price" required>
                                     <span asp-validation-for="Price" class="text-danger"></span>
                                 </div>
                                 <div class="col-sm-4">
-                                    <input value="" asp-for="Floor" class="form-control form-control-user is-invalid text-center" placeholder="Floor" required>
+                                    <input asp-for="Floor" class="form-control form-control-user is-invalid text-center" placeholder="Floor" required>
                                     <span asp-validation-for="Floor" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="form-group row was-validated">
                                 <div class="col-sm-6 mb-3 mb-sm-0 text-center">
-                                    <input value="" asp-for="MaxAdultCount" class="form-control form-control-user is-invalid text-center" placeholder="Max Adult Count" required>
+                                    <input asp-for="MaxAdultCount" class="form-control form-control-user is-invalid text-center" placeholder="Max Adult Count" required>
                                     <span asp-validation-for="MaxAdultCount" class="text-danger"></span>
                                 </div>
                                 <div class="col-sm-6 text-center">
-                                    <input value="" asp-for="MaxChildCount" class="form-control form-control-user is-invalid text-center" placeholder="Max Child Count" required>
+                                    <input asp-for="MaxChildCount" class="form-control form-control-user is-invalid text-center" placeholder="Max Child Count" required>
                                     <span asp-validation-for="MaxChildCount" class="text-danger"></span>
                                 </div>
                             </div>
@@ -50,8 +50,10 @@
                                 <span asp-validation-for="Description" class="text-danger"></span>
                             </div>
 
+                            <input asp-for="Id" hidden="" required>
+                            
                             <button type="submit" class="btn btn-success btn-user btn-block">
-                                Create Room
+                                Save
                             </button>
                         </form>
                     </div>

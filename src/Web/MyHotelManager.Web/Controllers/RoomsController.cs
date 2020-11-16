@@ -61,30 +61,30 @@
         }
 
         [Authorize]
-        public IActionResult AvailableRooms(DateTime? from, DateTime? to)
+        public IActionResult AvailableRooms(DateTime? arrivalDate, DateTime? returnDate)
         {
-            if (from == null || to == null)
+            if (arrivalDate == null || returnDate == null)
             {
                 return null;
             }
 
             var userId = this.userManager.GetUserId(this.User);
 
-            var viewModel = this.roomsService.AvailableRooms<RoomViewModel>(userId, (DateTime)from, (DateTime)to);
+            var viewModel = this.roomsService.AvailableRooms<RoomViewModel>(userId, (DateTime)arrivalDate, (DateTime)returnDate);
 
             foreach (var roomViewModel in viewModel)
             {
-                roomViewModel.ArrivalDate = (DateTime)from;
-                roomViewModel.ReturnDate = (DateTime)to;
+                roomViewModel.ArrivalDate = (DateTime)arrivalDate;
+                roomViewModel.ReturnDate = (DateTime)returnDate;
             }
 
             return this.PartialView(viewModel);
         }
 
         [Authorize]
-        public async Task<IActionResult> AvailableRoomsWithReservationRoom(DateTime? from, DateTime? to, string reservationId)
+        public async Task<IActionResult> AvailableRoomsWithReservationRoom(DateTime? arrivalDate, DateTime? returnDate, string reservationId)
         {
-            if (from == null || to == null)
+            if (arrivalDate == null || returnDate == null)
             {
                 return null;
             }
@@ -93,7 +93,7 @@
 
             var viewModel =
                 this.roomsService.AvailableRoomsWithReservationRoom<AvailableRoomViewModel>(
-                    user.Id, (DateTime)from, (DateTime)to, reservationId);
+                    user.Id, (DateTime)arrivalDate, (DateTime)returnDate, reservationId);
 
             if (!viewModel.All(r => r.HotelId == user.HotelId))
             {
@@ -131,6 +131,7 @@
             }
 
             await this.roomsService.CreateAsync(
+                input.Floor,
                 input.Number,
                 input.RoomTypeId,
                 input.Price,
@@ -140,6 +141,61 @@
                 (int)user.HotelId);
 
             return this.RedirectToAction("Index", "Home");
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Delete(int roomId)
+        {
+            await this.roomsService.Delete(roomId);
+
+            return this.RedirectToAction("AllRooms");
+        }
+
+        [Authorize]
+        public IActionResult Update(int roomId)
+        {
+            var roomTypes = this.roomTypesService.GetAll<RoomTypeDropDownViewModel>();
+            var room = this.roomsService.GetById<RoomUpdateViewModel>(roomId);
+
+            var viewModel = new RoomUpdateInputModel
+            {
+                Floor = room.Floor,
+                Id = room.Id,
+                MaxAdultCount = room.MaxAdultCount,
+                MaxChildCount = room.MaxChildCount,
+                Number = room.Number,
+                Price = room.Price,
+                Description = room.Description,
+                RoomTypeId = room.RoomTypeId,
+                RoomTypes = roomTypes,
+            };
+
+            return this.View(viewModel);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Update(RoomUpdateInputModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                var roomTypes = this.roomTypesService.GetAll<RoomTypeDropDownViewModel>();
+                input.RoomTypes = roomTypes;
+
+                return this.View(input);
+            }
+
+            await this.roomsService.UpdateAsync(
+                input.Id,
+                input.Floor,
+                input.Number,
+                input.RoomTypeId,
+                input.Price,
+                input.MaxAdultCount,
+                input.MaxChildCount,
+                input.Description);
+
+            return this.RedirectToAction("AllRooms");
         }
     }
 }

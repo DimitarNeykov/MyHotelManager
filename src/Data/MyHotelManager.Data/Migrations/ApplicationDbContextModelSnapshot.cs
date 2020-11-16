@@ -612,6 +612,9 @@ namespace MyHotelManager.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Floor")
+                        .HasColumnType("int");
+
                     b.Property<int>("HotelId")
                         .HasColumnType("int");
 

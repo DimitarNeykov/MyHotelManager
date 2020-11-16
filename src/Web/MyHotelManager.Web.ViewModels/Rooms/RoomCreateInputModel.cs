@@ -32,6 +32,8 @@
         [Range(1, double.MaxValue)]
         public decimal Price { get; set; }
 
+        public int Floor { get; set; }
+
         public IEnumerable<RoomTypeDropDownViewModel> RoomTypes { get; set; }
     }
 }

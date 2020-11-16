@@ -4,31 +4,28 @@
     this.ViewData["Title"] = "";
 }
     <div class="container">
-        <div class="card o-hidden border-0 shadow-lg my-5 bg-gradient-primary">
+        <div class="card o-hidden border-0 shadow-lg my-5 bg-gradient-primary rounded-pill">
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
                 <div class="row justify-content-center">
                     <div class="col-lg-6">
                         <div class="p-4">
                             <div class="text-center">
-                                <h1 class="h3 mb-4 text-white-50 font-italic">Search from Period!</h1>
+                                <h1 class="h3 mb-4 text-white-50 font-italic">Search Available Rooms!</h1>
                             </div>
                             <form class="user">
                                 <div class="form-group row was-validated">
                                     <div class="col-sm-6 mb-3 mb-sm-0 text-center">
-                                        <label class="text-white" asp-for="From"></label>
-                                        <input value="" type="date" asp-for="From" class="form-control form-control-user is-invalid" id="from-input" placeholder="Room Number" required>
-                                        <span asp-validation-for="From" class="text-danger"></span>
+                                        <label class="text-white" asp-for="ArrivalDate"></label>
+                                        <input value="" type="date" asp-for="ArrivalDate" class="form-control form-control-user is-invalid" id="arrivalDate" oninput="availableRooms()" placeholder="Room Number" required>
+                                        <span asp-validation-for="ArrivalDate" class="text-danger"></span>
                                     </div>
                                     <div class="col-sm-6 text-center">
-                                        <label class="text-white" asp-for="To"></label>
-                                        <input value="" type="date" asp-for="To" class="form-control form-control-user is-invalid" id="to-input" placeholder="Room Price" required>
-                                        <span asp-validation-for="To" class="text-danger"></span>
+                                        <label class="text-white" asp-for="ReturnDate"></label>
+                                        <input value="" type="date" asp-for="ReturnDate" class="form-control form-control-user is-invalid" id="returnDate" oninput="availableRooms()" placeholder="Room Price" required>
+                                        <span asp-validation-for="ReturnDate" class="text-danger"></span>
                                     </div>
                                 </div>
-                                <a id="btnSearch" onclick="availableRooms()" class="btn btn-primary btn-user btn-block text-white">
-                                    Search
-                                </a>
                             </form>
                         </div>
                     </div>
@@ -41,22 +38,24 @@
 
 @section Scripts {
     <script>
-        function availableRooms()
-        {
-            var from = $("#from-input").val();
-            var to = $("#to-input").val();  
-
-            $.ajax({  
-                cache: false,  
-                type: "GET",  
-                url: "@Url.Action("AvailableRooms","Rooms")",  
-                data: { "from": from, "to": to },  
-                success: function (data) { 
-                    $('#availableRooms').html(data);  
-                },  
-                error: function (xhr, ajaxOptions, thrownError) { 
-                }  
-            });  
+        function availableRooms() {
+            var arrivalDate = $("#arrivalDate").val();
+            var returnDate = $("#returnDate").val();
+            if (new Date(arrivalDate) < new Date(returnDate)) {
+                $.ajax({
+                    cache: false,
+                    type: "GET",
+                    url: "@Url.Action("AvailableRooms", "Rooms")",
+                    data: { "arrivalDate": arrivalDate, "returnDate": returnDate },
+                    success: function(data) {
+                        $('#availableRooms').html(data);
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                    }
+                });
+            } else {
+                $('#availableRooms').html("");
+            }
         };
     </script>
 }

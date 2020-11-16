@@ -29,11 +29,16 @@
         }
 
         [Authorize]
-        public IActionResult Details(string id)
+        public async Task<IActionResult> Details(string id)
         {
-            var user = this.userManager.GetUserId(this.User);
+            var user = await this.userManager.GetUserAsync(this.User);
 
             var viewModel = this.reservationsService.GetById<ReservationViewModel>(id);
+
+            if (user.HotelId != viewModel.Room.HotelId)
+            {
+                return this.RedirectToAction("Index");
+            }
 
             var customPrice = 0.0M;
 
@@ -60,9 +65,9 @@
         [Authorize]
         public IActionResult Manager()
         {
-            var user = this.userManager.GetUserId(this.User);
+            var userId = this.userManager.GetUserId(this.User);
 
-            var viewModel = this.reservationsService.GetAll<ReservationManageViewModel>(user);
+            var viewModel = this.reservationsService.GetAll<ReservationManageViewModel>(userId);
 
             return this.View(viewModel);
         }
@@ -209,7 +214,7 @@
 
             if (room.HotelId != user.HotelId)
             {
-                return this.RedirectToAction("Manager", "Reservations");
+                return this.RedirectToAction("Manager");
             }
 
             if (room.MaxAdultCount < input.AdultCount || input.AdultCount < 1 || room.MaxChildCount < input.ChildCount || input.ChildCount < 0)
@@ -233,7 +238,7 @@
                 input.HasLunch,
                 input.HasDinner);
 
-            return this.RedirectToAction("Manager", "Reservations");
+            return this.RedirectToAction("Manager");
         }
 
         [Authorize]

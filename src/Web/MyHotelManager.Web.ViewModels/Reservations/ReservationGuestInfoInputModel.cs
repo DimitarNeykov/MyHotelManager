@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace MyHotelManager.Web.ViewModels.Reservations
+﻿namespace MyHotelManager.Web.ViewModels.Reservations
 {
+    using System.ComponentModel.DataAnnotations;
+
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Mapping;
 

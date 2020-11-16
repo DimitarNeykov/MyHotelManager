@@ -19,6 +19,8 @@
 
         public int MaxChildCount { get; set; }
 
+        public int Floor { get; set; }
+
         public int RoomTypeId { get; set; }
 
         public RoomType RoomType { get; set; }

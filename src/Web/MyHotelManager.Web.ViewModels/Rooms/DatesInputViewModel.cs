@@ -6,9 +6,9 @@
     public class DatesInputViewModel
     {
         [Required]
-        public DateTime? From { get; set; }
+        public DateTime? ArrivalDate { get; set; }
 
         [Required]
-        public DateTime? To { get; set; }
+        public DateTime? ReturnDate { get; set; }
     }
 }
