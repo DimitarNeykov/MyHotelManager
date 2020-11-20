@@ -70,6 +70,8 @@
             services.AddTransient<IRoomTypesService, RoomTypesService>();
             services.AddTransient<IReservationsService, ReservationsService>();
             services.AddTransient<IGendersService, GendersService>();
+            services.AddTransient<IGuestsService, GuestsService>();
+            services.AddTransient<ICountriesService, CountriesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -108,8 +110,8 @@
             app.UseEndpoints(
                 endpoints =>
                     {
-                        endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+                        endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapRazorPages();
                     });
         }

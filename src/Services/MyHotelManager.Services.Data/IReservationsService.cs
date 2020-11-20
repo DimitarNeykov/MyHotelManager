@@ -14,6 +14,6 @@
 
         Task Delete(string reservationId);
 
-        Task UpdateAsync(string userId, string reservationId, int roomId, DateTime arrivalDate, DateTime returnDate, int adultCount, int childCount, string firstName, string lastName, string description, decimal price, bool hasBreakfast, bool hasLunch, bool hasDinner);
+        Task UpdateAsync(string userId, string reservationId, int roomId, DateTime arrivalDate, DateTime returnDate, int adultCount, int childCount, string firstName, string lastName, string phoneNumber, string description, decimal price, bool hasBreakfast, bool hasLunch, bool hasDinner);
     }
 }

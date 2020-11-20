@@ -146,16 +146,31 @@
         [Authorize]
         public async Task<IActionResult> Delete(int roomId)
         {
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            var room = this.roomsService.GetById<RoomViewModel>(roomId);
+
+            if (room.HotelId != user.HotelId)
+            {
+                return this.RedirectToAction("AllRooms");
+            }
+
             await this.roomsService.Delete(roomId);
 
             return this.RedirectToAction("AllRooms");
         }
 
         [Authorize]
-        public IActionResult Update(int roomId)
+        public async Task<IActionResult> Update(int roomId)
         {
+            var user = await this.userManager.GetUserAsync(this.User);
             var roomTypes = this.roomTypesService.GetAll<RoomTypeDropDownViewModel>();
             var room = this.roomsService.GetById<RoomUpdateViewModel>(roomId);
+
+            if (room.HotelId != user.HotelId)
+            {
+                return this.RedirectToAction("AllRooms");
+            }
 
             var viewModel = new RoomUpdateInputModel
             {
@@ -177,6 +192,15 @@
         [HttpPost]
         public async Task<IActionResult> Update(RoomUpdateInputModel input)
         {
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            var room = this.roomsService.GetById<RoomUpdateViewModel>(input.Id);
+
+            if (room.HotelId != user.HotelId)
+            {
+                return this.RedirectToAction("AllRooms");
+            }
+
             if (!this.ModelState.IsValid)
             {
                 var roomTypes = this.roomTypesService.GetAll<RoomTypeDropDownViewModel>();

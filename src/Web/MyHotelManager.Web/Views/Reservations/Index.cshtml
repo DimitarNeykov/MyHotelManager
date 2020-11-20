@@ -43,8 +43,8 @@
                             {
                                 <tr title="@reservation.Description">
                                     <td class="text-center align-middle">@reservation.Room.Number</td>
-                                    <td class="text-center align-middle">@reservation.GuestsReservations.First().Guest.FirstName @reservation.GuestsReservations.First().Guest.LastName</td>
-                                    <td class="text-center align-middle">@reservation.GuestsReservations.First().Guest.PhoneNumber</td>
+                                    <td class="text-center align-middle">@reservation.ReservationGuest.FirstName @reservation.ReservationGuest.LastName</td>
+                                    <td class="text-center align-middle">@reservation.ReservationGuest.PhoneNumber</td>
                                     <td class="text-center align-middle">@reservation.BookDate.ToString("dd.MM.yyyy")</td>
                                     <td class="text-center align-middle">@reservation.ArrivalDate.ToString("dd.MM.yyyy")</td>
                                     <td class="text-center align-middle">@reservation.ReturnDate.ToString("dd.MM.yyyy")</td>

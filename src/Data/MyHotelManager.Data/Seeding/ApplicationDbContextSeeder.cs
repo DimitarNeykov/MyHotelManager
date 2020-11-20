@@ -29,6 +29,7 @@
                               new GenderSeeder(),
                               new StarsSeeder(),
                               new RoomTypesSeeder(),
+                              new CountriesSeeder(),
                               new CitiesSeeder(),
                           };
 

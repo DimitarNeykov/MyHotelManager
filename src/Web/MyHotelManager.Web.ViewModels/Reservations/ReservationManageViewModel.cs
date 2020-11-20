@@ -1,4 +1,7 @@
-﻿namespace MyHotelManager.Web.ViewModels.Reservations
+﻿using System.Linq;
+using AutoMapper.Internal;
+
+namespace MyHotelManager.Web.ViewModels.Reservations
 {
     using System;
     using System.Collections.Generic;
@@ -24,6 +27,8 @@
 
         public string Description { get; set; }
 
-        public ICollection<GuestReservation> GuestsReservations { get; set; }
+        public ICollection<Guest> Guests { get; set; }
+
+        public Guest ReservationGuest => this.Guests.OrderBy(x => x.CreatedOn).First();
     }
 }

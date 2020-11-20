@@ -3,11 +3,12 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Text;
     using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Internal;
     using MyHotelManager.Data.Models;
+    using MyHotelManager.Data.Seeding.ImportDto;
     using Newtonsoft.Json;
 
     public class CitiesSeeder : ISeeder
@@ -20,6 +21,8 @@
 
                 var cities = new List<City>();
 
+                var bgCountry = await dbContext.Countries.FirstOrDefaultAsync(x => x.Name == "Bulgaria");
+
                 foreach (var city in json)
                 {
                     var validCity = new City
@@ -27,7 +30,7 @@
                         Name = city.Name,
                         Region = city.Region,
                         Population = city.Population,
-                        CountryCode = "BG",
+                        CountryId = bgCountry.Id,
                     };
 
                     cities.Add(validCity);

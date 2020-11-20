@@ -10,7 +10,6 @@
         public Guest()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.GuestsReservations = new HashSet<GuestReservation>();
         }
 
         public string FirstName { get; set; }
@@ -27,6 +26,10 @@
 
         public City City { get; set; }
 
+        public int? CountryId { get; set; }
+
+        public Country Country { get; set; }
+
         public string UCN { get; set; }
 
         public string PNF { get; set; }
@@ -37,10 +40,8 @@
 
         public DateTime? DateOfExpiry { get; set; }
 
-        public int? HotelId { get; set; }
+        public string ReservationId { get; set; }
 
-        public Hotel Hotel { get; set; }
-
-        public ICollection<GuestReservation> GuestsReservations { get; set; }
+        public Reservation Reservation { get; set; }
     }
 }

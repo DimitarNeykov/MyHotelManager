@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Linq;
 
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Mapping;
@@ -36,6 +37,6 @@
 
         public string Description { get; set; }
 
-        public ICollection<GuestReservation> GuestsReservations { get; set; }
+        public ICollection<Guest> Guests { get; set; }
     }
 }

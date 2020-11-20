@@ -49,13 +49,7 @@
                 PhoneNumber = phoneNumber,
             };
 
-            var guestReservation = new GuestReservation
-            {
-                Reservation = reservation,
-                Guest = guest,
-            };
-
-            reservation.GuestsReservations.Add(guestReservation);
+            reservation.Guests.Add(guest);
 
             await this.reservationRepository.AddAsync(reservation);
             await this.reservationRepository.SaveChangesAsync();
@@ -78,9 +72,8 @@
 
             var reservations = this.reservationRepository
                 .All()
-                .Include(x => x.GuestsReservations)
-                .ThenInclude(g => g.Guest)
-                .Where(x => x.Room.HotelId == user.HotelId && x.GuestsReservations.First() != null)
+                .Include(g => g.Guests)
+                .Where(x => x.Room.HotelId == user.HotelId && x.Guests.First() != null)
                 .OrderBy(x => x.ArrivalDate)
                 .To<T>()
                 .ToList();
@@ -92,8 +85,7 @@
         {
             var reservation = this.reservationRepository
                 .All()
-                .Include(r => r.GuestsReservations)
-                .ThenInclude(gr => gr.Guest)
+                .Include(r => r.Guests)
                 .Include(r => r.Room)
                 .ThenInclude(r => r.RoomType)
                 .Include(r => r.Creator)
@@ -105,12 +97,11 @@
             return reservation;
         }
 
-        public async Task UpdateAsync(string userId, string reservationId, int roomId, DateTime arrivalDate, DateTime returnDate, int adultCount, int childCount, string firstName, string lastName, string description, decimal price, bool hasBreakfast, bool hasLunch, bool hasDinner)
+        public async Task UpdateAsync(string userId, string reservationId, int roomId, DateTime arrivalDate, DateTime returnDate, int adultCount, int childCount, string firstName, string lastName, string phoneNumber, string description, decimal price, bool hasBreakfast, bool hasLunch, bool hasDinner)
         {
             var reservation = this.reservationRepository
                 .All()
-                .Include(r => r.GuestsReservations)
-                .ThenInclude(gr => gr.Guest)
+                .Include(r => r.Guests)
                 .First(x => x.Id == reservationId);
 
             reservation.EditorId = userId;
@@ -119,8 +110,9 @@
             reservation.ReturnDate = returnDate;
             reservation.AdultCount = adultCount;
             reservation.ChildCount = childCount;
-            reservation.GuestsReservations.First().Guest.FirstName = firstName;
-            reservation.GuestsReservations.First().Guest.LastName = lastName;
+            reservation.Guests.OrderBy(x => x.CreatedOn).First().FirstName = firstName;
+            reservation.Guests.OrderBy(x => x.CreatedOn).First().LastName = lastName;
+            reservation.Guests.OrderBy(x => x.CreatedOn).First().PhoneNumber = phoneNumber;
             reservation.Description = description;
             reservation.Price = price;
             reservation.HasBreakfast = hasBreakfast;

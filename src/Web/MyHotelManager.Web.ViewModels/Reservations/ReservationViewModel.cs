@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Mapping;
@@ -42,6 +43,8 @@
 
         public bool HasDinner { get; set; }
 
-        public ICollection<GuestReservation> GuestsReservations { get; set; }
+        public ICollection<Guest> Guests { get; set; }
+
+        public Guest ReservationGuest => this.Guests.OrderBy(x => x.CreatedOn).First();
     }
 }

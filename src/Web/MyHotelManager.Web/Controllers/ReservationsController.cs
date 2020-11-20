@@ -12,6 +12,7 @@
     using MyHotelManager.Web.ViewModels.Reservations;
     using MyHotelManager.Web.ViewModels.Rooms;
 
+    [Authorize]
     public class ReservationsController : Controller
     {
         private readonly IReservationsService reservationsService;
@@ -28,7 +29,6 @@
             this.roomsService = roomsService;
         }
 
-        [Authorize]
         public async Task<IActionResult> Details(string id)
         {
             var user = await this.userManager.GetUserAsync(this.User);
@@ -52,7 +52,6 @@
             return this.View(viewModel);
         }
 
-        [Authorize]
         public IActionResult Index()
         {
             var userId = this.userManager.GetUserId(this.User);
@@ -62,7 +61,6 @@
             return this.View(viewModel);
         }
 
-        [Authorize]
         public IActionResult Manager()
         {
             var userId = this.userManager.GetUserId(this.User);
@@ -72,7 +70,6 @@
             return this.View(viewModel);
         }
 
-        [Authorize]
         public async Task<IActionResult> Create(int roomId, string arrivalDate, string returnDate)
         {
             var user = await this.userManager.GetUserAsync(this.User);
@@ -100,7 +97,6 @@
         }
 
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> Create(ReservationCreateInputModel input)
         {
             if (!this.ModelState.IsValid)
@@ -156,7 +152,6 @@
             return this.RedirectToAction("Manager", "Reservations");
         }
 
-        [Authorize]
         public async Task<IActionResult> Update(string reservationId)
         {
             var user = await this.userManager.GetUserAsync(this.User);
@@ -181,12 +176,15 @@
                 RoomId = room.Id,
                 OldRoomId = room.Id,
                 RoomNumber = room.Number,
-                GuestFirstName = reservation.GuestsReservations.First().Guest.FirstName,
-                GuestLastName = reservation.GuestsReservations.First().Guest.LastName,
+                GuestFirstName = reservation.Guests.OrderBy(x => x.CreatedOn).First().FirstName,
+                GuestLastName = reservation.Guests.OrderBy(x => x.CreatedOn).First().LastName,
+                GuestPhoneNumber = reservation.Guests.OrderBy(x => x.CreatedOn).First().PhoneNumber,
                 ArrivalDate = reservation.ArrivalDate,
                 ReturnDate = reservation.ReturnDate,
                 AdultCount = reservation.AdultCount,
                 ChildCount = reservation.ChildCount,
+                MaxAdultCount = room.MaxAdultCount,
+                MaxChildCount = room.MaxChildCount,
                 RoomType = room.RoomType.Name,
                 HasBreakfast = reservation.HasBreakfast,
                 HasLunch = reservation.HasLunch,
@@ -200,7 +198,6 @@
         }
 
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> Update(ReservationUpdateInputModel input)
         {
             if (!this.ModelState.IsValid)
@@ -232,6 +229,7 @@
                 input.ChildCount,
                 input.GuestFirstName,
                 input.GuestLastName,
+                input.GuestPhoneNumber,
                 input.Description,
                 input.AllPrice,
                 input.HasBreakfast,
@@ -241,7 +239,6 @@
             return this.RedirectToAction("Manager");
         }
 
-        [Authorize]
         public async Task<IActionResult> Delete(string reservationId)
         {
             await this.reservationsService.Delete(reservationId);

@@ -1,4 +1,4 @@
-﻿namespace MyHotelManager.Data.Seeding
+﻿namespace MyHotelManager.Data.Seeding.ImportDto
 {
     public class CitiesImportDto
     {

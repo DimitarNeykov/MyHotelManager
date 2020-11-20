@@ -1,9 +1,7 @@
 ﻿namespace MyHotelManager.Web.ViewModels.Reservations
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Linq;
 
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Mapping;

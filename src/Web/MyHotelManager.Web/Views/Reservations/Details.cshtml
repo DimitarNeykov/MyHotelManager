@@ -241,13 +241,12 @@
         </div>
     </div>
 </div>
-
-<!-- DataTales Example -->
-<div class="card shadow mb-4">
+<!-- Guests Information -->
+<div class="card shadow mb-4" id="guestInformation">
     <div class="card-header py-3">
         <div class="row">
         <h6 class="m-0 font-weight-bold text-primary h3 col-xl-10 col-md-6">Guest information</h6>
-        <button class="btn btn-success rounded-pill btn-user btn-block col-xl-2 col-md-6">New Guest</button>
+        <a class="btn btn-success rounded-pill btn-user btn-block col-xl-2 col-md-6" asp-action="NewGuest" asp-controller="Guests" asp-route-reservationId="@Model.Id">New Guest</a>
         </div>
     </div>
     <div class="card-body">
@@ -279,16 +278,16 @@
                 </tfoot>
                 <tbody>
                 @{
-                    foreach (var guest in Model.GuestsReservations)
+                    foreach (var guest in Model.Guests)
                     {
                         <tr>
-                            <td class="text-center align-middle">@guest.Guest.FirstName</td>
-                            <td class="text-center align-middle">@guest.Guest.LastName</td>
-                            <td class="text-center align-middle">@guest.Guest.PhoneNumber</td>
-                            <td class="text-center align-middle">@guest.Guest.PNF</td>
-                            <td class="text-center align-middle">@guest.Guest.DocumentNumber</td>
-                            <td class="text-center align-middle">@guest.Guest.DateOfIssue</td>
-                            <td class="text-center align-middle">@guest.Guest.DateOfExpiry</td>
+                            <td class="text-center align-middle">@guest.FirstName</td>
+                            <td class="text-center align-middle">@guest.LastName</td>
+                            <td class="text-center align-middle">@guest.PhoneNumber</td>
+                            <td class="text-center align-middle">@guest.PNF</td>
+                            <td class="text-center align-middle">@guest.DocumentNumber</td>
+                            <td class="text-center align-middle">@guest.DateOfIssue</td>
+                            <td class="text-center align-middle">@guest.DateOfExpiry</td>
                             <td>
                                 <a class="btn btn-warning w-100">
                                     <i class="fas fa-edit"></i>

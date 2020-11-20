@@ -10,7 +10,7 @@
         public Reservation()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.GuestsReservations = new HashSet<GuestReservation>();
+            this.Guests = new HashSet<Guest>();
         }
 
         public int RoomId { get; set; }
@@ -47,6 +47,6 @@
 
         public ApplicationUser Editor { get; set; }
 
-        public ICollection<GuestReservation> GuestsReservations { get; set; }
+        public ICollection<Guest> Guests { get; set; }
     }
 }

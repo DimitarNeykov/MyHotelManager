@@ -25,11 +25,11 @@
 
         public virtual DbSet<City> Cities { get; set; }
 
+        public virtual DbSet<Country> Countries { get; set; }
+
         public virtual DbSet<Company> Companies { get; set; }
 
         public virtual DbSet<Guest> Guests { get; set; }
-
-        public virtual DbSet<GuestReservation> GuestsReservations { get; set; }
 
         public virtual DbSet<Hotel> Hotels { get; set; }
 

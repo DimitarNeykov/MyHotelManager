@@ -23,6 +23,8 @@
 
         public decimal Price { get; set; }
 
+        public int HotelId { get; set; }
+
         public RoomType RoomType { get; set; }
     }
 }

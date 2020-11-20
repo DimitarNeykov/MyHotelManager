@@ -1,9 +1,8 @@
-﻿namespace MyHotelManager.Data.Migrations
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+namespace MyHotelManager.Data.Migrations
 {
-    using System;
-
-    using Microsoft.EntityFrameworkCore.Migrations;
-
     public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,7 +18,7 @@
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    DeletedOn = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -39,7 +38,7 @@
                     Name = table.Column<string>(nullable: true),
                     Region = table.Column<string>(nullable: true),
                     Population = table.Column<int>(nullable: false),
-                    CountryCode = table.Column<string>(nullable: true),
+                    CountryCode = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -56,7 +55,7 @@
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -73,7 +72,7 @@
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -91,7 +90,7 @@
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     Name = table.Column<string>(nullable: true),
-                    StarsInNumbers = table.Column<int>(nullable: false),
+                    StarsInNumbers = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -106,7 +105,7 @@
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -134,7 +133,7 @@
                     PhoneNumber = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
                     Address = table.Column<string>(nullable: true),
-                    CityId = table.Column<int>(nullable: false),
+                    CityId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -162,7 +161,7 @@
                     Address = table.Column<string>(nullable: true),
                     StarsId = table.Column<int>(nullable: false),
                     CompanyId = table.Column<int>(nullable: true),
-                    ImgUrl = table.Column<string>(nullable: true),
+                    ImgUrl = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -214,7 +213,7 @@
                     LastName = table.Column<string>(nullable: true),
                     BirthDate = table.Column<DateTime>(nullable: false),
                     GenderId = table.Column<int>(nullable: true),
-                    HotelId = table.Column<int>(nullable: true),
+                    HotelId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -227,50 +226,6 @@
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_AspNetUsers_Hotels_HotelId",
-                        column: x => x.HotelId,
-                        principalTable: "Hotels",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Guests",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    GenderId = table.Column<int>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    CityId = table.Column<int>(nullable: true),
-                    UCN = table.Column<string>(nullable: true),
-                    PNF = table.Column<string>(nullable: true),
-                    DocumentNumber = table.Column<string>(nullable: true),
-                    DateOfIssue = table.Column<DateTime>(nullable: true),
-                    DateOfExpiry = table.Column<DateTime>(nullable: true),
-                    HotelId = table.Column<int>(nullable: true),
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Guests", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Guests_Cities_CityId",
-                        column: x => x.CityId,
-                        principalTable: "Cities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Guests_Genders_GenderId",
-                        column: x => x.GenderId,
-                        principalTable: "Genders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Guests_Hotels_HotelId",
                         column: x => x.HotelId,
                         principalTable: "Hotels",
                         principalColumn: "Id",
@@ -291,9 +246,10 @@
                     Description = table.Column<string>(nullable: true),
                     MaxAdultCount = table.Column<int>(nullable: false),
                     MaxChildCount = table.Column<int>(nullable: false),
+                    Floor = table.Column<int>(nullable: false),
                     RoomTypeId = table.Column<int>(nullable: false),
                     Price = table.Column<decimal>(nullable: false),
-                    HotelId = table.Column<int>(nullable: false),
+                    HotelId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -320,7 +276,7 @@
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -340,7 +296,7 @@
                     LoginProvider = table.Column<string>(nullable: false),
                     ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false),
+                    UserId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -358,7 +314,7 @@
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false),
+                    RoleId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -384,7 +340,7 @@
                     UserId = table.Column<string>(nullable: false),
                     LoginProvider = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),
-                    Value = table.Column<string>(nullable: true),
+                    Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -419,7 +375,7 @@
                     HasDinner = table.Column<bool>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     CreatorId = table.Column<string>(nullable: true),
-                    EditorId = table.Column<string>(nullable: true),
+                    EditorId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -445,29 +401,43 @@
                 });
 
             migrationBuilder.CreateTable(
-                name: "GuestsReservations",
+                name: "Guests",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
-                    GuestId = table.Column<string>(nullable: true),
-                    ReservationId = table.Column<string>(nullable: true),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    GenderId = table.Column<int>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    CityId = table.Column<int>(nullable: true),
+                    UCN = table.Column<string>(nullable: true),
+                    PNF = table.Column<string>(nullable: true),
+                    DocumentNumber = table.Column<string>(nullable: true),
+                    DateOfIssue = table.Column<DateTime>(nullable: true),
+                    DateOfExpiry = table.Column<DateTime>(nullable: true),
+                    ReservationId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GuestsReservations", x => x.Id);
+                    table.PrimaryKey("PK_Guests", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_GuestsReservations_Guests_GuestId",
-                        column: x => x.GuestId,
-                        principalTable: "Guests",
+                        name: "FK_Guests_Cities_CityId",
+                        column: x => x.CityId,
+                        principalTable: "Cities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_GuestsReservations_Reservations_ReservationId",
+                        name: "FK_Guests_Genders_GenderId",
+                        column: x => x.GenderId,
+                        principalTable: "Genders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Guests_Reservations_ReservationId",
                         column: x => x.ReservationId,
                         principalTable: "Reservations",
                         principalColumn: "Id",
@@ -564,28 +534,13 @@
                 column: "GenderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Guests_HotelId",
-                table: "Guests",
-                column: "HotelId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Guests_IsDeleted",
                 table: "Guests",
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GuestsReservations_GuestId",
-                table: "GuestsReservations",
-                column: "GuestId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_GuestsReservations_IsDeleted",
-                table: "GuestsReservations",
-                column: "IsDeleted");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_GuestsReservations_ReservationId",
-                table: "GuestsReservations",
+                name: "IX_Guests_ReservationId",
+                table: "Guests",
                 column: "ReservationId");
 
             migrationBuilder.CreateIndex(
@@ -672,13 +627,10 @@
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "GuestsReservations");
+                name: "Guests");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "Guests");
 
             migrationBuilder.DropTable(
                 name: "Reservations");

@@ -24,6 +24,10 @@
 
         public int ChildCount { get; set; }
 
+        public int MaxAdultCount { get; set; }
+
+        public int MaxChildCount { get; set; }
+
         public string RoomNumber { get; set; }
 
         public string RoomType { get; set; }
@@ -48,5 +52,7 @@
         public string GuestFirstName { get; set; }
 
         public string GuestLastName { get; set; }
+
+        public string GuestPhoneNumber { get; set; }
     }
 }

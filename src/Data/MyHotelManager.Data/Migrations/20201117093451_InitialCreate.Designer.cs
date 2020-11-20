@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyHotelManager.Data;
 
 namespace MyHotelManager.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201117093451_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -269,8 +271,8 @@ namespace MyHotelManager.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CountryId")
-                        .HasColumnType("int");
+                    b.Property<string>("CountryCode")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -294,8 +296,6 @@ namespace MyHotelManager.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CountryId");
 
                     b.HasIndex("IsDeleted");
 
@@ -348,38 +348,6 @@ namespace MyHotelManager.Data.Migrations
                     b.ToTable("Companies");
                 });
 
-            modelBuilder.Entity("MyHotelManager.Data.Models.Country", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.ToTable("Countries");
-                });
-
             modelBuilder.Entity("MyHotelManager.Data.Models.Gender", b =>
                 {
                     b.Property<int>("Id")
@@ -415,9 +383,6 @@ namespace MyHotelManager.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("CityId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CountryId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
@@ -465,8 +430,6 @@ namespace MyHotelManager.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CityId");
-
-                    b.HasIndex("CountryId");
 
                     b.HasIndex("GenderId");
 
@@ -776,15 +739,6 @@ namespace MyHotelManager.Data.Migrations
                         .HasForeignKey("HotelId");
                 });
 
-            modelBuilder.Entity("MyHotelManager.Data.Models.City", b =>
-                {
-                    b.HasOne("MyHotelManager.Data.Models.Country", "Country")
-                        .WithMany("Cities")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("MyHotelManager.Data.Models.Company", b =>
                 {
                     b.HasOne("MyHotelManager.Data.Models.City", "City")
@@ -799,10 +753,6 @@ namespace MyHotelManager.Data.Migrations
                     b.HasOne("MyHotelManager.Data.Models.City", "City")
                         .WithMany("Guests")
                         .HasForeignKey("CityId");
-
-                    b.HasOne("MyHotelManager.Data.Models.Country", "Country")
-                        .WithMany("Guests")
-                        .HasForeignKey("CountryId");
 
                     b.HasOne("MyHotelManager.Data.Models.Gender", "Gender")
                         .WithMany("Guests")

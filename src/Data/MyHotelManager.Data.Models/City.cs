@@ -1,4 +1,6 @@
-﻿namespace MyHotelManager.Data.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace MyHotelManager.Data.Models
 {
     using System.Collections.Generic;
 
@@ -19,7 +21,9 @@
 
         public int Population { get; set; }
 
-        public string CountryCode { get; set; }
+        public int CountryId { get; set; }
+
+        public Country Country { get; set; }
 
         public ICollection<Hotel> Hotels { get; set; }
 
