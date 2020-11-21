@@ -1,7 +1,6 @@
 ﻿namespace MyHotelManager.Data.Models
 {
     using System;
-    using System.Collections.Generic;
 
     using MyHotelManager.Data.Common.Models;
 

@@ -9,7 +9,6 @@
 
     public class GuestsCreateInputModel : IMapTo<Guest>
     {
-        [Required(ErrorMessage = "Полето е задължително!")]
         public string FirstName { get; set; }
 
         public string LastName { get; set; }

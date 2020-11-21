@@ -1,4 +1,6 @@
-﻿namespace MyHotelManager.Services.Data
+﻿using AutoMapper.Internal;
+
+namespace MyHotelManager.Services.Data
 {
     using System;
     using System.Collections.Generic;
@@ -81,11 +83,29 @@
             return reservations;
         }
 
+        public IEnumerable<T> GetAllDeleted<T>(int hotelId)
+        {
+            var reservations = this.reservationRepository
+                .AllWithDeleted()
+                .Include(g => g.Guests)
+                .Where(x => x.Room.HotelId == hotelId && x.Guests.First() != null && x.DeletedOn != null)
+                .To<T>()
+                .ToList();
+
+            return reservations;
+        }
+
         public T GetById<T>(string reservationId)
         {
             var reservation = this.reservationRepository
                 .All()
-                .Include(r => r.Guests)
+                .Include(x => x.Guests)
+                .ThenInclude(r => r.Gender)
+                .Include(x => x.Guests)
+                .ThenInclude(r => r.City)
+                .ThenInclude(x => x.Country)
+                .Include(x => x.Guests)
+                .ThenInclude(r => r.Country)
                 .Include(r => r.Room)
                 .ThenInclude(r => r.RoomType)
                 .Include(r => r.Creator)

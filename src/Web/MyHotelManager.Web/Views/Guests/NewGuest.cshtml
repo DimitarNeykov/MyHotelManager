@@ -51,7 +51,7 @@
                             <div class="form-group row text-center was-validated justify-content-center text-white-50">
                                 <div class="col-sm-6 text-center">
                                     <label>Nationality</label>
-                                    <select asp-for="GenderId" onchange="Nationality()" class="form-control rounded-pill custom-select" id="nationalitySelect"  style="text-align-last: center; text-align: center; -ms-text-align-last: center; -moz-text-align-last: center;" required>
+                                    <select onchange="Nationality()" class="form-control rounded-pill custom-select" id="nationalitySelect"  style="text-align-last: center; text-align: center; -ms-text-align-last: center; -moz-text-align-last: center;" required>
                                         <option value="" disabled selected>Select Nationality</option>
                                         <option value="1">Bulgarian</option>
                                         <option value="2">Foreign</option>
@@ -64,7 +64,7 @@
                             <div class="form-group row was-validated text-center text-white-50 justify-content-center">
                                 <div class="col-sm-6 mb-3 mb-sm-0 text-center" hidden="" id="city">
                                     <label asp-for="CityId"></label>
-                                    <select asp-for="CityId" asp-items="cities" class="form-control rounded-pill custom-select" style="text-align-last: center; text-align: center; -ms-text-align-last: center; -moz-text-align-last: center;" required>
+                                    <select asp-for="CityId" asp-items="cities" id="citySelect" class="form-control rounded-pill custom-select" style="text-align-last: center; text-align: center; -ms-text-align-last: center; -moz-text-align-last: center;" required>
                                         <option value="" disabled selected>Select City</option>
                                     </select>
                                     <span asp-validation-for="CityId" class="text-danger"></span>
@@ -72,7 +72,7 @@
 
                                 <div class="col-sm-6 mb-3 mb-sm-0 text-center" hidden="" id="country">
                                     <label asp-for="CountryId"></label>
-                                    <select asp-for="CountryId" asp-items="countries" class="form-control rounded-pill custom-select" style="text-align-last: center; text-align: center; -ms-text-align-last: center; -moz-text-align-last: center;" required>
+                                    <select asp-for="CountryId" asp-items="countries" id="countrySelect" class="form-control rounded-pill custom-select" style="text-align-last: center; text-align: center; -ms-text-align-last: center; -moz-text-align-last: center;" required>
                                         <option value="" disabled selected>Select Country</option>
                                     </select>
                                     <span asp-validation-for="CountryId" class="text-danger"></span>
@@ -81,12 +81,12 @@
                             <div class="form-group row was-validated text-center text-white-50">
                                     <div class="col-sm-6 mb-3 mb-sm-0 text-center" hidden="" id="UCN">
                                         <label asp-for="UCN"></label>
-                                        <input asp-for="UCN" class="form-control form-control-user is-invalid text-center" placeholder="UCN" required>
+                                        <input asp-for="UCN" id="UCNinput" class="form-control form-control-user is-invalid text-center" placeholder="UCN" required>
                                         <span asp-validation-for="UCN" class="text-danger"></span>
                                     </div>
                                     <div class="col-sm-6 mb-3 mb-sm-0 text-center" hidden="" id="PNF">
                                         <label asp-for="PNF"></label>
-                                        <input asp-for="PNF" class="form-control form-control-user is-invalid text-center" placeholder="PNF" required>
+                                        <input asp-for="PNF" id="PNFinput" class="form-control form-control-user is-invalid text-center" placeholder="PNF" required>
                                         <span asp-validation-for="PNF" class="text-danger"></span>
                                     </div>
                                     <div class="col-sm-6 text-center" id="documentNumber" hidden="">
@@ -140,6 +140,8 @@
                 dateExpiryIssue.hidden = "";
                 city.hidden = "hidden";
                 country.hidden = "";
+                document.getElementById('citySelect').value = "";
+                document.getElementById('UCNinput').value = null;
             }
             else{
                 UCN.hidden = "";
@@ -148,6 +150,8 @@
                 dateExpiryIssue.hidden = "";
                 city.hidden = "";
                 country.hidden = "hidden";
+                document.getElementById('countrySelect').value = "";
+                document.getElementById('PNFinput').value = null;
             }
         }
     </script>
