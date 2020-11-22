@@ -17,8 +17,6 @@ namespace MyHotelManager.Web.ViewModels.Restaurant
 
         public int TotalCount => this.AdultCount + this.ChildCount;
 
-        public string EatName { get; set; }
-
         public ICollection<Guest> Guests { get; set; }
     }
 }

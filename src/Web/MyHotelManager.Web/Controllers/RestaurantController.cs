@@ -27,7 +27,8 @@ namespace MyHotelManager.Web.Controllers
             var user = await this.userManager.GetUserAsync(this.User);
 
             var viewModel = this.reservationsService.GetActiveReservationsWithBreakfast<ReservationViewModel>((int)user.HotelId);
-            viewModel.ForAll(x => x.EatName = nameof(this.Breakfast));
+
+            this.ViewData["EatName"] = "Breakfasts".ToString();
 
             return this.View("Restaurant", viewModel);
         }
@@ -37,7 +38,8 @@ namespace MyHotelManager.Web.Controllers
             var user = await this.userManager.GetUserAsync(this.User);
 
             var viewModel = this.reservationsService.GetActiveReservationsWithLunch<ReservationViewModel>((int)user.HotelId);
-            viewModel.ForAll(x => x.EatName = nameof(this.Lunch));
+
+            this.ViewData["EatName"] = "Lunches".ToString();
 
             return this.View("Restaurant", viewModel);
         }
@@ -47,7 +49,8 @@ namespace MyHotelManager.Web.Controllers
             var user = await this.userManager.GetUserAsync(this.User);
 
             var viewModel = this.reservationsService.GetActiveReservationsWithDinner<ReservationViewModel>((int)user.HotelId);
-            viewModel.ForAll(x => x.EatName = nameof(this.Dinner));
+
+            this.ViewData["EatName"] = "Dinners".ToString();
 
             return this.View("Restaurant", viewModel);
         }
