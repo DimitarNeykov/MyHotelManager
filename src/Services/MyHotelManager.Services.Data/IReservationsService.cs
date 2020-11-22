@@ -19,5 +19,7 @@
         Task Delete(string reservationId, string editorId);
 
         Task UpdateAsync(string userId, string reservationId, int roomId, DateTime arrivalDate, DateTime returnDate, int adultCount, int childCount, string firstName, string lastName, string phoneNumber, string description, decimal price, bool hasBreakfast, bool hasLunch, bool hasDinner);
+
+        IEnumerable<T> GetActiveReservationsWithBreakfast<T>(int hotelId);
     }
 }

@@ -65,6 +65,5 @@
 
   <ItemGroup>
     <Folder Include="Properties\" />
-    <Folder Include="Views\Restaurant\" />
   </ItemGroup>
 </Project>

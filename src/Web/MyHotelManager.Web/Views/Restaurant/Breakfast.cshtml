@@ -1,0 +1,77 @@
+﻿@model IEnumerable<MyHotelManager.Web.ViewModels.Restaurant.ReservationViewModel>
+
+@{
+    this.ViewData["Title"] = "Reservations";
+}
+
+<div class="container-fluid">
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary h3">Manage your reservations</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover font-italic" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr class="bg-primary text-white-50">
+                            <th class="text-center align-middle">Room</th>
+                            <th class="text-center align-middle">Guest Names</th>
+                            <th class="text-center align-middle">Country</th>
+                            <th class="text-center align-middle">Yes/No</th>
+                            <th class="text-center align-middle">Adult Count</th>
+                            <th class="text-center align-middle">Child Count</th>
+                            <th class="text-center align-middle">Total Count</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr class="bg-primary text-white-50">
+                            <th class="text-center align-middle">Room</th>
+                            <th class="text-center align-middle">Guest Names</th>
+                            <th class="text-center align-middle">Country</th>
+                            <th class="text-center align-middle">Yes/No</th>
+                            <th class="text-center align-middle">Adult Count</th>
+                            <th class="text-center align-middle">Child Count</th>
+                            <th class="text-center align-middle">Total Count</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @{
+                            foreach (var reservation in Model)
+                            {
+                                <tr>
+                                    <th class="text-center align-middle">@reservation.Room.Number</th>
+                                    <th class="text-center align-middle bg-gray-300"></th>
+                                    <th class="text-center align-middle bg-gray-300"></th>
+                                    <th class="text-center align-middle bg-gray-300"></th>
+                                    <th class="text-center align-middle">@reservation.AdultCount</th>
+                                    <th class="text-center align-middle">@reservation.ChildCount</th>
+                                    <th class="text-center align-middle">@reservation.TotalCount</th>
+                                </tr>
+                                foreach (var guest in reservation.Guests)
+                                {
+                                    <tr>
+                                        <th class="text-center align-middle bg-gray-300"></th>
+                                        <th class="text-center align-middle">@guest.FirstName @guest.LastName</th>
+                                        @if (guest.Country != null)
+                                        {
+                                            <th class="text-center align-middle">@guest.Country.Name</th>
+                                        }
+                                        else
+                                        {
+                                            <th class="text-center align-middle">@guest.City.Country.Name</th>
+                                        }
+                                        <th class="text-center align-middle"></th>
+                                        <th class="text-center align-middle bg-gray-300"></th>
+                                        <th class="text-center align-middle bg-gray-300"></th>
+                                        <th class="text-center align-middle bg-gray-300"></th>
+                                    </tr>
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

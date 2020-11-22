@@ -84,6 +84,23 @@ namespace MyHotelManager.Services.Data
             return reservations;
         }
 
+        public IEnumerable<T> GetActiveReservationsWithBreakfast<T>(int hotelId)
+        {
+            var reservations = this.reservationRepository
+                .All()
+                .Include(g => g.Guests)
+                .ThenInclude(g => g.Country)
+                .Include(g => g.Guests)
+                .ThenInclude(g => g.City)
+                .ThenInclude(c => c.Country)
+                .Include(r => r.Room)
+                .Where(x => x.Room.HotelId == hotelId && DateTime.UtcNow <= x.ReturnDate && DateTime.UtcNow >= x.ArrivalDate && x.HasBreakfast)
+                .To<T>()
+                .ToList();
+
+            return reservations;
+        }
+
         public IEnumerable<T> GetAllDeleted<T>(int hotelId)
         {
             var reservations = this.reservationRepository
