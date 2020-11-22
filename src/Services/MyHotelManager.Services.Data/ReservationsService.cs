@@ -57,13 +57,14 @@ namespace MyHotelManager.Services.Data
             await this.reservationRepository.SaveChangesAsync();
         }
 
-        public async Task Delete(string reservationId)
+        public async Task Delete(string reservationId, string editorId)
         {
             var reservation = this.reservationRepository.All().FirstOrDefault(x => x.Id == reservationId);
 
             this.reservationRepository.Delete(reservation);
 
             reservation.CancelDate = DateTime.UtcNow;
+            reservation.EditorId = editorId;
 
             await this.reservationRepository.SaveChangesAsync();
         }
@@ -88,6 +89,7 @@ namespace MyHotelManager.Services.Data
             var reservations = this.reservationRepository
                 .AllWithDeleted()
                 .Include(g => g.Guests)
+                .Include(r => r.Editor)
                 .Where(x => x.Room.HotelId == hotelId && x.Guests.First() != null && x.DeletedOn != null)
                 .To<T>()
                 .ToList();
@@ -99,6 +101,28 @@ namespace MyHotelManager.Services.Data
         {
             var reservation = this.reservationRepository
                 .All()
+                .Include(x => x.Guests)
+                .ThenInclude(r => r.Gender)
+                .Include(x => x.Guests)
+                .ThenInclude(r => r.City)
+                .ThenInclude(x => x.Country)
+                .Include(x => x.Guests)
+                .ThenInclude(r => r.Country)
+                .Include(r => r.Room)
+                .ThenInclude(r => r.RoomType)
+                .Include(r => r.Creator)
+                .Include(r => r.Editor)
+                .Where(r => r.Id == reservationId)
+                .To<T>()
+                .FirstOrDefault();
+
+            return reservation;
+        }
+
+        public T GetDeletedById<T>(string reservationId)
+        {
+            var reservation = this.reservationRepository
+                .AllWithDeleted()
                 .Include(x => x.Guests)
                 .ThenInclude(r => r.Gender)
                 .Include(x => x.Guests)

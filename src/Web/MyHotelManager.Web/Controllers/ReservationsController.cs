@@ -241,7 +241,8 @@
 
         public async Task<IActionResult> Delete(string reservationId)
         {
-            await this.reservationsService.Delete(reservationId);
+            var userId = this.userManager.GetUserId(this.User);
+            await this.reservationsService.Delete(reservationId, userId);
 
             return this.RedirectToAction("Manager");
         }
