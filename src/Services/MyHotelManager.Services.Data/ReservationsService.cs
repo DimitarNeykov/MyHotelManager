@@ -94,7 +94,41 @@ namespace MyHotelManager.Services.Data
                 .ThenInclude(g => g.City)
                 .ThenInclude(c => c.Country)
                 .Include(r => r.Room)
-                .Where(x => x.Room.HotelId == hotelId && DateTime.UtcNow <= x.ReturnDate && DateTime.UtcNow >= x.ArrivalDate && x.HasBreakfast)
+                .Where(x => x.Room.HotelId == hotelId && DateTime.UtcNow <= x.ReturnDate && DateTime.Now.Date > x.ArrivalDate && x.HasBreakfast)
+                .To<T>()
+                .ToList();
+
+            return reservations;
+        }
+
+        public IEnumerable<T> GetActiveReservationsWithLunch<T>(int hotelId)
+        {
+            var reservations = this.reservationRepository
+                .All()
+                .Include(g => g.Guests)
+                .ThenInclude(g => g.Country)
+                .Include(g => g.Guests)
+                .ThenInclude(g => g.City)
+                .ThenInclude(c => c.Country)
+                .Include(r => r.Room)
+                .Where(x => x.Room.HotelId == hotelId && DateTime.UtcNow <= x.ReturnDate && DateTime.Now.Date >= x.ArrivalDate && x.HasLunch)
+                .To<T>()
+                .ToList();
+
+            return reservations;
+        }
+
+        public IEnumerable<T> GetActiveReservationsWithDinner<T>(int hotelId)
+        {
+            var reservations = this.reservationRepository
+                .All()
+                .Include(g => g.Guests)
+                .ThenInclude(g => g.Country)
+                .Include(g => g.Guests)
+                .ThenInclude(g => g.City)
+                .ThenInclude(c => c.Country)
+                .Include(r => r.Room)
+                .Where(x => x.Room.HotelId == hotelId && DateTime.Now.Date < x.ReturnDate && DateTime.Now.Date >= x.ArrivalDate && x.HasDinner)
                 .To<T>()
                 .ToList();
 

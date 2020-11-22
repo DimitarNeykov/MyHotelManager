@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using AutoMapper.Internal;
 using MyHotelManager.Web.ViewModels.Restaurant;
 
 namespace MyHotelManager.Web.Controllers
@@ -26,18 +27,29 @@ namespace MyHotelManager.Web.Controllers
             var user = await this.userManager.GetUserAsync(this.User);
 
             var viewModel = this.reservationsService.GetActiveReservationsWithBreakfast<ReservationViewModel>((int)user.HotelId);
+            viewModel.ForAll(x => x.EatName = nameof(this.Breakfast));
 
-            return this.View(viewModel);
+            return this.View("Restaurant", viewModel);
         }
 
-        public IActionResult Lunch()
+        public async Task<IActionResult> Lunch()
         {
-            return this.View();
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            var viewModel = this.reservationsService.GetActiveReservationsWithLunch<ReservationViewModel>((int)user.HotelId);
+            viewModel.ForAll(x => x.EatName = nameof(this.Lunch));
+
+            return this.View("Restaurant", viewModel);
         }
 
-        public IActionResult Dinner()
+        public async Task<IActionResult> Dinner()
         {
-            return this.View();
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            var viewModel = this.reservationsService.GetActiveReservationsWithDinner<ReservationViewModel>((int)user.HotelId);
+            viewModel.ForAll(x => x.EatName = nameof(this.Dinner));
+
+            return this.View("Restaurant", viewModel);
         }
     }
 }

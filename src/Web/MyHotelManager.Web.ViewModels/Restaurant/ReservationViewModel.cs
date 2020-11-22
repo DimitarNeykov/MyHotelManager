@@ -1,4 +1,6 @@
-﻿namespace MyHotelManager.Web.ViewModels.Restaurant
+﻿using System.Linq;
+
+namespace MyHotelManager.Web.ViewModels.Restaurant
 {
     using System.Collections.Generic;
 
@@ -14,6 +16,8 @@
         public int ChildCount { get; set; }
 
         public int TotalCount => this.AdultCount + this.ChildCount;
+
+        public string EatName { get; set; }
 
         public ICollection<Guest> Guests { get; set; }
     }

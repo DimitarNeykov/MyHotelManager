@@ -1,0 +1,110 @@
+﻿@using AutoMapper.Internal
+@model IEnumerable<MyHotelManager.Web.ViewModels.Restaurant.ReservationViewModel>
+
+@{
+    this.ViewData["Title"] = "Reservations";
+}
+<div class="container-fluid" id="print">
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <a onclick="PrintOnlyTable()" class="btn btn-primary btn-icon-split text-white rounded-pill float-right">
+                <span class="icon text-white-50">
+                    <i class="fas fa-print"></i>
+                </span>
+                <span class="text">Print</span>
+            </a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover font-italic " id="example" width="100%">
+                    <thead>
+                    @if (Model.Count() != 0)
+                    {
+                        <tr>
+                            <th colspan="7" class="text-center">@Model.First().EatName List</th>
+                        </tr>
+                    }
+                    <tr class="bg-primary text-gray-400">
+                        <th class="text-center align-middle">Room</th>
+                        <th class="text-center align-middle">Guest Names</th>
+                        <th class="text-center align-middle">Country</th>
+                        <th class="text-center align-middle">Adult</th>
+                        <th class="text-center align-middle">Child</th>
+                        <th class="text-center align-middle">Total Count</th>
+                        <th class="text-center align-middle">Yes/No</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                        @if (Model.Count() != 0)
+                        {
+                            <tr>
+                                <th colspan="7" class="text-right"></th>
+                            </tr>
+
+                            <tr>
+                                <th colspan="6" class="text-right">Total @Model.First().EatName.Insert(@Model.First().EatName.Length,"s"):</th>
+                                <th colspan="1" class="text-center">@Model.Sum(x => x.TotalCount)</th>
+                            </tr>
+                        }
+                        </tfoot>
+                    <tbody>
+                    @{
+                        foreach (var reservation in Model)
+                        {
+                            <tr>
+                                <th class="text-center align-middle">@reservation.Room.Number</th>
+                                <th class="text-center align-middle">
+                                    @foreach (var guest in reservation.Guests.OrderBy(x => x.CreatedOn))
+                                    {
+                                        <span>@guest.FirstName @guest.LastName</span>
+                                        <br/>
+                                    }
+                                </th>
+                                @if (reservation.Guests.OrderBy(x => x.CreatedOn).First().Country != null)
+                                {
+                                    <th class="text-center align-middle">@reservation.Guests.OrderBy(x => x.CreatedOn).First().Country.Name</th>
+                                }
+                                else if (reservation.Guests.OrderBy(x => x.CreatedOn).First().City != null)
+                                {
+                                    <th class="text-center align-middle">@reservation.Guests.OrderBy(x => x.CreatedOn).First().City.Country.Name</th>
+                                }
+                                else
+                                {
+                                    <th></th>
+                                }
+                                <th class="text-center align-middle">@reservation.AdultCount</th>
+                                <th class="text-center align-middle">@reservation.ChildCount</th>
+                                <th class="text-center align-middle">@reservation.TotalCount</th>
+                                <th class="text-center align-middle"></th>
+                            </tr>
+                        }
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script>
+        window.onload = function() {
+            table = $('#example').DataTable( {
+                paging: true
+            });
+
+        }
+
+        function PrintOnlyTable() {
+            table.destroy();
+            $('#example').dataTable( {
+                "pageLength": -1
+            } );
+            var HTML = $("body");
+            HTML.html($("#example"));
+            window.print();
+            location.reload();
+        }
+    </script>
+}

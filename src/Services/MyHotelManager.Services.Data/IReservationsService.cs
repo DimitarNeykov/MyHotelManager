@@ -21,5 +21,9 @@
         Task UpdateAsync(string userId, string reservationId, int roomId, DateTime arrivalDate, DateTime returnDate, int adultCount, int childCount, string firstName, string lastName, string phoneNumber, string description, decimal price, bool hasBreakfast, bool hasLunch, bool hasDinner);
 
         IEnumerable<T> GetActiveReservationsWithBreakfast<T>(int hotelId);
+
+        IEnumerable<T> GetActiveReservationsWithLunch<T>(int hotelId);
+
+        IEnumerable<T> GetActiveReservationsWithDinner<T>(int hotelId);
     }
 }
