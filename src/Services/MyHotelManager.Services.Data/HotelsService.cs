@@ -25,7 +25,6 @@
                 CityId = cityId,
                 Address = address,
                 StarsId = starsId,
-                ImgUrl = imgUrl,
             };
 
             hotel.Users.Add(user);

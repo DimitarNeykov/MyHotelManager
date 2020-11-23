@@ -10,6 +10,8 @@
 
         IEnumerable<T> GetAll<T>(string userId);
 
+        IEnumerable<T> GetAllRoomsForCleaningToday<T>(int hotelId);
+
         T GetById<T>(int id);
 
         Task Delete(int roomId);

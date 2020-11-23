@@ -130,5 +130,21 @@
 
             await this.roomRepository.SaveChangesAsync();
         }
+
+        public IEnumerable<T> GetAllRoomsForCleaningToday<T>(int hotelId)
+        {
+            var rooms = this.roomRepository
+                .All()
+                .Include(x => x.Reservations)
+                .Include(x => x.RoomType)
+                .AsEnumerable()
+                .Where(x => x.HotelId == hotelId && x.Reservations.Any(x => (DateTime.Now.Date - x.ArrivalDate.Date).Days % 3 == 0 && x.ArrivalDate.Date < DateTime.Now.Date || x.ReturnDate.Date == DateTime.Now.Date))
+                .AsQueryable()
+                .OrderBy(x => x.Number)
+                .To<T>()
+                .ToList();
+
+            return rooms;
+        }
     }
 }

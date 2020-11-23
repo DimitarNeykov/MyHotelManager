@@ -28,7 +28,7 @@
 
         public Company Company { get; set; }
 
-        public string ImgUrl { get; set; }
+        public int CleaningPerDays { get; set; }
 
         public ICollection<Room> Rooms { get; set; }
 
