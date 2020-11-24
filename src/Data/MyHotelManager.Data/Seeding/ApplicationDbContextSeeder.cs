@@ -9,6 +9,17 @@
 
     public class ApplicationDbContextSeeder : ISeeder
     {
+        private readonly string contentRootPath;
+
+        public ApplicationDbContextSeeder()
+        {
+        }
+
+        public ApplicationDbContextSeeder(string contentRootPath)
+        {
+            this.contentRootPath = contentRootPath;
+        }
+
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
             if (dbContext == null)
@@ -29,8 +40,8 @@
                               new GenderSeeder(),
                               new StarsSeeder(),
                               new RoomTypesSeeder(),
-                              new CountriesSeeder(),
-                              new CitiesSeeder(),
+                              new CountriesSeeder(this.contentRootPath),
+                              new CitiesSeeder(this.contentRootPath),
                           };
 
             foreach (var seeder in seeders)

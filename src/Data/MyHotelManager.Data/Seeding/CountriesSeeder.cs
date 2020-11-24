@@ -12,11 +12,18 @@
 
     public class CountriesSeeder : ISeeder
     {
+        private readonly string contentRootPath;
+
+        public CountriesSeeder(string contentRootPath)
+        {
+            this.contentRootPath = contentRootPath;
+        }
+
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
             if (!dbContext.Cities.Any())
             {
-                var json = JsonConvert.DeserializeObject<List<CountriesImportDto>>(await File.ReadAllTextAsync(@"wwwroot\JsonInput\countries.json"));
+                var json = JsonConvert.DeserializeObject<List<CountriesImportDto>>(await File.ReadAllTextAsync($"{this.contentRootPath}/JsonInput/countries.json"));
 
                 var countries = new List<Country>();
 
