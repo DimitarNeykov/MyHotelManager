@@ -2,12 +2,13 @@
 {
     using System.Threading.Tasks;
 
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using MyHotelManager.Common;
     using MyHotelManager.Services.Data;
+    using MyHotelManager.Web.Infrastructure.Attributes;
     using MyHotelManager.Web.ViewModels.Guests;
 
-    [Authorize]
+    [AuthorizeRoles(new[] { GlobalConstants.ManagerRoleName, GlobalConstants.AdministratorRoleName, GlobalConstants.ReceptionistRoleName })]
     public class GuestsController : Controller
     {
         private readonly ICitiesService citiesService;

@@ -4,13 +4,15 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using MyHotelManager.Common;
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Data;
+    using MyHotelManager.Web.Infrastructure.Attributes;
     using MyHotelManager.Web.ViewModels.Rooms;
 
+    [AuthorizeRoles(new[] { GlobalConstants.ManagerRoleName, GlobalConstants.AdministratorRoleName, GlobalConstants.ReceptionistRoleName })]
     public class RoomsController : Controller
     {
         private readonly IRoomsService roomsService;
@@ -27,7 +29,6 @@
             this.userManager = userManager;
         }
 
-        [Authorize]
         public IActionResult AllRooms()
         {
             var userId = this.userManager.GetUserId(this.User);
@@ -37,7 +38,6 @@
             return this.View(viewModel);
         }
 
-        [Authorize]
         public async Task<IActionResult> GetRoomByIdJson(int roomId)
         {
             var user = await this.userManager.GetUserAsync(this.User);
@@ -52,7 +52,6 @@
             return this.Json(viewModel);
         }
 
-        [Authorize]
         public IActionResult DateSearch()
         {
             var viewModel = new DatesInputViewModel();
@@ -60,7 +59,6 @@
             return this.View(viewModel);
         }
 
-        [Authorize]
         public IActionResult AvailableRooms(DateTime? arrivalDate, DateTime? returnDate)
         {
             if (arrivalDate == null || returnDate == null)
@@ -81,7 +79,6 @@
             return this.PartialView(viewModel);
         }
 
-        [Authorize]
         public async Task<IActionResult> AvailableRoomsWithReservationRoom(DateTime? arrivalDate, DateTime? returnDate, string reservationId)
         {
             if (arrivalDate == null || returnDate == null)
@@ -103,7 +100,7 @@
             return this.PartialView(viewModel);
         }
 
-        [Authorize]
+        [AuthorizeRoles(new[] { GlobalConstants.ManagerRoleName, GlobalConstants.AdministratorRoleName })]
         public IActionResult Create()
         {
             var roomTypes = this.roomTypesService.GetAll<RoomTypeDropDownViewModel>();
@@ -116,8 +113,8 @@
             return this.View(viewModel);
         }
 
-        [Authorize]
         [HttpPost]
+        [AuthorizeRoles(new[] { GlobalConstants.ManagerRoleName, GlobalConstants.AdministratorRoleName })]
         public async Task<IActionResult> Create(RoomCreateInputModel input)
         {
             var user = await this.userManager.GetUserAsync(this.User);
@@ -143,7 +140,7 @@
             return this.RedirectToAction("Index", "Home");
         }
 
-        [Authorize]
+        [AuthorizeRoles(new[] { GlobalConstants.ManagerRoleName, GlobalConstants.AdministratorRoleName })]
         public async Task<IActionResult> Delete(int roomId)
         {
             var user = await this.userManager.GetUserAsync(this.User);
@@ -160,7 +157,7 @@
             return this.RedirectToAction("AllRooms");
         }
 
-        [Authorize]
+        [AuthorizeRoles(new[] { GlobalConstants.ManagerRoleName, GlobalConstants.AdministratorRoleName })]
         public async Task<IActionResult> Update(int roomId)
         {
             var user = await this.userManager.GetUserAsync(this.User);
@@ -188,8 +185,8 @@
             return this.View(viewModel);
         }
 
-        [Authorize]
         [HttpPost]
+        [AuthorizeRoles(new[] { GlobalConstants.ManagerRoleName, GlobalConstants.AdministratorRoleName })]
         public async Task<IActionResult> Update(RoomUpdateInputModel input)
         {
             var user = await this.userManager.GetUserAsync(this.User);

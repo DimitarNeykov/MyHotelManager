@@ -1,13 +1,16 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using MyHotelManager.Data.Models;
-using MyHotelManager.Services.Data;
-using MyHotelManager.Web.ViewModels.Archive;
-
-namespace MyHotelManager.Web.Controllers
+﻿namespace MyHotelManager.Web.Controllers
 {
-    using Microsoft.AspNetCore.Mvc;
+    using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using MyHotelManager.Common;
+    using MyHotelManager.Data.Models;
+    using MyHotelManager.Services.Data;
+    using MyHotelManager.Web.Infrastructure.Attributes;
+    using MyHotelManager.Web.ViewModels.Archive;
+
+    [AuthorizeRoles(new[] { GlobalConstants.ManagerRoleName, GlobalConstants.AdministratorRoleName, GlobalConstants.ReceptionistRoleName })]
     public class ArchiveController : Controller
     {
         private readonly IReservationsService reservationsService;
@@ -35,7 +38,7 @@ namespace MyHotelManager.Web.Controllers
 
             if (user.HotelId != viewModel.Room.HotelId)
             {
-                return this.RedirectToAction("Index");
+                return this.RedirectToAction("Reservation");
             }
 
             var customPrice = 0.0M;

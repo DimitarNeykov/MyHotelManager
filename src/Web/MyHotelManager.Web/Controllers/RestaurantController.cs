@@ -1,14 +1,16 @@
-﻿using System.Threading.Tasks;
-using AutoMapper.Internal;
-using MyHotelManager.Web.ViewModels.Restaurant;
-
-namespace MyHotelManager.Web.Controllers
+﻿namespace MyHotelManager.Web.Controllers
 {
+    using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using MyHotelManager.Common;
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Data;
+    using MyHotelManager.Web.Infrastructure.Attributes;
+    using MyHotelManager.Web.ViewModels.Restaurant;
 
+    [AuthorizeRoles(new[] { GlobalConstants.ManagerRoleName, GlobalConstants.AdministratorRoleName, GlobalConstants.ReceptionistRoleName })]
     public class RestaurantController : Controller
     {
         private readonly IReservationsService reservationsService;

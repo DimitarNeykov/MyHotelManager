@@ -5,10 +5,13 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using MyHotelManager.Common;
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Data;
+    using MyHotelManager.Web.Infrastructure.Attributes;
     using MyHotelManager.Web.ViewModels.Hotels;
 
+    [AuthorizeRoles(new[] { GlobalConstants.ManagerRoleName, GlobalConstants.AdministratorRoleName, GlobalConstants.ReceptionistRoleName })]
     public class HotelsController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
@@ -44,7 +47,6 @@
             return this.RedirectToAction("Create", "Hotels");
         }
 
-        [Authorize]
         public async Task<IActionResult> Create()
         {
             var user = await this.userManager.GetUserAsync(this.User);
@@ -67,7 +69,6 @@
         }
 
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> Create(HotelCreateInputModel input)
         {
             var user = await this.userManager.GetUserAsync(this.User);
@@ -100,6 +101,8 @@
                 input.Company.CityId,
                 input.Company.Address,
                 user);
+
+            await this.userManager.AddToRoleAsync(user, GlobalConstants.ManagerRoleName);
 
             return this.RedirectToAction("Index");
         }
