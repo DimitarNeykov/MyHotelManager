@@ -25,8 +25,12 @@
         public async Task<IActionResult> DailyList()
         {
             var user = await this.userManager.GetUserAsync(this.User);
+            if (user.HotelId == null)
+            {
+                return this.NotFound();
+            }
 
-            var viewModel = this.roomsService.GetAllRoomsForCleaningToday<CleaningRoomViewModel>((int) user.HotelId);
+            var viewModel = this.roomsService.GetAllRoomsForCleaningToday<CleaningRoomViewModel>((int)user.HotelId);
 
             return this.View(viewModel);
         }

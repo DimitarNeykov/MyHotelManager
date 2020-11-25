@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace MyHotelManager.Web.ViewModels.Rooms
+﻿namespace MyHotelManager.Web.ViewModels.Rooms
 {
+    using System.Collections.Generic;
+
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Mapping;
 

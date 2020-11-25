@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace MyHotelManager.Data.Models
+﻿namespace MyHotelManager.Data.Models
 {
     using System.Collections.Generic;
 

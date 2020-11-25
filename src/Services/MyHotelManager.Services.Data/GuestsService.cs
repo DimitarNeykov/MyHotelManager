@@ -1,11 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace MyHotelManager.Services.Data
+﻿namespace MyHotelManager.Services.Data
 {
     using System;
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore;
     using MyHotelManager.Data.Common.Repositories;
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Mapping;

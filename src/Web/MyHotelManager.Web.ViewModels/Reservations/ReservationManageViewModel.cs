@@ -1,10 +1,8 @@
-﻿using System.Linq;
-using AutoMapper.Internal;
-
-namespace MyHotelManager.Web.ViewModels.Reservations
+﻿namespace MyHotelManager.Web.ViewModels.Reservations
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Mapping;

@@ -1,6 +1,4 @@
-﻿using AutoMapper.Internal;
-
-namespace MyHotelManager.Services.Data
+﻿namespace MyHotelManager.Services.Data
 {
     using System;
     using System.Collections.Generic;

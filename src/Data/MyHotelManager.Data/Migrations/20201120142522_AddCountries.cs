@@ -1,8 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace MyHotelManager.Data.Migrations
+﻿namespace MyHotelManager.Data.Migrations
 {
+    using System;
+
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class AddCountries : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -38,7 +39,7 @@ namespace MyHotelManager.Data.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     Name = table.Column<string>(nullable: true),
-                    Code = table.Column<string>(nullable: true)
+                    Code = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
