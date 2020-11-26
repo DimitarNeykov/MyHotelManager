@@ -1,0 +1,188 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using MyHotelManager.Data.Models
+@model MyHotelManager.Web.ViewModels.Hotels.HotelViewModel
+@inject UserManager<ApplicationUser> UserManager
+@{
+    this.ViewData["Title"] = "My Hotels";
+}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="accordion col-xl-12 col-lg-12 col-md-9" id="accordionExample">
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <h2 class="mb-0">
+                        <button class="btn btn-block btn-outline-primary rounded-pill text-center font-weight-bold btn-lg" id="button" onclick="myFunction()" type="button" data-toggle="collapse" data-target="#HotelInfo" aria-expanded="true" aria-controls="collapseOne">
+                            Hotel Information
+                        </button>
+                    </h2>
+                </div>
+
+                <div id="HotelInfo" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div class="row justify-content-center">
+                        <div class="card-body col-sm-8">
+                            <div class="card border-0">
+                                <ul class="list-group list-group-flush text-white-50 font-weight-bold text-lg font-italic">
+                                    <li class="list-group-item rounded-pill border-bottom-light bg-gray-700 justify-content-center">Hotel Name: <span class="float-right"> @Model.Name</span></li>
+                                    <li class="list-group-item rounded-pill border-bottom-light bg-gray-700">City: <span class="float-right"> @Model.CityName</span></li>
+                                    <li class="list-group-item rounded-pill border-bottom-light bg-gray-700">Address: <span class="float-right"> @Model.Address</span></li>
+                                    <li class="list-group-item rounded-pill border-bottom-light bg-gray-700">Rooms Count: <span class="float-right"> @Model.RoomsCount</span></li>
+                                    <li class="list-group-item rounded-pill border-bottom-light bg-gray-700">Users Count: <span class="float-right"> @Model.UsersCount</span></li>
+                                    <li class="list-group-item rounded-pill border-bottom-light bg-gray-700">Cleaning Per Day: <span class="float-right"> @Model.CleaningPerDays</span></li>
+                                    <li class="list-group-item rounded-pill border-bottom-light bg-gray-700">Company Name: <span class="float-right"> @Model.CompanyName</span></li>
+                                    <li class="list-group-item rounded-pill border-bottom-light bg-gray-700 text-warning text-center">
+
+                                        @for (int i = 0; i < Model.StarsStarsInNumbers; i++)
+                                        {
+                                            <i class="fas fa-star"></i>
+                                        }
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="card-body col-sm-5">
+                            <a class="btn btn-warning w-100 rounded-pill" asp-action="Update" asp-controller="Guests">
+                                <i class="fas fa-edit"> Edit</i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header" id="headingTwo">
+                    <h2 class="mb-0">
+                        <button class="btn btn-block btn-outline-primary rounded-pill text-center font-weight-bold btn-lg" type="button" data-toggle="collapse" data-target="#CompanyInfo" aria-expanded="false" aria-controls="collapseTwo">
+                            Company Information
+                        </button>
+                    </h2>
+                </div>
+                <div id="CompanyInfo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                    @if (Model.CompanyName == null)
+                    {
+                        <div class="card-body text-center text-danger">
+                            <h5>You don't have company! Please press the button and add information for you are company!</h5>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="card-body col-sm-5">
+                                <a class="btn btn-success w-100 rounded-pill" asp-action="Update" asp-controller="Guests">
+                                    <i class="fas fa-plus"> Add Company</i>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row justify-content-center">
+                            <div class="card-body col-sm-8">
+                                <div class="card border-0">
+                                    <ul class="list-group list-group-flush text-white-50 font-weight-bold text-lg font-italic">
+                                        <li class="list-group-item rounded-pill border-bottom-light bg-gray-700 justify-content-center">Company Name: <span class="float-right"> @Model.Company.Name</span></li>
+                                        <li class="list-group-item rounded-pill border-bottom-light bg-gray-700">City: <span class="float-right"> @Model.Company.City.Name</span></li>
+                                        <li class="list-group-item rounded-pill border-bottom-light bg-gray-700">Address: <span class="float-right"> @Model.Company.Address</span></li>
+                                        <li class="list-group-item rounded-pill border-bottom-light bg-gray-700">Phone Number: <span class="float-right"> @Model.Company.PhoneNumber</span></li>
+                                        <li class="list-group-item rounded-pill border-bottom-light bg-gray-700">Bulstat: <span class="float-right"> @Model.Company.Bulstat</span></li>
+                                        <li class="list-group-item rounded-pill border-bottom-light bg-gray-700">Email: <span class="float-right"> @Model.Company.Email</span></li>
+                                        <li class="list-group-item rounded-pill border-bottom-light bg-gray-700">Company Hotels: <span class="float-right"> @Model.Company.Hotels.Count</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="card-body col-sm-5">
+                                <a class="btn btn-warning w-100 rounded-pill" asp-action="Update" asp-controller="Guests">
+                                    <i class="fas fa-edit"> Edit</i>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingThree">
+                    <h2 class="mb-0">
+                        <button class="btn btn-block btn-outline-primary rounded-pill text-center font-weight-bold btn-lg" type="button" data-toggle="collapse" data-target="#UsersInfo" aria-expanded="false" aria-controls="collapseThree">
+                            Users Information
+                        </button>
+                    </h2>
+                </div>
+                <div id="UsersInfo" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <a onclick="PrintOnlyTable()" class="btn btn-success btn-icon-split text-white rounded-pill float-right">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-user-plus"></i>
+                            </span>
+                            <span class="text">New User</span>
+                        </a>
+                        <div class="table-responsive mt-5">
+                            <table class="table table-bordered table-hover font-italic " id="example" width="100%">
+                                <thead>
+                                <tr class="bg-primary text-gray-400">
+                                    <th class="text-center align-middle">Names</th>
+                                    <th class="text-center align-middle">BirthDate</th>
+                                    <th class="text-center align-middle">Gender</th>
+                                    <th class="text-center align-middle">Roles</th>
+                                    <th class="text-center align-middle">Edit</th>
+                                    <th class="text-center align-middle">Delete</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @{
+                                    foreach (var user in Model.Users)
+                                    {
+                                        <tr>
+                                            <th class="text-center align-middle">@user.FirstName @user.LastName</th>
+                                            <th class="text-center align-middle">@user.BirthDate.ToShortDateString()</th>
+                                            <th class="text-center align-middle">@user.Gender.Name</th>
+                                            <th class="text-center align-middle">@string.Join(", ", await UserManager.GetRolesAsync(UserManager.Users.FirstOrDefault(x => x.Id == user.Id)))</th>
+                                            <td class="text-center align-middle">
+                                                <a asp-controller="Reservations" asp-action="Update" asp-route-reservationId="@user.Id" class="btn btn-warning w-100">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                            </td>
+                                            <td class="text-center align-middle">
+                                                <a class="btn btn-danger w-100" data-toggle="modal" data-target="#tips-@user.Id">
+                                                    <i class="fas fa-trash text-white"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <div class="modal fade" id="tips-@user.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+                                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">×</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body text-danger">Select "Delete" below if you want to remove a reservation.</div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                        <form class="form-inline" asp-action="Delete" asp-controller="Reservations" asp-route-reservationId="@user.Id">
+                                                            <button type="submit" class="btn btn-danger">Remove</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script>
+        function myFunction() {
+            var element = document.getElementById("button");
+            element.classList.add("active");
+        }
+    </script>
+}

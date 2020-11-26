@@ -11,16 +11,22 @@
 
         public string Name { get; set; }
 
-        public int CityId { get; set; }
+        public string CityName { get; set; }
 
         public string Address { get; set; }
 
-        public int StarsId { get; set; }
+        public int StarsStarsInNumbers { get; set; }
 
-        public int CompanyId { get; set; }
+        public string CompanyName { get; set; }
 
-        public string ImgUrl { get; set; }
+        public Company Company { get; set; }
 
-        public ICollection<Room> Rooms { get; set; }
+        public int CleaningPerDays { get; set; }
+
+        public int RoomsCount { get; set; }
+
+        public int UsersCount { get; set; }
+
+        public ICollection<ApplicationUser> Users { get; set; }
     }
 }

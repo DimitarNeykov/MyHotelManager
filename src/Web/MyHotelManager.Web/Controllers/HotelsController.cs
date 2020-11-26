@@ -106,5 +106,19 @@
 
             return this.RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> Manager()
+        {
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            if (user.HotelId == null)
+            {
+                return this.NotFound();
+            }
+
+            var viewModel = this.hotelsService.GetById<HotelViewModel>((int)user.HotelId);
+
+            return this.View(viewModel);
+        }
     }
 }

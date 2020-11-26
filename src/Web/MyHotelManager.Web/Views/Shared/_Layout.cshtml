@@ -124,7 +124,7 @@
                         @if (this.SignInManager.IsSignedIn(this.User))
                         {<!-- Nav Item - Messages -->
                                             <li class="nav-item dropdown no-arrow mx-1">
-                                                <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <a class="nav-link dropdown-toggle text-primary" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <i class="fas fa-envelope fa-fw"></i>
                                                     <!-- Counter - Messages -->
                                                     <span class="badge badge-danger badge-counter">7</span>
@@ -183,12 +183,16 @@
                                                                             <li class="nav-item dropdown no-arrow">
                                                                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                                                     <span class="mr-2 d-none d-lg-inline text-gray-600 small">@User.Identity.Name</span>
-                                                                                    <span style="font-size: 3em; color: #4e73df">
+                                                                                    <span class="text-primary h1">
                                                                                         <i class="fas fa-user-circle img-profile"></i>
                                                                                     </span>
                                                                                 </a>
                                                                                 <!-- Dropdown - User Information -->
                                                                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                                                                    <a class="dropdown-item" asp-controller="Hotels" asp-action="Manager">
+                                                                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                                                        Manage Hotel
+                                                                                    </a>
                                                                                     <a class="dropdown-item" href="#">
                                                                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                                                                         Profile
