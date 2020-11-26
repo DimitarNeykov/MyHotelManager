@@ -10,5 +10,7 @@
         Task CreateAsync(string name, int cityId, string address, int starsId, ApplicationUser user, string imgUrl);
 
         T GetById<T>(int id);
+
+        Task UpdateAsync(int hotelId, string name, int cityId, string address, int starsId, int cleaningPerDays);
     }
 }

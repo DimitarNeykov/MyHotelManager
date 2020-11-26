@@ -1,0 +1,62 @@
+﻿@model MyHotelManager.Web.ViewModels.Hotels.HotelEditInputModel
+
+@{
+    var cities = Model.Cities.Select(x => new SelectListItem(x.Name + " / " + x.Region, x.Id.ToString()));
+    var stars = Model.Stars.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+}
+
+@{
+    this.ViewData["Title"] = "New Hotel";
+}
+<div class="container">
+    <div class="col-xl-12 col-lg-12 col-md-12">
+        <div class="card o-hidden border-0 shadow-lg my-5 bg-gradient-primary">
+            <div class="card-body p-0">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="p-4">
+                            <div class="text-center">
+                                <h1 class="h3 mb-4 font-italic text-white-50">Edit Hotel!</h1>
+                            </div>
+                            <form class="user text-center text-white-50" method="post">
+                                <div class="form-group was-validated">
+                                    <label asp-for="Name"></label>
+                                    <input asp-for="Name" class="form-control form-control-user text-center" placeholder="Hotel Name" required>
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                                <div class="form-group was-validated">
+                                    <label asp-for="Address"></label>
+                                    <input asp-for="Address" class="form-control form-control-user text-center" placeholder="Hotel Address" required>
+                                    <span asp-validation-for="Address" class="text-danger"></span>
+                                </div>
+                                <div class="form-group was-validated">
+                                    <label asp-for="CityId"></label>
+                                    <select asp-for="CityId" asp-items="cities" class="form-control rounded-pill custom-select" style="text-align-last: center; text-align: center; -ms-text-align-last: center; -moz-text-align-last: center;" required>
+                                        <option value="" disabled selected>Select City</option>
+                                    </select>
+                                    <span asp-validation-for="CityId" class="text-danger"></span>
+                                </div>
+                                <div class="form-group was-validated">
+                                    <label asp-for="StarsId"></label>
+                                    <select asp-for="StarsId" asp-items="stars" class="form-control rounded-pill custom-select" style="text-align-last: center; text-align: center; -ms-text-align-last: center; -moz-text-align-last: center;" required>
+                                        <option value="" disabled selected>Select Stars</option>
+                                    </select>
+                                    <span asp-validation-for="StarsId" class="text-danger"></span>
+                                </div>
+                                <div class="form-group was-validated">
+                                    <label asp-for="CleaningPerDays"></label>
+                                    <input asp-for="CleaningPerDays" class="form-control form-control-user text-center" placeholder="Cleaning Per Days" required>
+                                    <span asp-validation-for="CleaningPerDays" class="text-danger"></span>
+                                </div>
+                                <hr />
+                                <button type="submit" class="btn btn-success btn-user btn-block">
+                                    Save
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

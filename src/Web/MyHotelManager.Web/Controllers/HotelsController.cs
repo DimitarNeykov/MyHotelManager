@@ -120,5 +120,65 @@
 
             return this.View(viewModel);
         }
+
+        public async Task<IActionResult> Edit()
+        {
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            if (user.HotelId == null)
+            {
+                return this.NotFound();
+            }
+
+            var hotel = this.hotelsService.GetById<HotelEditViewModel>((int)user.HotelId);
+
+            var cities = this.citiesService.GetAll<CityDropDownViewModel>();
+            var stars = this.starsService.GetAll<StarsDropDownViewModel>();
+
+            var viewModel = new HotelEditInputModel
+            {
+                Name = hotel.Name,
+                CityId = hotel.CityId,
+                Address = hotel.Address,
+                StarsId = hotel.StarsId,
+                CleaningPerDays = hotel.CleaningPerDays,
+                Cities = cities,
+                Stars = stars,
+            };
+
+            return this.View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(HotelEditInputModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                var cities = this.citiesService.GetAll<CityDropDownViewModel>();
+                var stars = this.starsService.GetAll<StarsDropDownViewModel>();
+
+                input.Cities = cities;
+                input.Stars = stars;
+
+                return this.View(input);
+            }
+
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            if (user.HotelId == null)
+            {
+                return this.NotFound();
+            }
+
+            await this.hotelsService.UpdateAsync(
+                (int)user.HotelId,
+                input.Name,
+                input.CityId,
+                input.Address,
+                input.StarsId,
+                input.CleaningPerDays);
+
+            return this.RedirectToAction("Manager");
+        }
     }
 }

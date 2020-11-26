@@ -51,5 +51,18 @@ namespace MyHotelManager.Services.Data
 
             return hotel;
         }
+
+        public async Task UpdateAsync(int hotelId, string name, int cityId, string address, int starsId, int cleaningPerDays)
+        {
+            var hotel = await this.hotelRepository.All().FirstOrDefaultAsync(h => h.Id == hotelId);
+
+            hotel.Name = name;
+            hotel.CityId = cityId;
+            hotel.Address = address;
+            hotel.StarsId = starsId;
+            hotel.CleaningPerDays = cleaningPerDays;
+
+            await this.hotelRepository.SaveChangesAsync();
+        }
     }
 }

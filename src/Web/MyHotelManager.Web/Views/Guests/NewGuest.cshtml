@@ -15,8 +15,8 @@
                         <div class="text-center">
                             <h1 class="h3 mb-4 font-italic text-white-50">Add New Guest In Reservation!</h1>
                         </div>
-                        <form class="user" method="post">
-                            <div class="form-group row was-validated text-center text-white-50">
+                        <form class="user text-center text-white-50" method="post">
+                            <div class="form-group row was-validated">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label asp-for="FirstName"></label>
                                     <input asp-for="FirstName" class="form-control form-control-user is-invalid text-center" placeholder="First Name" required>
@@ -29,8 +29,8 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row was-validated text-center text-white-50 justify-content-center">
-                                <div class="col-sm-6 text-center">
+                            <div class="form-group row was-validated justify-content-center">
+                                <div class="col-sm-6">
                                     <label asp-for="GenderId"></label>
                                     <select asp-for="GenderId" class="form-control rounded-pill custom-select" style="text-align-last: center; text-align: center; -ms-text-align-last: center; -moz-text-align-last: center;" required>
                                         <option value="" disabled selected>Select Sex</option>
@@ -42,14 +42,14 @@
                                 </div>
                             </div>
 
-                            <div class="form-group was-validated text-center text-white-50">
+                            <div class="form-group was-validated">
                                 <label asp-for="PhoneNumber"></label>
                                 <input asp-for="PhoneNumber" class="form-control form-control-user text-center is-invalid" placeholder="Phone Number" minlength="10" required>
                                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                             </div>
                             <hr />
-                            <div class="form-group row text-center was-validated justify-content-center text-white-50">
-                                <div class="col-sm-6 text-center">
+                            <div class="form-group row was-validated justify-content-center">
+                                <div class="col-sm-6">
                                     <label>Nationality</label>
                                     <select onchange="Nationality()" class="form-control rounded-pill custom-select" id="nationalitySelect"  style="text-align-last: center; text-align: center; -ms-text-align-last: center; -moz-text-align-last: center;" required>
                                         <option value="" disabled selected>Select Nationality</option>
@@ -61,8 +61,8 @@
 
                             <hr />
 
-                            <div class="form-group row was-validated text-center text-white-50 justify-content-center">
-                                <div class="col-sm-6 mb-3 mb-sm-0 text-center" hidden="" id="city">
+                            <div class="form-group row was-validated justify-content-center">
+                                <div class="col-sm-6 mb-3 mb-sm-0" hidden="" id="city">
                                     <label asp-for="CityId"></label>
                                     <select asp-for="CityId" asp-items="cities" id="citySelect" class="form-control rounded-pill custom-select" style="text-align-last: center; text-align: center; -ms-text-align-last: center; -moz-text-align-last: center;" required>
                                         <option value="" disabled selected>Select City</option>
@@ -70,7 +70,7 @@
                                     <span asp-validation-for="CityId" class="text-danger"></span>
                                 </div>
 
-                                <div class="col-sm-6 mb-3 mb-sm-0 text-center" hidden="" id="country">
+                                <div class="col-sm-6 mb-3 mb-sm-0" hidden="" id="country">
                                     <label asp-for="CountryId"></label>
                                     <select asp-for="CountryId" asp-items="countries" id="countrySelect" class="form-control rounded-pill custom-select" style="text-align-last: center; text-align: center; -ms-text-align-last: center; -moz-text-align-last: center;" required>
                                         <option value="" disabled selected>Select Country</option>
@@ -78,31 +78,31 @@
                                     <span asp-validation-for="CountryId" class="text-danger"></span>
                                 </div>
                             </div>
-                            <div class="form-group row was-validated text-center text-white-50">
-                                    <div class="col-sm-6 mb-3 mb-sm-0 text-center" hidden="" id="UCN">
+                            <div class="form-group row was-validated">
+                                    <div class="col-sm-6 mb-3 mb-sm-0" hidden="" id="UCN">
                                         <label asp-for="UCN"></label>
                                         <input asp-for="UCN" id="UCNinput" class="form-control form-control-user is-invalid text-center" placeholder="UCN" required>
                                         <span asp-validation-for="UCN" class="text-danger"></span>
                                     </div>
-                                    <div class="col-sm-6 mb-3 mb-sm-0 text-center" hidden="" id="PNF">
+                                    <div class="col-sm-6 mb-3 mb-sm-0" hidden="" id="PNF">
                                         <label asp-for="PNF"></label>
                                         <input asp-for="PNF" id="PNFinput" class="form-control form-control-user is-invalid text-center" placeholder="PNF" required>
                                         <span asp-validation-for="PNF" class="text-danger"></span>
                                     </div>
-                                    <div class="col-sm-6 text-center" id="documentNumber" hidden="">
+                                    <div class="col-sm-6" id="documentNumber" hidden="">
                                         <label asp-for="DocumentNumber"></label>
                                         <input asp-for="DocumentNumber" class="form-control form-control-user is-invalid text-center" placeholder="Document Number" required>
                                         <span asp-validation-for="DocumentNumber" class="text-danger"></span>
                                     </div>
                                 </div>
 
-                                <div class="form-group row was-validated text-center text-white-50" id="dateExpiryIssue" hidden="">
-                                    <div class="col-sm-6 mb-3 mb-sm-0 text-center">
+                                <div class="form-group row was-validated" id="dateExpiryIssue" hidden="">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
                                         <label asp-for="DateOfExpiry"></label>
                                         <input value="" type="date" asp-for="DateOfExpiry" class="form-control form-control-user is-invalid text-center" placeholder="Date Of Expiry" required>
                                         <span asp-validation-for="DateOfExpiry" class="text-danger"></span>
                                     </div>
-                                    <div class="col-sm-6 text-center">
+                                    <div class="col-sm-6">
                                         <label asp-for="DateOfIssue"></label>
                                         <input value="" type="date" asp-for="DateOfIssue" class="form-control form-control-user is-invalid text-center" placeholder="Date Of Issue" required>
                                         <span asp-validation-for="DateOfIssue" class="text-danger"></span>
