@@ -1,11 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace MyHotelManager.Web.Controllers
+﻿namespace MyHotelManager.Web.Controllers
 {
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Data;
     using MyHotelManager.Web.ViewModels.Companies;
@@ -24,6 +23,62 @@ namespace MyHotelManager.Web.Controllers
             this.companiesService = companiesService;
             this.citiesService = citiesService;
             this.userManager = userManager;
+        }
+
+        public async Task<IActionResult> Create()
+        {
+            var userId = this.userManager.GetUserId(this.User);
+
+            var user = await this.userManager.Users
+                .Include(u => u.Hotel)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+
+            if (user.Hotel.CompanyId != null)
+            {
+                return this.NotFound();
+            }
+
+            var cities = this.citiesService.GetAll<CityDropDownViewModel>();
+
+            var viewModel = new CompanyCreateInputModel
+            {
+                Cities = cities,
+            };
+
+            return this.View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CompanyCreateInputModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                var cities = this.citiesService.GetAll<CityDropDownViewModel>();
+                input.Cities = cities;
+                return this.View(input);
+            }
+
+            var userId = this.userManager.GetUserId(this.User);
+
+            var user = await this.userManager.Users
+                .Include(u => u.Hotel)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+
+            if (user.HotelId == null || user.Hotel.CompanyId != null)
+            {
+                return this.NotFound();
+            }
+
+            await this.companiesService.CreateAsync(
+                input.Name,
+                input.Bulstat,
+                input.PhoneNumber,
+                input.Email,
+                input.CityId,
+                input.Address,
+                (int)user.HotelId);
+
+            return this.RedirectToAction("Manager", "Hotels");
         }
 
         public async Task<IActionResult> Edit()

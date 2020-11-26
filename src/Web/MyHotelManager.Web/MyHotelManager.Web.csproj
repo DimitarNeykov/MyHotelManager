@@ -11,6 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\JsonInput\countries.json" />
     <Content Remove="wwwroot\towns.json" />
   </ItemGroup>
   <ItemGroup>
@@ -18,8 +19,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\.editorconfig" Link=".editorconfig" />
+    <None Include="wwwroot\JsonInput\countries.json" />
     <None Include="wwwroot\JsonInput\towns.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Include="wwwroot\lib\jquery-validation-unobtrusive\dist\jquery.validate.unobtrusive.js" />
     <None Include="wwwroot\lib\jquery-validation-unobtrusive\dist\jquery.validate.unobtrusive.min.js" />

@@ -21,11 +21,11 @@
             this.hotelRepository = hotelRepository;
         }
 
-        public async Task CreateAsync(string name, string bulstat, string phoneNumber, string email, int cityId, string address, ApplicationUser user)
+        public async Task CreateAsync(string name, string bulstat, string phoneNumber, string email, int cityId, string address, int hotelId)
         {
-            var company = this.companyRepository.All().FirstOrDefault(c => c.Bulstat == bulstat);
+            var company = await this.companyRepository.All().FirstOrDefaultAsync(c => c.Bulstat == bulstat);
 
-            var hotel = this.hotelRepository.All().FirstOrDefault(h => h.Id == user.HotelId);
+            var hotel = await this.hotelRepository.All().FirstOrDefaultAsync(h => h.Id == hotelId);
 
             if (company != null)
             {

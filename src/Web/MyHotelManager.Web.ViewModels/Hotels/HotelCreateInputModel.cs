@@ -6,6 +6,7 @@
 
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Mapping;
+    using MyHotelManager.Web.ViewModels.Companies;
 
     public class HotelCreateInputModel : IMapTo<Hotel>
     {

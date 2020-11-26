@@ -2,11 +2,9 @@
 {
     using System.Threading.Tasks;
 
-    using MyHotelManager.Data.Models;
-
     public interface ICompaniesService
     {
-        Task CreateAsync(string name, string bulstat, string phoneNumber, string email, int cityId, string address, ApplicationUser user);
+        Task CreateAsync(string name, string bulstat, string phoneNumber, string email, int cityId, string address, int hotelId);
 
         Task<T> GetById<T>(int id);
 

@@ -100,7 +100,7 @@
                 input.Company.Email,
                 input.Company.CityId,
                 input.Company.Address,
-                user);
+                (int)user.HotelId);
 
             await this.userManager.AddToRoleAsync(user, GlobalConstants.ManagerRoleName);
 
