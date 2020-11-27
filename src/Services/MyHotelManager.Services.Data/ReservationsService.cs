@@ -72,9 +72,9 @@
             var user = this.userManager.Users.First(x => x.Id == userId);
 
             var reservations = this.reservationRepository
-                .All()
+                .AllWithDeleted()
                 .Include(g => g.Guests)
-                .Where(x => x.Room.HotelId == user.HotelId && x.Guests.First() != null)
+                .Where(x => x.Room.HotelId == user.HotelId && x.Guests.First() != null && x.IsDeleted == false)
                 .OrderBy(x => x.ArrivalDate)
                 .To<T>()
                 .ToList();
@@ -149,7 +149,7 @@
         public T GetById<T>(string reservationId)
         {
             var reservation = this.reservationRepository
-                .All()
+                .AllWithDeleted()
                 .Include(x => x.Guests)
                 .ThenInclude(r => r.Gender)
                 .Include(x => x.Guests)
@@ -161,7 +161,7 @@
                 .ThenInclude(r => r.RoomType)
                 .Include(r => r.Creator)
                 .Include(r => r.Editor)
-                .Where(r => r.Id == reservationId)
+                .Where(r => r.Id == reservationId && r.IsDeleted == false)
                 .To<T>()
                 .FirstOrDefault();
 

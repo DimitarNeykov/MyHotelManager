@@ -61,6 +61,37 @@
             return this.RedirectToAction("Manager", "Hotels");
         }
 
+        [HttpPost]
+        public async Task<IActionResult> EditRole(string userId, string role)
+        {
+            var user = await this.userManager.Users.FirstOrDefaultAsync(u => u.Id == userId);
+
+            var manager = await this.userManager.GetUserAsync(this.User);
+
+            var hotelCreator = await this.userManager.Users.Where(u => u.HotelId == manager.HotelId).OrderBy(u => u.CreatedOn).FirstOrDefaultAsync();
+
+            if (user.HotelId != manager.HotelId || user.Id == manager.Id || user.Id == hotelCreator.Id)
+            {
+                return this.NotFound();
+            }
+
+            var userRoles = await this.userManager.GetRolesAsync(user);
+
+            switch (role)
+            {
+                case GlobalConstants.ManagerRoleName:
+                    await this.userManager.RemoveFromRolesAsync(user, userRoles);
+                    await this.userManager.AddToRoleAsync(user, GlobalConstants.ManagerRoleName);
+                    break;
+                case GlobalConstants.ReceptionistRoleName:
+                    await this.userManager.RemoveFromRolesAsync(user, userRoles);
+                    await this.userManager.AddToRoleAsync(user, GlobalConstants.ReceptionistRoleName);
+                    break;
+            }
+
+            return this.RedirectToAction("Manager", "Hotels");
+        }
+
         public async Task<IActionResult> DeleteUser(string userId)
         {
             var user = await this.userManager.Users.FirstOrDefaultAsync(u => u.Id == userId);

@@ -1,5 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using MyHotelManager.Common
 @using MyHotelManager.Data.Models
+@using System.Linq
 @model MyHotelManager.Web.ViewModels.Hotels.HotelViewModel
 @inject UserManager<ApplicationUser> UserManager
 @{
@@ -121,14 +123,14 @@
                         <div class="table-responsive mt-5">
                             <table class="table table-bordered table-hover font-italic " id="example" width="100%">
                                 <thead>
-                                <tr class="bg-primary text-gray-400">
-                                    <th class="text-center align-middle">Names</th>
-                                    <th class="text-center align-middle">BirthDate</th>
-                                    <th class="text-center align-middle">Gender</th>
-                                    <th class="text-center align-middle">Roles</th>
-                                    <th class="text-center align-middle">Edit</th>
-                                    <th class="text-center align-middle">Delete</th>
-                                </tr>
+                                    <tr class="bg-primary text-gray-400">
+                                        <th class="text-center align-middle">Names</th>
+                                        <th class="text-center align-middle">BirthDate</th>
+                                        <th class="text-center align-middle">Gender</th>
+                                        <th class="text-center align-middle">Roles</th>
+                                        <th class="text-center align-middle">Edit</th>
+                                        <th class="text-center align-middle">Delete</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                 @{
@@ -140,17 +142,47 @@
                                             <th class="text-center align-middle">@user.Gender.Name</th>
                                             <th class="text-center align-middle">@string.Join(", ", await UserManager.GetRolesAsync(UserManager.Users.FirstOrDefault(x => x.Id == user.Id)))</th>
                                             <td class="text-center align-middle">
-                                                <a asp-controller="Users" asp-action="Edit" asp-route-userId="@user.Id" class="btn btn-warning w-100">
-                                                    <i class="fas fa-edit"></i>
+                                                <a class="btn btn-warning w-100" data-toggle="modal" data-target="#manage-@user.Id">
+                                                    <i class="fas fa-edit text-white"></i>
                                                 </a>
                                             </td>
                                             <td class="text-center align-middle">
-                                                <a class="btn btn-danger w-100" data-toggle="modal" data-target="#tips-@user.Id">
+                                                <a class="btn btn-danger w-100" data-toggle="modal" data-target="#delete-@user.Id">
                                                     <i class="fas fa-trash text-white"></i>
                                                 </a>
                                             </td>
                                         </tr>
-                                        <div class="modal fade" id="tips-@user.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="manage-@user.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">@user.FirstName @user.LastName</h5>
+                                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">×</span>
+                                                        </button>
+                                                    </div>
+                                                    <form class="form-inline" method="post" asp-action="EditRole" asp-controller="Users" asp-route-userId="@user.Id">
+                                                        @{
+                                                            Model.Role = string.Join(", ", await UserManager.GetRolesAsync(UserManager.Users.FirstOrDefault(x => x.Id == user.Id)));
+                                                        }
+                                                        <div class="modal-body text-center">
+                                                            <label asp-for="Role"></label>
+                                                            <select asp-for="Role" class="form-control rounded-pill custom-select" style="text-align-last: center; text-align: center; -ms-text-align-last: center; -moz-text-align-last: center;" required>
+                                                                <option value="" disabled selected>Select New Role</option>
+                                                                <option value="@GlobalConstants.ReceptionistRoleName">Receptionist</option>
+                                                                <option value="@GlobalConstants.ManagerRoleName">Manager</option>
+                                                            </select>
+                                                            <span asp-validation-for="Role" class="text-danger mt-4"></span>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                            <button type="submit" class="btn btn-success">Save</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal fade" id="delete-@user.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">

@@ -28,5 +28,7 @@
         public int UsersCount { get; set; }
 
         public ICollection<ApplicationUser> Users { get; set; }
+
+        public string Role { get; set; }
     }
 }
