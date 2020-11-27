@@ -1,13 +1,7 @@
-﻿using System;
-using System.Linq;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.EntityFrameworkCore;
-
-namespace MyHotelManager.Web.Controllers
+﻿namespace MyHotelManager.Web.Controllers
 {
     using System.Threading.Tasks;
 
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using MyHotelManager.Common;
@@ -20,7 +14,6 @@ namespace MyHotelManager.Web.Controllers
     public class HotelsController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly SignInManager<ApplicationUser> signInManager;
         private readonly IHotelsService hotelsService;
         private readonly ICitiesService citiesService;
         private readonly IStarsService starsService;
@@ -28,14 +21,12 @@ namespace MyHotelManager.Web.Controllers
 
         public HotelsController(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
             IHotelsService hotelsService,
             ICitiesService citiesService,
             IStarsService starsService,
             ICompaniesService companiesService)
         {
             this.userManager = userManager;
-            this.signInManager = signInManager;
             this.hotelsService = hotelsService;
             this.citiesService = citiesService;
             this.starsService = starsService;
@@ -185,16 +176,6 @@ namespace MyHotelManager.Web.Controllers
                 input.Address,
                 input.StarsId,
                 input.CleaningPerDays);
-
-            return this.RedirectToAction("Manager");
-        }
-
-        public async Task<IActionResult> DeleteUser(string userId)
-        {
-            var user = await this.userManager.Users.FirstOrDefaultAsync(u => u.Id == userId);
-            user.IsDeleted = true;
-
-            await this.userManager.UpdateAsync(user);
 
             return this.RedirectToAction("Manager");
         }

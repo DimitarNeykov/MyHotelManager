@@ -17,7 +17,6 @@
     using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.Extensions.Logging;
     using MyHotelManager.Data.Models;
-    using MyHotelManager.Services.Data;
 
     [AllowAnonymous]
     public partial class RegisterModel : PageModel
@@ -26,20 +25,17 @@
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-        private readonly IGendersService _gendersService;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender,
-            IGendersService gendersService)
+            IEmailSender emailSender)
         {
             this._userManager = userManager;
             this._signInManager = signInManager;
             this._logger = logger;
             this._emailSender = emailSender;
-            this._gendersService = gendersService;
         }
 
         [BindProperty]

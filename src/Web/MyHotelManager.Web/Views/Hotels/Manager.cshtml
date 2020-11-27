@@ -112,7 +112,7 @@
                 </div>
                 <div id="UsersInfo" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
                     <div class="card-body">
-                        <a class="btn btn-success btn-icon-split text-white rounded-pill float-right" asp-controller="Hotels" asp-action="CreateUser">
+                        <a class="btn btn-success btn-icon-split text-white rounded-pill float-right" asp-controller="Users" asp-action="Create">
                             <span class="icon text-white-50">
                                 <i class="fas fa-user-plus"></i>
                             </span>
@@ -140,7 +140,7 @@
                                             <th class="text-center align-middle">@user.Gender.Name</th>
                                             <th class="text-center align-middle">@string.Join(", ", await UserManager.GetRolesAsync(UserManager.Users.FirstOrDefault(x => x.Id == user.Id)))</th>
                                             <td class="text-center align-middle">
-                                                <a asp-controller="Hotels" asp-action="EditUser" asp-route-userId="@user.Id" class="btn btn-warning w-100">
+                                                <a asp-controller="Users" asp-action="Edit" asp-route-userId="@user.Id" class="btn btn-warning w-100">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
                                             </td>
@@ -162,7 +162,7 @@
                                                     <div class="modal-body text-danger">Select "Delete" below if you want to remove a user.</div>
                                                     <div class="modal-footer">
                                                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                                        <form class="form-inline" asp-action="DeleteUser" asp-controller="Hotels" asp-route-userId="@user.Id">
+                                                        <form class="form-inline" asp-action="DeleteUser" asp-controller="Users" asp-route-userId="@user.Id">
                                                             <button type="submit" class="btn btn-danger">Remove</button>
                                                         </form>
                                                     </div>

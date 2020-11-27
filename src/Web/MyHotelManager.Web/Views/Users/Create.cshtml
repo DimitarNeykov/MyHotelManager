@@ -1,0 +1,111 @@
+﻿@using MyHotelManager.Common
+@model MyHotelManager.Web.ViewModels.Users.UserCreateInputModel
+@{
+    ViewData["Title"] = "Register";
+}
+    <div class="container">
+        <div class="row justify-content-center">
+
+            <div class="col-xl-10 col-lg-12 col-md-9">
+                <div class="card o-hidden border-0 shadow-lg my-5 bg-gradient-primary">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h3 mb-4 font-italic text-white-50">Create User Account!</h1>
+                            </div>
+                            <form class="user text-center text-white-50" method="post">
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label asp-for="FirstName"></label>
+                                        <input asp-for="FirstName" class="form-control form-control-user text-center" placeholder="First Name">
+                                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label asp-for="LastName"></label>
+                                        <input asp-for="LastName" class="form-control form-control-user text-center" placeholder="Last Name">
+                                        <span asp-validation-for="LastName" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label asp-for="BirthDate"></label>
+                                        <input type="date" asp-for="BirthDate" class="form-control form-control-user text-center" placeholder="BirthDate">
+                                        <span asp-validation-for="BirthDate" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label asp-for="PhoneNumber"></label>
+                                        <input asp-for="PhoneNumber" class="form-control form-control-user text-center" placeholder="Last Name">
+                                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-sm-6">
+                                        <label asp-for="GenderId"></label>
+                                        <select asp-for="GenderId" class="form-control rounded-pill custom-select" style="text-align-last: center; text-align: center; -ms-text-align-last: center; -moz-text-align-last: center;" required>
+                                            <option value="" disabled selected>Select Sex</option>
+                                            <option value="1">Male</option>
+                                            <option value="2">Female</option>
+                                            <option value="3">Other</option>
+                                        </select>
+                                        <span asp-validation-for="GenderId" class="text-danger mt-4"></span>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label asp-for="Role"></label>
+                                        <select asp-for="Role" class="form-control rounded-pill custom-select" style="text-align-last: center; text-align: center; -ms-text-align-last: center; -moz-text-align-last: center;" required>
+                                            <option value="" disabled selected>Select Role</option>
+                                            <option value="@GlobalConstants.ReceptionistRoleName">Receptionist</option>
+                                            <option value="@GlobalConstants.ManagerRoleName">Manager</option>
+                                        </select>
+                                        <span asp-validation-for="Role" class="text-danger mt-4"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label asp-for="Username"></label>
+                                        <input asp-for="Username" class="form-control form-control-user text-center" placeholder="Username">
+                                        <span asp-validation-for="Username" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label asp-for="Email"></label>
+                                        <input asp-for="Email" class="form-control form-control-user text-center" placeholder="Email Address">
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label asp-for="Password"></label>
+                                        <input asp-for="Password" class="form-control form-control-user text-center" placeholder="Password">
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label asp-for="ConfirmPassword"></label>
+                                        <input asp-for="ConfirmPassword" class="form-control form-control-user text-center" placeholder="Repeat Password">
+                                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <hr />
+
+                                <div class="row justify-content-center">
+                                    <div class="col-8">
+                                        <button type="submit" class="btn btn-success btn-user btn-block">
+                                            Create Account
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
