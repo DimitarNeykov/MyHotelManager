@@ -1,7 +1,13 @@
 ﻿namespace MyHotelManager.Web
 {
+    using System;
+    using System.Linq;
     using System.Reflection;
 
+    using Hangfire;
+    using Hangfire.Console;
+    using Hangfire.Dashboard;
+    using Hangfire.SqlServer;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -10,12 +16,14 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using MyHotelManager.Common;
     using MyHotelManager.Data;
     using MyHotelManager.Data.Common;
     using MyHotelManager.Data.Common.Repositories;
     using MyHotelManager.Data.Models;
     using MyHotelManager.Data.Repositories;
     using MyHotelManager.Data.Seeding;
+    using MyHotelManager.Services.CronJobs;
     using MyHotelManager.Services.Data;
     using MyHotelManager.Services.Mapping;
     using MyHotelManager.Services.Messaging;
@@ -33,6 +41,22 @@
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHangfire(
+                config => config.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                    .UseSimpleAssemblyNameTypeSerializer().UseRecommendedSerializerSettings().UseSqlServerStorage(
+                        this.configuration.GetConnectionString("DefaultConnection"),
+                        new SqlServerStorageOptions
+                        {
+                            CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                            SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                            QueuePollInterval = TimeSpan.Zero,
+                            UseRecommendedIsolationLevel = true,
+                            UsePageLocksOnDequeue = true,
+                            DisableGlobalLocks = true,
+                        }).UseConsole());
+
+            services.AddHangfireServer();
+
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
 
@@ -74,12 +98,25 @@
             services.AddTransient<IGendersService, GendersService>();
             services.AddTransient<IGuestsService, GuestsService>();
             services.AddTransient<ICountriesService, CountriesService>();
+            services.AddTransient<IClearOldReservation, ClearOldReservations>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(
+            IApplicationBuilder app,
+            IWebHostEnvironment env,
+            IRecurringJobManager recurringJobManager,
+            IServiceProvider serviceProvider)
         {
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
+
+            if (env.IsProduction())
+            {
+                app.UseHangfireServer(new BackgroundJobServerOptions { WorkerCount = 2 });
+                app.UseHangfireDashboard(
+                    "/hangfire",
+                    new DashboardOptions { Authorization = new[] { new HangfireAuthorizationFilter() } });
+            }
 
             // Seed data on application startup
             using (var serviceScope = app.ApplicationServices.CreateScope())
@@ -87,6 +124,7 @@
                 var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
                 dbContext.Database.Migrate();
                 new ApplicationDbContextSeeder(env.WebRootPath).SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+                this.SeedHangfireJobs(recurringJobManager, dbContext, serviceProvider);
             }
 
             if (env.IsDevelopment())
@@ -115,7 +153,25 @@
                         endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapRazorPages();
+                        endpoints.MapHangfireDashboard();
                     });
+        }
+
+        private void SeedHangfireJobs(IRecurringJobManager recurringJobManager, ApplicationDbContext dbContext, IServiceProvider serviceProvider)
+        {
+            recurringJobManager.AddOrUpdate(
+                "ClearOldReservation",
+                () => serviceProvider.GetService<IClearOldReservation>().Clear(),
+                "* * * * *");
+        }
+
+        private class HangfireAuthorizationFilter : IDashboardAuthorizationFilter
+        {
+            public bool Authorize(DashboardContext context)
+            {
+                var httpContext = context.GetHttpContext();
+                return httpContext.User.IsInRole(GlobalConstants.AdministratorRoleName);
+            }
         }
     }
 }

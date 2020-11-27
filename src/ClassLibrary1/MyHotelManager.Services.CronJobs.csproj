@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hangfire.Console" Version="1.4.2" />
+    <PackageReference Include="Hangfire.Core" Version="1.7.18" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Data\MyHotelManager.Data.Common\MyHotelManager.Data.Common.csproj" />
+    <ProjectReference Include="..\Data\MyHotelManager.Data.Models\MyHotelManager.Data.Models.csproj" />
+    <ProjectReference Include="..\MyHotelManager.Common\MyHotelManager.Common.csproj" />
+    <ProjectReference Include="..\Services\MyHotelManager.Services.Data\MyHotelManager.Services.Data.csproj" />
+    <ProjectReference Include="..\Services\MyHotelManager.Services\MyHotelManager.Services.csproj" />
+  </ItemGroup>
+
+</Project>

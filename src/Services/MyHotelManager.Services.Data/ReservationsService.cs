@@ -214,5 +214,16 @@
 
             await this.reservationRepository.SaveChangesAsync();
         }
+
+        public async Task DeleteOldReservation(string reservationId)
+        {
+            var reservation = this.reservationRepository.All().FirstOrDefault(x => x.Id == reservationId);
+
+            this.reservationRepository.Delete(reservation);
+
+            reservation.CancelDate = DateTime.UtcNow;
+
+            await this.reservationRepository.SaveChangesAsync();
+        }
     }
 }
