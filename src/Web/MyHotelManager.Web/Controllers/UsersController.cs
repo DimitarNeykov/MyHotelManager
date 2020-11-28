@@ -8,8 +8,10 @@
     using Microsoft.EntityFrameworkCore;
     using MyHotelManager.Common;
     using MyHotelManager.Data.Models;
+    using MyHotelManager.Web.Infrastructure.Attributes;
     using MyHotelManager.Web.ViewModels.Users;
 
+    [AuthorizeRoles(new[] { GlobalConstants.ManagerRoleName, GlobalConstants.AdministratorRoleName })]
     public class UsersController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;

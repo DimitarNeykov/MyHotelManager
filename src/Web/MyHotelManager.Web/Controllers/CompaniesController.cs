@@ -5,10 +5,13 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
+    using MyHotelManager.Common;
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Data;
+    using MyHotelManager.Web.Infrastructure.Attributes;
     using MyHotelManager.Web.ViewModels.Companies;
 
+    [AuthorizeRoles(new[] { GlobalConstants.AdministratorRoleName, GlobalConstants.ManagerRoleName })]
     public class CompaniesController : Controller
     {
         private readonly ICompaniesService companiesService;

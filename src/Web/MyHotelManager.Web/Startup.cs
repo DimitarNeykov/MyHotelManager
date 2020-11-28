@@ -162,7 +162,7 @@
             recurringJobManager.AddOrUpdate(
                 "ClearOldReservation",
                 () => serviceProvider.GetService<IClearOldReservation>().Clear(),
-                "* * * * *");
+                Cron.Hourly);
         }
 
         private class HangfireAuthorizationFilter : IDashboardAuthorizationFilter

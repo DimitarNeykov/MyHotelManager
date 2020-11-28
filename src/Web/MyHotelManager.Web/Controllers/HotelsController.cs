@@ -2,6 +2,7 @@
 {
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using MyHotelManager.Common;
@@ -10,7 +11,6 @@
     using MyHotelManager.Web.Infrastructure.Attributes;
     using MyHotelManager.Web.ViewModels.Hotels;
 
-    [AuthorizeRoles(new[] { GlobalConstants.ManagerRoleName, GlobalConstants.AdministratorRoleName, GlobalConstants.ReceptionistRoleName })]
     public class HotelsController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
@@ -33,6 +33,7 @@
             this.companiesService = companiesService;
         }
 
+        [AuthorizeRoles(new[] { GlobalConstants.ManagerRoleName, GlobalConstants.AdministratorRoleName, GlobalConstants.ReceptionistRoleName })]
         public async Task<IActionResult> Index()
         {
             var user = await this.userManager.GetUserAsync(this.User);
@@ -106,6 +107,7 @@
             return this.RedirectToAction("Index");
         }
 
+        [AuthorizeRoles(new[] { GlobalConstants.ManagerRoleName, GlobalConstants.AdministratorRoleName })]
         public async Task<IActionResult> Manager()
         {
             var user = await this.userManager.GetUserAsync(this.User);
@@ -120,6 +122,7 @@
             return this.View(viewModel);
         }
 
+        [AuthorizeRoles(new[] { GlobalConstants.ManagerRoleName, GlobalConstants.AdministratorRoleName })]
         public async Task<IActionResult> Edit()
         {
             var user = await this.userManager.GetUserAsync(this.User);
@@ -149,6 +152,7 @@
         }
 
         [HttpPost]
+        [AuthorizeRoles(new[] { GlobalConstants.ManagerRoleName, GlobalConstants.AdministratorRoleName })]
         public async Task<IActionResult> Edit(HotelEditInputModel input)
         {
             if (!this.ModelState.IsValid)
