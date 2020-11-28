@@ -7,7 +7,7 @@
 
     public interface IHotelsService
     {
-        Task CreateAsync(string name, int cityId, string address, int starsId, ApplicationUser user, string imgUrl);
+        Task CreateAsync(string name, int cityId, string address, int starsId, int cleaningPerDays, ApplicationUser user);
 
         T GetById<T>(int id);
 

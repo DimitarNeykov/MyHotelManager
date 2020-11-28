@@ -1,11 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace MyHotelManager.Services.Data
+﻿namespace MyHotelManager.Services.Data
 {
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore;
     using MyHotelManager.Data.Common.Repositories;
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Mapping;
@@ -19,7 +17,7 @@ namespace MyHotelManager.Services.Data
             this.hotelRepository = hotelRepository;
         }
 
-        public async Task CreateAsync(string name, int cityId, string address, int starsId, ApplicationUser user, string imgUrl)
+        public async Task CreateAsync(string name, int cityId, string address, int starsId, int cleaningPerDays, ApplicationUser user)
         {
             var hotel = new Hotel
             {
@@ -27,6 +25,7 @@ namespace MyHotelManager.Services.Data
                 CityId = cityId,
                 Address = address,
                 StarsId = starsId,
+                CleaningPerDays = cleaningPerDays,
             };
 
             hotel.Users.Add(user);

@@ -51,13 +51,13 @@
         {
             var user = await this.userManager.GetUserAsync(this.User);
 
-            var cities = this.citiesService.GetAll<CityDropDownViewModel>();
-            var stars = this.starsService.GetAll<StarsDropDownViewModel>();
-
             if (user.HotelId != null)
             {
                 return this.RedirectToAction("Index");
             }
+
+            var cities = this.citiesService.GetAll<CityDropDownViewModel>();
+            var stars = this.starsService.GetAll<StarsDropDownViewModel>();
 
             var viewModel = new HotelCreateInputModel
             {
@@ -90,17 +90,8 @@
                 input.CityId,
                 input.Address,
                 input.StarsId,
-                user,
-                input.ImgUrl);
-
-            await this.companiesService.CreateAsync(
-                input.Company.Name,
-                input.Company.Bulstat,
-                input.Company.PhoneNumber,
-                input.Company.Email,
-                input.Company.CityId,
-                input.Company.Address,
-                (int)user.HotelId);
+                input.CleaningPerDays,
+                user);
 
             await this.userManager.AddToRoleAsync(user, GlobalConstants.ManagerRoleName);
 

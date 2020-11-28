@@ -30,14 +30,10 @@
         [Range(1, 6)]
         public int StarsId { get; set; }
 
-        [Url]
-        public string ImgUrl { get; set; }
+        public int CleaningPerDays { get; set; }
 
         public IEnumerable<CityDropDownViewModel> Cities { get; set; }
 
         public IEnumerable<StarsDropDownViewModel> Stars { get; set; }
-
-        [Required]
-        public CompanyCreateInputModel Company { get; set; }
     }
 }
