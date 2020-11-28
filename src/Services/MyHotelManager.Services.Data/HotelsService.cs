@@ -44,6 +44,8 @@
                 .ThenInclude(x => x.City)
                 .Include(x => x.Users)
                 .ThenInclude(u => u.Gender)
+                .Include(h => h.Rooms)
+                .ThenInclude(r => r.Reservations)
                 .Where(x => x.Id == id)
                 .To<T>()
                 .FirstOrDefault();

@@ -1,4 +1,7 @@
-﻿namespace MyHotelManager.Web.Controllers
+﻿using System;
+using System.Linq;
+
+namespace MyHotelManager.Web.Controllers
 {
     using System.Threading.Tasks;
 
@@ -17,20 +20,20 @@
         private readonly IHotelsService hotelsService;
         private readonly ICitiesService citiesService;
         private readonly IStarsService starsService;
-        private readonly ICompaniesService companiesService;
+        private readonly IRoomsService roomsService;
 
         public HotelsController(
             UserManager<ApplicationUser> userManager,
             IHotelsService hotelsService,
             ICitiesService citiesService,
             IStarsService starsService,
-            ICompaniesService companiesService)
+            IRoomsService roomsService)
         {
             this.userManager = userManager;
             this.hotelsService = hotelsService;
             this.citiesService = citiesService;
             this.starsService = starsService;
-            this.companiesService = companiesService;
+            this.roomsService = roomsService;
         }
 
         [AuthorizeRoles(new[] { GlobalConstants.ManagerRoleName, GlobalConstants.AdministratorRoleName, GlobalConstants.ReceptionistRoleName })]
@@ -41,6 +44,9 @@
             if (user.HotelId != null)
             {
                 var hotelViewModel = this.hotelsService.GetById<HotelViewModel>((int)user.HotelId);
+                var availableRoomsCount =
+                    this.roomsService.AvailableRooms<RoomViewModel>(user.Id, DateTime.Now, DateTime.Now).Count();
+                hotelViewModel.AvailableRoomsCount = availableRoomsCount;
                 return this.View(hotelViewModel);
             }
 

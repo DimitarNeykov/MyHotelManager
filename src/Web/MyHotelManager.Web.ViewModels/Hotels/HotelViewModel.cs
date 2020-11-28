@@ -1,4 +1,7 @@
-﻿namespace MyHotelManager.Web.ViewModels.Hotels
+﻿using System;
+using System.Linq;
+
+namespace MyHotelManager.Web.ViewModels.Hotels
 {
     using System.Collections.Generic;
 
@@ -28,6 +31,12 @@
         public int UsersCount { get; set; }
 
         public ICollection<ApplicationUser> Users { get; set; }
+
+        public ICollection<Room> Rooms { get; set; }
+
+        public int AvailableRoomsCount { get; set; }
+
+        public int OccupiedRoomsCount => this.RoomsCount - this.AvailableRoomsCount;
 
         public string Role { get; set; }
     }

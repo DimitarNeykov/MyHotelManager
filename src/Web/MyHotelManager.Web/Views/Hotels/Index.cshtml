@@ -3,9 +3,56 @@
 @{
     this.ViewData["Title"] = "My Hotels";
 }
+<div class="col-xl-4 col-lg-5">
+    <div class="card shadow mb-4">
+        <!-- Card Header - Dropdown -->
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary text-center">Room Occupancy</h6>
+        </div>
+        <!-- Card Body -->
+        <div class="card-body">
+            <div class="chart-pie pt-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                <canvas id="PieChart" width="337" height="216" style="display: block; width: 337px; height: 216px;"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
 @section Scripts
 {
     <script src="~/lib/chart.js/Chart.min.js"></script>
     <script src="~/js/demo/chart-area-demo.js"></script>
     <script src="~/js/demo/chart-pie-demo.js"></script>
+    <script>
+        var ctx = document.getElementById("PieChart");
+        var myPieChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ["Occupied", "Empty"],
+                datasets: [{
+                    data: [@Model.OccupiedRoomsCount, @Model.AvailableRoomsCount],
+                    backgroundColor: ['#BA2100', '#04B938'],
+                    hoverBackgroundColor: ['#971B00', '#069C31'],
+                    hoverBorderColor: "rgba(234, 236, 244, 1)"
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                tooltips: {
+                    backgroundColor: "rgb(255,255,255)",
+                    bodyFontColor: "#11069C",
+                    borderColor: '#dddfeb',
+                    borderWidth: 1,
+                    xPadding: 15,
+                    yPadding: 15,
+                    displayColors: true,
+                    caretPadding: 10
+                },
+                legend: {
+                    display: true
+                },
+                cutoutPercentage: 60
+            }
+        });
+
+    </script>
 }
