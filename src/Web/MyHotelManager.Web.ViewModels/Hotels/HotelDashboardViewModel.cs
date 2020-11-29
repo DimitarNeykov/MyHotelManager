@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using MyHotelManager.Data.Models;
-using MyHotelManager.Services.Mapping;
-
-namespace MyHotelManager.Web.ViewModels.Hotels
+﻿namespace MyHotelManager.Web.ViewModels.Hotels
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using MyHotelManager.Data.Models;
+    using MyHotelManager.Services.Mapping;
+
     public class HotelDashboardViewModel : IMapFrom<Hotel>
     {
         public string Name { get; set; }
@@ -16,6 +17,16 @@ namespace MyHotelManager.Web.ViewModels.Hotels
 
         public int OccupiedRoomsCount => this.Rooms.Count(r => r.IsDeleted == false) - this.AvailableRoomsCount;
 
+        public double ReservationsForToday => this.Rooms.Sum(r => r.Reservations
+            .Count(r => r.ArrivalDate.Date == DateTime.Now.Date && r.CancelDate == null && r.IsDeleted == false));
+
+        public double ArrivedReservationsForToday => this.Rooms.Sum(r => r.Reservations
+            .Count(r => r.ArrivalDate.Date == DateTime.Now.Date && r.CancelDate == null && r.IsDeleted == false &&
+                        r.Guests.Any(x => x.PNF != null || x.UCN != null)));
+
+        public double PercentageOfArrivedReservations =>
+            (this.ArrivedReservationsForToday / this.ReservationsForToday) * 100;
+
         public int ReservationsCountForThisYear => this.Rooms.Sum(r => r.Reservations
             .Count(r => r.ReturnDate.Year == DateTime.Now.Year && r.CancelDate == null && r.IsDeleted == true));
 
@@ -24,7 +35,6 @@ namespace MyHotelManager.Web.ViewModels.Hotels
 
         public int ReservationsCountForTwoYearEarly => this.Rooms.Sum(r => r.Reservations
             .Count(r => r.ReturnDate.Year == DateTime.Now.Year - 2 && r.CancelDate == null && r.IsDeleted == true));
-
 
         public int JanuaryReservations => this.Rooms.Sum(r => r.Reservations
             .Count(r => r.ReturnDate.Year == DateTime.Now.Year && r.ReturnDate.Month == 1 && r.CancelDate == null && r.IsDeleted == true));
