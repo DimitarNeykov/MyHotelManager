@@ -42,8 +42,10 @@
             if (user.HotelId != null)
             {
                 var hotelViewModel = this.hotelsService.GetByIdWithDeleted<HotelDashboardViewModel>((int)user.HotelId);
+
                 var availableRoomsCount =
-                    this.roomsService.AvailableRooms<RoomViewModel>(user.Id, DateTime.Now, DateTime.Now).Count();
+                    this.roomsService.AvailableRooms<RoomViewModel>(user.Id, DateTime.Now, DateTime.Now.AddDays(1)).Count();
+
                 hotelViewModel.AvailableRoomsCount = availableRoomsCount;
                 return this.View(hotelViewModel);
             }
