@@ -43,6 +43,8 @@
 
         public virtual DbSet<Stars> Stars { get; set; }
 
+        public virtual DbSet<ContactForm> ContactForm { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
