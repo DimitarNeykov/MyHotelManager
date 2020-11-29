@@ -1,27 +1,228 @@
-﻿@model MyHotelManager.Web.ViewModels.Hotels.HotelViewModel
+﻿@model MyHotelManager.Web.ViewModels.Hotels.HotelDashboardViewModel
 
 @{
     this.ViewData["Title"] = "My Hotels";
+    var thisYear = DateTime.Now.Year;
+    var oneYearEarly = DateTime.Now.Year - 1;
+    var twoYearEarly = DateTime.Now.Year - 2;
 }
-<div class="col-xl-4 col-lg-5">
-    <div class="card shadow mb-4">
-        <!-- Card Header - Dropdown -->
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary text-center">Room Occupancy</h6>
+<div class="row text-center">
+    <div class="col-xl-4 col-md-4 mb-4">
+        <div class="card shadow">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Sofia</h6>
+            </div>
+            <div class="card-body">
+                <div id="displayMomentSofia"></div>
+                <hr />
+                <div id="displayJsDateSofia"></div>
+            </div>
         </div>
-        <!-- Card Body -->
-        <div class="card-body">
-            <div class="chart-pie pt-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                <canvas id="PieChart" width="337" height="216" style="display: block; width: 337px; height: 216px;"></canvas>
+    </div>
+    <div class="col-xl-4 col-md-4 mb-4">
+        <div class="card shadow">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">London</h6>
+            </div>
+            <div class="card-body">
+                <div id="displayMomentLondon"></div>
+                <hr />
+                <div id="displayJsDateLondon"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-md-4 mb-4">
+        <div class="card shadow">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Moscow</h6>
+            </div>
+            <div class="card-body">
+                <div id="displayMomentMoscow"></div>
+                <hr />
+                <div id="displayJsDateMoscow"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr class="mb-4"/>
+<h6 class="m-0 font-weight-bold text-primary text-center mb-4">Reservations in process!</h6>
+<div class="progress mb-4">
+    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%">10/20</div>
+</div>
+<hr class="mb-4"/>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Area Chart</h6>
+    </div>
+    <div class="card-body">
+        <div class="chart-area">
+            <div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+            <canvas id="myAreaChart" style="display: block; width: 337px; height: 160px;" width="337" height="160" class="chartjs-render-monitor"></canvas>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-6 col-lg-6">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary text-center">Room Occupancy</h6>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="chart-pie">
+                    <div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                    <canvas id="PieChart" width="419" height="320" style="display: block; width: 419px; height: 320px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-6 col-lg-6">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary text-center">Bar Chart</h6>
+            </div>
+            <div class="card-body">
+                <div class="chart-bar">
+                    <div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                    <canvas id="BarChart" width="419" height="320" class="chartjs-render-monitor" style="display: block; width: 419px; height: 320px;"></canvas>
+                </div>
             </div>
         </div>
     </div>
 </div>
 @section Scripts
 {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.7/moment-timezone-with-data-2010-2020.min.js"></script>
+    <script type="text/javascript">
+        function startTimeSofia() {
+            var today = moment.tz("Europe/Sofia");
+            document.getElementById('displayMomentSofia').innerHTML = today.format('HH:mm:ss');
+            document.getElementById('displayJsDateSofia').innerHTML = today.format('DD/MM/YYYY');
+            var t = setTimeout(startTimeSofia, 500);
+        }
+
+        startTimeSofia();
+    </script>
+    <script type="text/javascript">
+        function startTimeLondon() {
+            var today = moment.tz("Europe/London");
+            document.getElementById('displayMomentLondon').innerHTML = today.format('HH:mm:ss');
+            document.getElementById('displayJsDateLondon').innerHTML = today.format('DD/MM/YYYY');
+            var t = setTimeout(startTimeLondon, 500);
+        }
+
+        startTimeLondon();
+    </script>
+    <script type="text/javascript">
+        function startTimeMoscow() {
+            var today = moment.tz("Europe/Moscow");
+            document.getElementById('displayMomentMoscow').innerHTML = today.format('HH:mm:ss');
+            document.getElementById('displayJsDateMoscow').innerHTML = today.format('DD/MM/YYYY');
+            var t = setTimeout(startTimeMoscow, 500);
+        }
+
+        startTimeMoscow();
+    </script>
     <script src="~/lib/chart.js/Chart.min.js"></script>
     <script src="~/js/demo/chart-area-demo.js"></script>
     <script src="~/js/demo/chart-pie-demo.js"></script>
+    <script>
+        var ctx = document.getElementById("BarChart");
+
+        var charMaxValue = 100;
+        if (@Model.ReservationsCountForTwoYearEarly > charMaxValue) {
+            charMaxValue = @Model.ReservationsCountForTwoYearEarly;
+        }
+        if (@Model.ReservationsCountForOneYearEarly > charMaxValue) {
+            charMaxValue = @Model.ReservationsCountForOneYearEarly;
+        }
+        if (@Model.ReservationsCountForThisYear > charMaxValue) {
+            charMaxValue = @Model.ReservationsCountForThisYear;
+        }
+        var myBarChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ["@twoYearEarly", "@oneYearEarly", "@thisYear"],
+                datasets: [{
+                    label: "Reservations",
+                    backgroundColor: "#4e73df",
+                    hoverBackgroundColor: "#2e59d9",
+                    borderColor: "#4e73df",
+                    data: [@Model.ReservationsCountForTwoYearEarly, @Model.ReservationsCountForOneYearEarly, @Model.ReservationsCountForThisYear]
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                layout: {
+                    padding: {
+                        left: 10,
+                        right: 25,
+                        top: 25,
+                        bottom: 0
+                    }
+                },
+                scales: {
+                    xAxes: [{
+                        time: {
+                            unit: 'year'
+                        },
+                        gridLines: {
+                            display: true,
+                            drawBorder: true
+                        },
+                        ticks: {
+                            maxTicksLimit: 6
+                        },
+                        maxBarThickness: 40,
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            max: charMaxValue,
+                            maxTicksLimit: 10,
+                            padding: 10,
+                            // Include a dollar sign in the ticks
+                            callback: function(value, index, values) {
+                                return number_format(value);
+                            }
+                        },
+                        gridLines: {
+                            color: "rgb(234, 236, 244)",
+                            zeroLineColor: "rgb(234, 236, 244)",
+                            drawBorder: true,
+                            borderDash: [2],
+                            zeroLineBorderDash: [2]
+                        }
+                    }],
+                },
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    titleMarginBottom: 10,
+                    titleFontColor: '#6e707e',
+                    titleFontSize: 14,
+                    backgroundColor: "rgb(255,255,255)",
+                    bodyFontColor: "#858796",
+                    borderColor: '#dddfeb',
+                    borderWidth: 1,
+                    xPadding: 15,
+                    yPadding: 15,
+                    displayColors: false,
+                    caretPadding: 10,
+                    callbacks: {
+                        label: function(tooltipItem, chart) {
+                            var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                            return datasetLabel + ': ' + number_format(tooltipItem.yLabel);
+                        }
+                    }
+                },
+            }
+        });
+
+    </script>
     <script>
         var ctx = document.getElementById("PieChart");
         var myPieChart = new Chart(ctx, {
@@ -30,8 +231,8 @@
                 labels: ["Occupied", "Empty"],
                 datasets: [{
                     data: [@Model.OccupiedRoomsCount, @Model.AvailableRoomsCount],
-                    backgroundColor: ['#BA2100', '#04B938'],
-                    hoverBackgroundColor: ['#971B00', '#069C31'],
+                    backgroundColor: ['#FF4646', '#5AEAA5'],
+                    hoverBackgroundColor: ['#C53636', '#4DC28A'],
                     hoverBorderColor: "rgba(234, 236, 244, 1)"
                 }]
             },
@@ -50,7 +251,7 @@
                 legend: {
                     display: true
                 },
-                cutoutPercentage: 60
+                cutoutPercentage: 10
             }
         });
 

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Linq;
-
-namespace MyHotelManager.Web.Controllers
+﻿namespace MyHotelManager.Web.Controllers
 {
+    using System;
+    using System.Linq;
     using System.Threading.Tasks;
 
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using MyHotelManager.Common;
@@ -43,7 +41,7 @@ namespace MyHotelManager.Web.Controllers
 
             if (user.HotelId != null)
             {
-                var hotelViewModel = this.hotelsService.GetById<HotelViewModel>((int)user.HotelId);
+                var hotelViewModel = this.hotelsService.GetByIdWithDeleted<HotelDashboardViewModel>((int)user.HotelId);
                 var availableRoomsCount =
                     this.roomsService.AvailableRooms<RoomViewModel>(user.Id, DateTime.Now, DateTime.Now).Count();
                 hotelViewModel.AvailableRoomsCount = availableRoomsCount;

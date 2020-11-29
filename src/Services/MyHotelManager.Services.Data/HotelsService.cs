@@ -34,6 +34,25 @@
             await this.hotelRepository.SaveChangesAsync();
         }
 
+        public T GetByIdWithDeleted<T>(int id)
+        {
+            var hotel = this.hotelRepository.AllWithDeleted()
+                .Include(x => x.City)
+                .Include(x => x.Company)
+                .ThenInclude(x => x.Hotels)
+                .Include(x => x.Company)
+                .ThenInclude(x => x.City)
+                .Include(x => x.Users)
+                .ThenInclude(u => u.Gender)
+                .Include(h => h.Rooms)
+                .ThenInclude(r => r.Reservations)
+                .Where(x => x.Id == id)
+                .To<T>()
+                .FirstOrDefault();
+
+            return hotel;
+        }
+
         public T GetById<T>(int id)
         {
             var hotel = this.hotelRepository.All()

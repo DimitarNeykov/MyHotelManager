@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-
-namespace MyHotelManager.Web.ViewModels.Hotels
+﻿namespace MyHotelManager.Web.ViewModels.Hotels
 {
     using System.Collections.Generic;
 
@@ -10,8 +7,6 @@ namespace MyHotelManager.Web.ViewModels.Hotels
 
     public class HotelViewModel : IMapFrom<Hotel>
     {
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
         public string CityName { get; set; }
@@ -31,12 +26,6 @@ namespace MyHotelManager.Web.ViewModels.Hotels
         public int UsersCount { get; set; }
 
         public ICollection<ApplicationUser> Users { get; set; }
-
-        public ICollection<Room> Rooms { get; set; }
-
-        public int AvailableRoomsCount { get; set; }
-
-        public int OccupiedRoomsCount => this.RoomsCount - this.AvailableRoomsCount;
 
         public string Role { get; set; }
     }
