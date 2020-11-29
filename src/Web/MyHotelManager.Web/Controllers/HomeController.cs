@@ -14,6 +14,11 @@
             return this.View();
         }
 
+        public IActionResult ContactUs()
+        {
+            return this.View();
+        }
+
         public IActionResult Privacy()
         {
             return this.View();

@@ -8,7 +8,7 @@
     var user = this.UserManager.Users.FirstOrDefault(x => x.Id == this.UserManager.GetUserId(this.User));
     string controller = (string)ViewContext.RouteData.Values["controller"];
 }
-<body id="page-top">
+<body id="page-top" class="bg-light">
     <div id="wrapper">
         @if (this.SignInManager.IsSignedIn(this.User) && controller != "Home")
         {
@@ -99,7 +99,7 @@
 
 </ul>}
         <div id="content-wrapper" class="d-flex flex-column">
-            <div id="content">
+            <div id="content" >
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
                     <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -200,7 +200,7 @@
                             <!-- Nav Item - User Information -->
                             <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">@User.Identity.Name</span>
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">@user.FirstName @user.LastName</span>
                                     <span class="text-primary h1">
                                         <i class="fas fa-user-circle img-profile"></i>
                                     </span>
@@ -209,10 +209,10 @@
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                     @if (this.User.IsInRole(GlobalConstants.ManagerRoleName))
                                     {
-                                    <a class="dropdown-item" asp-controller="Hotels" asp-action="Manager">
-                                        <i class="fas fa-hotel fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Manage Hotel
-                                    </a>
+                                        <a class="dropdown-item" asp-controller="Hotels" asp-action="Manager">
+                                            <i class="fas fa-hotel fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            Manage Hotel
+                                        </a>
                                     }
                                     <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -251,7 +251,7 @@
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto row">
                         <div class="col-xl-4 col-md-4">
-                            <a asp-controller="Home" asp-action="ContactUs">Contact Us</a>
+                            <a asp-controller="Home" asp-action="ContactUs"><i class="fas fa-pencil-alt"></i> Contact Us</a>
                         </div>
 
                         <div class="col-xl-4 col-md-4">
@@ -259,7 +259,7 @@
                         </div>
 
                         <div class="col-xl-4 col-md-4">
-                            <a href="https://github.com/DimitarNeykov/MyHotelManager" target="_blank">Open Source System</a>
+                            <a href="https://github.com/DimitarNeykov/MyHotelManager" target="_blank"><i class="fab fa-github"></i> Open Source System</a>
                         </div>
                     </div>
                 </div>
