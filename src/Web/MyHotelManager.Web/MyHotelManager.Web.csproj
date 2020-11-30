@@ -62,9 +62,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\ClassLibrary1\MyHotelManager.Services.CronJobs.csproj" />
     <ProjectReference Include="..\..\Data\MyHotelManager.Data.Models\MyHotelManager.Data.Models.csproj" />
     <ProjectReference Include="..\..\Data\MyHotelManager.Data\MyHotelManager.Data.csproj" />
+    <ProjectReference Include="..\..\Services\MyHotelManager.Services.CronJobs\MyHotelManager.Services.CronJobs.csproj" />
     <ProjectReference Include="..\..\Services\MyHotelManager.Services.Data\MyHotelManager.Services.Data.csproj" />
     <ProjectReference Include="..\..\Services\MyHotelManager.Services.Mapping\MyHotelManager.Services.Mapping.csproj" />
     <ProjectReference Include="..\..\Services\MyHotelManager.Services.Messaging\MyHotelManager.Services.Messaging.csproj" />

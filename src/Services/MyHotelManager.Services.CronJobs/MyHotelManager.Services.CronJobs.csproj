@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
+    <AdditionalFiles Include="..\..\stylecop.json" Link="stylecop.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,11 +23,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Data\MyHotelManager.Data.Common\MyHotelManager.Data.Common.csproj" />
-    <ProjectReference Include="..\Data\MyHotelManager.Data.Models\MyHotelManager.Data.Models.csproj" />
-    <ProjectReference Include="..\MyHotelManager.Common\MyHotelManager.Common.csproj" />
-    <ProjectReference Include="..\Services\MyHotelManager.Services.Data\MyHotelManager.Services.Data.csproj" />
-    <ProjectReference Include="..\Services\MyHotelManager.Services\MyHotelManager.Services.csproj" />
+    <ProjectReference Include="..\..\Data\MyHotelManager.Data.Common\MyHotelManager.Data.Common.csproj" />
+    <ProjectReference Include="..\..\Data\MyHotelManager.Data.Models\MyHotelManager.Data.Models.csproj" />
+    <ProjectReference Include="..\..\MyHotelManager.Common\MyHotelManager.Common.csproj" />
+    <ProjectReference Include="..\MyHotelManager.Services.Data\MyHotelManager.Services.Data.csproj" />
+    <ProjectReference Include="..\MyHotelManager.Services\MyHotelManager.Services.csproj" />
   </ItemGroup>
 
 </Project>
