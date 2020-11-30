@@ -12,5 +12,7 @@
         public string Title { get; set; }
 
         public string Content { get; set; }
+
+        public AboutUsViewModel AboutUs { get; set; }
     }
 }

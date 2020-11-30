@@ -1,4 +1,8 @@
-﻿namespace MyHotelManager.Web.Controllers
+﻿using System.Threading.Tasks;
+using MyHotelManager.Services.Data;
+using MyHotelManager.Web.ViewModels.Home;
+
+namespace MyHotelManager.Web.Controllers
 {
     using System.Diagnostics;
 
@@ -9,14 +13,28 @@
 
     public class HomeController : Controller
     {
+        private readonly IAboutUsService aboutUsService;
+
+        public HomeController(IAboutUsService aboutUsService)
+        {
+            this.aboutUsService = aboutUsService;
+        }
+
         public IActionResult Index()
         {
             return this.View();
         }
 
-        public IActionResult ContactUs()
+        public async Task<IActionResult> ContactUs()
         {
-            return this.View();
+            var aboutUsInformation = await this.aboutUsService.GetInformationAsync<AboutUsViewModel>();
+
+            var viewModel = new ContactFormInputModel
+            {
+                AboutUs = aboutUsInformation,
+            };
+
+            return this.View(viewModel);
         }
 
         public IActionResult Privacy()

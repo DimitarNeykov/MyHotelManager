@@ -42,6 +42,7 @@
                               new RoomTypesSeeder(),
                               new CountriesSeeder(this.contentRootPath),
                               new CitiesSeeder(this.contentRootPath),
+                              new AboutUsSeeder(),
                           };
 
             foreach (var seeder in seeders)

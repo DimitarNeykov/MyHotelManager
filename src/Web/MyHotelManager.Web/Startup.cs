@@ -99,6 +99,7 @@
             services.AddTransient<IGuestsService, GuestsService>();
             services.AddTransient<ICountriesService, CountriesService>();
             services.AddTransient<IClearOldReservation, ClearOldReservations>();
+            services.AddTransient<IAboutUsService, AboutUsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -124,7 +125,7 @@
                 var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
                 dbContext.Database.Migrate();
                 new ApplicationDbContextSeeder(env.WebRootPath).SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
-                this.SeedHangfireJobs(recurringJobManager, dbContext, serviceProvider);
+                this.SeedHangfireJobs(recurringJobManager, serviceProvider);
             }
 
             if (env.IsDevelopment())
@@ -157,7 +158,7 @@
                     });
         }
 
-        private void SeedHangfireJobs(IRecurringJobManager recurringJobManager, ApplicationDbContext dbContext, IServiceProvider serviceProvider)
+        private void SeedHangfireJobs(IRecurringJobManager recurringJobManager, IServiceProvider serviceProvider)
         {
             recurringJobManager.AddOrUpdate(
                 "ClearOldReservation",
