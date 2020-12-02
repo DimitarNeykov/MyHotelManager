@@ -1,7 +1,6 @@
 ﻿namespace MyHotelManager.Web
 {
     using System;
-    using System.Linq;
     using System.Reflection;
 
     using Hangfire;
@@ -57,6 +56,10 @@
 
             services.AddHangfireServer();
 
+            services.AddSession();
+            services.Configure<CookieTempDataProviderOptions>(options => {
+                options.Cookie.IsEssential = true;
+            });
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
 
@@ -87,7 +90,8 @@
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             // Application services
-            services.AddTransient<IEmailSender, NullMessageSender>();
+            services.AddTransient<IEmailSender>(
+                serviceProvider => new SendGridEmailSender(this.configuration["SendGrid:ApiKey"]));
             services.AddTransient<ICompaniesService, CompaniesService>();
             services.AddTransient<IHotelsService, HotelsService>();
             services.AddTransient<ICitiesService, CitiesService>();
@@ -100,6 +104,7 @@
             services.AddTransient<ICountriesService, CountriesService>();
             services.AddTransient<IClearOldReservation, ClearOldReservations>();
             services.AddTransient<IAboutUsService, AboutUsService>();
+            services.AddTransient<IContactUsService, ContactUsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -147,6 +152,8 @@
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(
                 endpoints =>

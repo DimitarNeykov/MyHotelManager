@@ -88,11 +88,13 @@
                     this.ModelState.AddModelError(string.Empty, error.Description);
                 }
 
-                return this.Page();
+                this.StatusMessage = "Unexpected error when trying to change password.";
+                return this.RedirectToPage();
             }
 
             await this._signInManager.RefreshSignInAsync(user);
             this._logger.LogInformation("User changed their password successfully.");
+
             this.StatusMessage = "Your password has been changed.";
 
             return this.RedirectToPage();

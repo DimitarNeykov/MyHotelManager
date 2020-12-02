@@ -1,23 +1,25 @@
-﻿using System.Threading.Tasks;
-using MyHotelManager.Services.Data;
-using MyHotelManager.Web.ViewModels.Home;
-
-namespace MyHotelManager.Web.Controllers
+﻿namespace MyHotelManager.Web.Controllers
 {
     using System.Diagnostics;
+    using System.Threading.Tasks;
 
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using MyHotelManager.Data.Models;
+    using MyHotelManager.Services.Data;
+    using MyHotelManager.Services.Messaging;
     using MyHotelManager.Web.ViewModels;
+    using MyHotelManager.Web.ViewModels.Home;
 
     public class HomeController : Controller
     {
         private readonly IAboutUsService aboutUsService;
+        private readonly IContactUsService contactUsService;
+        private readonly IEmailSender emailSender;
 
-        public HomeController(IAboutUsService aboutUsService)
+        public HomeController(IAboutUsService aboutUsService, IContactUsService contactUsService, IEmailSender emailSender)
         {
             this.aboutUsService = aboutUsService;
+            this.contactUsService = contactUsService;
+            this.emailSender = emailSender;
         }
 
         public IActionResult Index()
@@ -35,6 +37,28 @@ namespace MyHotelManager.Web.Controllers
             };
 
             return this.View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ContactUs(ContactFormInputModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(input);
+            }
+
+            await this.contactUsService.CreateAsync(input.Name, input.Email, input.Title, input.Content);
+
+            var aboutUsInformation = await this.aboutUsService.GetInformationAsync<AboutUsViewModel>();
+
+            await this.emailSender.SendEmailAsync(
+                input.Email,
+                input.Name,
+                aboutUsInformation.Email,
+                input.Title,
+                input.Content);
+
+            return this.RedirectToAction("Index");
         }
 
         public IActionResult Privacy()

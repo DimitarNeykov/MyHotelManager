@@ -3,11 +3,11 @@
 @using MyHotelManager.Data.Models
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
-@{
-    Layout = "_BasicLayout";
-    var user = this.UserManager.Users.FirstOrDefault(x => x.Id == this.UserManager.GetUserId(this.User));
-    string controller = (string)ViewContext.RouteData.Values["controller"];
+@{ Layout = "_BasicLayout";
+                var user = this.UserManager.Users.FirstOrDefault(x => x.Id == this.UserManager.GetUserId(this.User));
+                string controller = (string)ViewContext.RouteData.Values["controller"];
 }
+@this.RenderSection("Style", false)
 <body id="page-top" class="bg-light">
     <div id="wrapper">
         @if (this.SignInManager.IsSignedIn(this.User) && controller != "Home")
@@ -54,8 +54,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 @if (this.User.IsInRole(GlobalConstants.ManagerRoleName))
                 {
-                    <a class="collapse-item" asp-controller="Rooms" asp-action="Create">Create New Room</a>
-                }
+<a class="collapse-item" asp-controller="Rooms" asp-action="Create">Create New Room</a>                }
                 <a class="collapse-item" asp-controller="Rooms" asp-action="AllRooms">All Rooms</a>
             </div>
         </div>
@@ -99,7 +98,7 @@
 
 </ul>}
         <div id="content-wrapper" class="d-flex flex-column">
-            <div id="content" >
+            <div id="content">
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
                     <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -109,136 +108,128 @@
                     <!-- Topbar Navbar -->
                     @if (controller == "Home" || user.HotelId == null)
                     {
-                        <ul class="navbar-nav">
-                            <li class="">
-                                <a class="nav-link navbar-brand" asp-controller="Home" asp-action="Index">
-                                    MyHotelManager
-                                </a>
-                            </li>
-                        </ul>
-                    }
+        <ul class="navbar-nav">
+            <li class="">
+                <a class="nav-link navbar-brand" asp-controller="Home" asp-action="Index">
+                    MyHotelManager
+                </a>
+            </li>
+        </ul>}
                     <ul class="navbar-nav ml-auto">
                         @if (this.SignInManager.IsSignedIn(this.User))
                         {<!-- Nav Item - Messages -->
-                            @if (controller != "Home" && user.HotelId != null)
-                            {
-                                <li class="nav-item dropdown no-arrow mx-1">
-                                    <a class="nav-link dropdown-toggle text-primary" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fas fa-envelope fa-fw"></i>
-                                        <!-- Counter - Messages -->
-                                        <span class="badge badge-danger badge-counter">7</span>
-                                    </a>
-                                    <!-- Dropdown - Messages -->
-                                    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
-                                        <h6 class="dropdown-header">
-                                            Message Center
-                                        </h6>
-                                        <a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image mr-3">
-                                                <img class="rounded-circle" src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
-                                                <div class="status-indicator bg-success"></div>
-                                            </div>
-                                            <div class="font-weight-bold">
-                                                <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
-                                                <div class="small text-gray-500">Emily Fowler · 58m</div>
-                                            </div>
-                                        </a>
-                                        <a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image mr-3">
-                                                <img class="rounded-circle" src="https://source.unsplash.com/AU4VPcFN4LE/60x60" alt="">
-                                                <div class="status-indicator"></div>
-                                            </div>
-                                            <div>
-                                                <div class="text-truncate">I have the photos that you ordered last month, how would you like them sent to you?</div>
-                                                <div class="small text-gray-500">Jae Chun · 1d</div>
-                                            </div>
-                                        </a>
-                                        <a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image mr-3">
-                                                <img class="rounded-circle" src="https://source.unsplash.com/CS2uCrpNzJY/60x60" alt="">
-                                                <div class="status-indicator bg-warning"></div>
-                                            </div>
-                                            <div>
-                                                <div class="text-truncate">Last month's report looks great, I am very happy with the progress so far, keep up the good work!</div>
-                                                <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                                            </div>
-                                        </a>
-                                        <a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image mr-3">
-                                                <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="">
-                                                <div class="status-indicator bg-success"></div>
-                                            </div>
-                                            <div>
-                                                <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</div>
-                                                <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                                            </div>
-                                        </a>
-                                        <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-                                    </div>
-                                </li>
-                            }
-                            else if(controller == "Home")
-                            {
-                                if (user.HotelId == null)
-                                {
-                                    <li class="nav-item">
-                                        <a class="nav-link text-black-50 font-weight-bold" asp-controller="Hotels" asp-action="Create">
-                                            Create Hotel
-                                        </a>
-                                    </li>
-                                }
-                                else
-                                {
-                                    <li class="nav-item">
-                                        <a class="nav-link text-black-50 font-weight-bold" asp-controller="Hotels" asp-action="Index">
-                                            Portal
-                                        </a>
-                                    </li>
-                                }
-                            }
-                            <div class="topbar-divider d-none d-sm-block"></div>
-                            <!-- Nav Item - User Information -->
-                            <li class="nav-item dropdown no-arrow">
-                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">@user.FirstName @user.LastName</span>
-                                    <span class="text-primary h1">
-                                        <i class="fas fa-user-circle img-profile"></i>
-                                    </span>
+                                            @if (controller != "Home" && user.HotelId != null)
+                                            {
+                            <li class="nav-item dropdown no-arrow mx-1">
+                                <a class="nav-link dropdown-toggle text-primary" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-envelope fa-fw"></i>
+                                    <!-- Counter - Messages -->
+                                    <span class="badge badge-danger badge-counter">7</span>
                                 </a>
-                                <!-- Dropdown - User Information -->
-                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                    @if (this.User.IsInRole(GlobalConstants.ManagerRoleName))
-                                    {
-                                        <a class="dropdown-item" asp-controller="Hotels" asp-action="Manager">
-                                            <i class="fas fa-hotel fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Manage Hotel
-                                        </a>
-                                    }
-                                    <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">
-                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Profile
+                                <!-- Dropdown - Messages -->
+                                <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
+                                    <h6 class="dropdown-header">
+                                        Message Center
+                                    </h6>
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="dropdown-list-image mr-3">
+                                            <img class="rounded-circle" src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
+                                            <div class="status-indicator bg-success"></div>
+                                        </div>
+                                        <div class="font-weight-bold">
+                                            <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
+                                            <div class="small text-gray-500">Emily Fowler · 58m</div>
+                                        </div>
                                     </a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal">
-                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Logout
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="dropdown-list-image mr-3">
+                                            <img class="rounded-circle" src="https://source.unsplash.com/AU4VPcFN4LE/60x60" alt="">
+                                            <div class="status-indicator"></div>
+                                        </div>
+                                        <div>
+                                            <div class="text-truncate">I have the photos that you ordered last month, how would you like them sent to you?</div>
+                                            <div class="small text-gray-500">Jae Chun · 1d</div>
+                                        </div>
                                     </a>
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="dropdown-list-image mr-3">
+                                            <img class="rounded-circle" src="https://source.unsplash.com/CS2uCrpNzJY/60x60" alt="">
+                                            <div class="status-indicator bg-warning"></div>
+                                        </div>
+                                        <div>
+                                            <div class="text-truncate">Last month's report looks great, I am very happy with the progress so far, keep up the good work!</div>
+                                            <div class="small text-gray-500">Morgan Alvarez · 2d</div>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="dropdown-list-image mr-3">
+                                            <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="">
+                                            <div class="status-indicator bg-success"></div>
+                                        </div>
+                                        <div>
+                                            <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</div>
+                                            <div class="small text-gray-500">Chicken the Dog · 2w</div>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
                                 </div>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="">
-                                <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">
-                                    Login
+                            </li> }
+                                            else if (controller == "Home")
+                                            {
+                                                if (user.HotelId == null)
+                                                {
+                            <li class="nav-item">
+                                <a class="nav-link text-black-50 font-weight-bold" asp-controller="Hotels" asp-action="Create">
+                                    Create Hotel
                                 </a>
-                            </li>
-                            <li>
-                                <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">
-                                    Register
+                            </li> }
+                                                else
+                                                {
+                            <li class="nav-item">
+                                <a class="nav-link text-black-50 font-weight-bold" asp-controller="Hotels" asp-action="Index">
+                                    Portal
                                 </a>
-                            </li>
-                        }
+                            </li>}
+                                            }
+                                                            <div class="topbar-divider d-none d-sm-block"></div> <!-- Nav Item - User Information -->
+                                                                                            <li class="nav-item dropdown no-arrow">
+                                                                                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">@user.FirstName @user.LastName</span>
+                                                                                                    <span class="text-primary h1">
+                                                                                                        <i class="fas fa-user-circle img-profile"></i>
+                                                                                                    </span>
+                                                                                                </a>
+                                                                                                <!-- Dropdown - User Information -->
+                                                                                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                                                                                    @if (this.User.IsInRole(GlobalConstants.ManagerRoleName))
+                                                                                                    {
+                                                                                    <a class="dropdown-item" asp-controller="Hotels" asp-action="Manager">
+                                                                                        <i class="fas fa-hotel fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                                                        Manage Hotel
+                                                                                    </a>}
+                                                                                                    <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">
+                                                                                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                                                                        Profile
+                                                                                                    </a>
+                                                                                                    <div class="dropdown-divider"></div>
+                                                                                                    <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal">
+                                                                                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                                                                        Logout
+                                                                                                    </a>
+                                                                                                </div>
+                                                                                            </li> }
+                                                                                                        else
+                                                                                                        {
+                                                                                            <li class="">
+                                                                                                <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">
+                                                                                                    Login
+                                                                                                </a>
+                                                                                            </li>
+                                                                                                            <li>
+                                                                                                                <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">
+                                                                                                                    Register
+                                                                                                                </a>
+                                                                                                            </li>}
                     </ul>
                 </nav>
                 <div class="container-fluid">

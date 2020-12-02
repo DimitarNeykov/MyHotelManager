@@ -1,4 +1,6 @@
-﻿namespace MyHotelManager.Web.Areas.Identity.Pages.Account.Manage
+﻿using System;
+
+namespace MyHotelManager.Web.Areas.Identity.Pages.Account.Manage
 {
     using System.ComponentModel.DataAnnotations;
     using System.Threading.Tasks;
@@ -31,21 +33,41 @@
 
         public class InputModel
         {
+            [Required]
+            [MinLength(3)]
+            [MaxLength(30)]
+            public string FirstName { get; set; }
+
+            [Required]
+            [MinLength(3)]
+            [MaxLength(30)]
+            public string LastName { get; set; }
+
+            [Required]
+            public DateTime BirthDate { get; set; }
+
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Required]
+            [Range(1, 3)]
+            public int GenderId { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
         {
             var userName = await this._userManager.GetUserNameAsync(user);
             var phoneNumber = await this._userManager.GetPhoneNumberAsync(user);
-
             this.Username = userName;
 
             this.Input = new InputModel
             {
                 PhoneNumber = phoneNumber,
+                GenderId = (int)user.GenderId,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                BirthDate = user.BirthDate,
             };
         }
 
@@ -82,12 +104,22 @@
                 if (!setPhoneResult.Succeeded)
                 {
                     this.StatusMessage = "Unexpected error when trying to set phone number.";
+
                     return this.RedirectToPage();
                 }
             }
 
+            user.FirstName = this.Input.FirstName;
+            user.LastName = this.Input.LastName;
+            user.BirthDate = this.Input.BirthDate;
+            user.GenderId = this.Input.GenderId;
+
+            await this._userManager.UpdateAsync(user);
+
             await this._signInManager.RefreshSignInAsync(user);
+
             this.StatusMessage = "Your profile has been updated";
+
             return this.RedirectToPage();
         }
     }
