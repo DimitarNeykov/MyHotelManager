@@ -1,4 +1,5 @@
-﻿@model MyHotelManager.Web.ViewModels.Home.ContactFormInputModel
+﻿@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+@model MyHotelManager.Web.ViewModels.Home.ContactFormInputModel
 @{
     this.ViewData["Title"] = "Home Page";
 }
@@ -41,6 +42,7 @@
                                         <span asp-validation-for="Content" class="text-danger"></span>
                                     </div>
                                     <hr />
+                                    <input type="hidden" id="RecaptchaValue" name="RecaptchaValue" />
                                     <button type="submit" class="btn btn-success btn-user btn-block mb-5">
                                         Submit
                                     </button>
@@ -72,3 +74,14 @@
         </div>
     </div>
 </div>
+@section Scripts
+{
+    <script src="https://www.google.com/recaptcha/api.js?render=@this.Configuration["GoogleReCaptcha:Key"]"></script>
+    <script>
+        grecaptcha.ready(function() {
+            grecaptcha.execute('@this.Configuration["GoogleReCaptcha:Key"]', { action: 'contact_form' }).then(function(token) {
+                document.getElementById("RecaptchaValue").value = token;
+            });
+        });
+    </script>
+}
