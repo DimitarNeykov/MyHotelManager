@@ -126,7 +126,7 @@
                         values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
                         protocol: this.Request.Scheme);
 
-                    this.mailHelper.SendFromIdentity(
+                    await this.mailHelper.SendFromIdentityAsync(
                         this.Input.Email,
                         "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");

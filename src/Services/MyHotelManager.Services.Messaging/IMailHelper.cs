@@ -1,9 +1,11 @@
 ﻿namespace MyHotelManager.Services.Messaging
 {
+    using System.Threading.Tasks;
+
     public interface IMailHelper
     {
-        bool SendContactForm(string email, string names, string subject, string content);
+        Task SendContactFormAsync(string email, string names, string subject, string content);
 
-        bool SendFromIdentity(string email, string subject, string content);
+        Task SendFromIdentityAsync(string email, string subject, string content);
     }
 }

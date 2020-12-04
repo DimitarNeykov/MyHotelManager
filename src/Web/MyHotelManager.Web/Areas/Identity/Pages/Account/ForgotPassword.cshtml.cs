@@ -56,7 +56,7 @@
                     values: new { area = "Identity", code },
                     protocol: this.Request.Scheme);
 
-                this.mailHelper.SendFromIdentity(
+                await this.mailHelper.SendFromIdentityAsync(
                     this.Input.Email,
                     "Reset Password",
                     $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");

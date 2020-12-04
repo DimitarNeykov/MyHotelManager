@@ -52,7 +52,7 @@
 
             await this.contactUsService.CreateAsync(input.Name, input.Email, input.Title, input.Content);
 
-            this.mailHelper.SendContactForm(input.Email, input.Name, input.Title, input.Content);
+            await this.mailHelper.SendContactFormAsync(input.Email, input.Name, input.Title, input.Content);
 
             return this.RedirectToAction("Index");
         }

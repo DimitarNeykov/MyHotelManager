@@ -100,14 +100,14 @@
                     protocol: this.Request.Scheme);
                 if (await this._userManager.IsEmailConfirmedAsync(user))
                 {
-                    this.mailHelper.SendFromIdentity(
+                    await this.mailHelper.SendFromIdentityAsync(
                         email,
                         "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
                 }
                 else
                 {
-                    this.mailHelper.SendFromIdentity(
+                    await this.mailHelper.SendFromIdentityAsync(
                         this.Input.NewEmail,
                         "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
@@ -144,7 +144,7 @@
                 pageHandler: null,
                 values: new { area = "Identity", userId = userId, code = code },
                 protocol: this.Request.Scheme);
-            this.mailHelper.SendFromIdentity(
+            await this.mailHelper.SendFromIdentityAsync(
                 email,
                 "Confirm your email",
                 $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");

@@ -1,4 +1,7 @@
-﻿namespace MyHotelManager.Services.Messaging
+﻿using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+
+namespace MyHotelManager.Services.Messaging
 {
     using System.Linq;
     using System.Net;
@@ -18,58 +21,39 @@
             this.aboutUs = aboutUs;
         }
 
-        public bool SendContactForm(string email, string names, string subject, string content)
+        public async Task SendContactFormAsync(string email, string names, string subject, string content)
         {
-            var aboutUsInformation = this.aboutUs.All().First();
-            try
-            {
-                var fromAddress = new MailAddress(aboutUsInformation.Email, $"{names} - Contact Form");
-                var toAddress = new MailAddress(aboutUsInformation.Email, GlobalConstants.SystemName);
+            var aboutUsInformation = await this.aboutUs.All().FirstAsync();
 
-                var body = string.Empty;
+            var fromAddress = new MailAddress(aboutUsInformation.Email, $"{names} - Contact Form");
+            var toAddress = new MailAddress(aboutUsInformation.Email, GlobalConstants.SystemName);
 
-                body = "<font size=\"4\">";
-                body += $"<b>Email:</b> {email}";
-                body += "<br/>";
-                body += $"<b>Names:</b> {names}";
-                body += "</font>";
-                body += "<br/>";
-                body += "<br/>";
-                body += "<b>Content:</b>";
-                body += "<br/>";
-                body += content;
+            string body = "<font size=\"4\">";
+            body += $"<b>Email:</b> {email}";
+            body += "<br/>";
+            body += $"<b>Names:</b> {names}";
+            body += "</font>";
+            body += "<br/>";
+            body += "<br/>";
+            body += "<b>Content:</b>";
+            body += "<br/>";
+            body += content;
 
-                this.SendMessage(fromAddress, toAddress, aboutUsInformation.Email, aboutUsInformation.EmailPassword,
-                    subject, body);
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
+            await this.SendMessageAsync(fromAddress, toAddress, aboutUsInformation.Email, aboutUsInformation.EmailPassword,
+                subject, body);
         }
 
-        public bool SendFromIdentity(string email, string subject, string content)
+        public async Task SendFromIdentityAsync(string email, string subject, string content)
         {
-            var aboutUsInformation = this.aboutUs.All().First();
-            try
-            {
-                var fromAddress = new MailAddress(aboutUsInformation.Email, GlobalConstants.SystemName);
-                var toAddress = new MailAddress(email);
+            var aboutUsInformation = await this.aboutUs.All().FirstAsync();
+            var fromAddress = new MailAddress(aboutUsInformation.Email, GlobalConstants.SystemName);
+            var toAddress = new MailAddress(email);
 
-                this.SendMessage(fromAddress, toAddress, aboutUsInformation.Email, aboutUsInformation.EmailPassword,
-                    subject, content);
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
+            await this.SendMessageAsync(fromAddress, toAddress, aboutUsInformation.Email, aboutUsInformation.EmailPassword,
+                subject, content);
         }
 
-        private void SendMessage(MailAddress fromAddress, MailAddress toAddress, string companyEmail,
+        private async Task SendMessageAsync(MailAddress fromAddress, MailAddress toAddress, string companyEmail,
             string companyEmailPassword, string subject, string body)
         {
             var smtp = new SmtpClient
@@ -86,8 +70,10 @@
                 Subject = subject,
                 Body = body,
             };
+
             message.IsBodyHtml = true;
-            smtp.Send(message);
+
+            await smtp.SendMailAsync(message);
         }
     }
 }
