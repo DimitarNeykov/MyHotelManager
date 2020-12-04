@@ -1,6 +1,4 @@
-﻿using CloudinaryDotNet;
-
-namespace MyHotelManager.Web
+﻿namespace MyHotelManager.Web
 {
     using System;
     using System.Reflection;

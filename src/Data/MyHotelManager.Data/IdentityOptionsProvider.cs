@@ -13,6 +13,7 @@
             options.Password.RequiredLength = 8;
             options.SignIn.RequireConfirmedAccount = true;
             options.SignIn.RequireConfirmedEmail = true;
+            options.User.RequireUniqueEmail = true;
         }
     }
 }
