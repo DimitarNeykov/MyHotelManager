@@ -1,4 +1,6 @@
-﻿namespace MyHotelManager.Web.Areas.Identity.Pages.Account
+﻿using MyHotelManager.Services.Messaging;
+
+namespace MyHotelManager.Web.Areas.Identity.Pages.Account
 {
     using System.ComponentModel.DataAnnotations;
     using System.Security.Claims;
@@ -20,19 +22,19 @@
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IEmailSender _emailSender;
         private readonly ILogger<ExternalLoginModel> _logger;
+        private readonly IMailHelper mailHelper;
 
         public ExternalLoginModel(
             SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager,
             ILogger<ExternalLoginModel> logger,
-            IEmailSender emailSender)
+            IMailHelper mailHelper)
         {
             this._signInManager = signInManager;
             this._userManager = userManager;
             this._logger = logger;
-            this._emailSender = emailSender;
+            this.mailHelper = mailHelper;
         }
 
         [BindProperty]
@@ -143,7 +145,7 @@
                             values: new { area = "Identity", userId = userId, code = code },
                             protocol: this.Request.Scheme);
 
-                        await this._emailSender.SendEmailAsync(this.Input.Email, "Confirm your email",
+                        this.mailHelper.SendFromIdentity(this.Input.Email, "Confirm your email",
                             $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                         // If account confirmation is required, we need to show the link if we don't have a real email sender

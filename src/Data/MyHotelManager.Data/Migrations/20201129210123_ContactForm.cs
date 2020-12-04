@@ -1,8 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace MyHotelManager.Data.Migrations
+﻿namespace MyHotelManager.Data.Migrations
 {
+    using System;
+
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class ContactForm : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

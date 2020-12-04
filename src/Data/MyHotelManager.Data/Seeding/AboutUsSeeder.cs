@@ -14,7 +14,7 @@
             {
                 var aboutUs = new AboutUs
                 {
-                    Email = "dimitarneikov@gmail.com",
+                    Email = "myhotelmanager.bg@gmail.com",
                     Phone = "0888989844",
                     Address = "Цариградски комплекс Дружба 2 284, 1582 ж.к. Дружба 2, София",
                     LocationUrlForGoogleMaps =

@@ -11,21 +11,22 @@
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.AspNetCore.WebUtilities;
     using MyHotelManager.Data.Models;
+    using MyHotelManager.Services.Messaging;
 
     public partial class EmailModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IEmailSender _emailSender;
+        private readonly IMailHelper mailHelper;
 
         public EmailModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IEmailSender emailSender)
+            IMailHelper mailHelper)
         {
             this._userManager = userManager;
             this._signInManager = signInManager;
-            this._emailSender = emailSender;
+            this.mailHelper = mailHelper;
         }
 
         public string Username { get; set; }
@@ -73,7 +74,7 @@
             return this.Page();
         }
 
-        public async Task<IActionResult> OnPostChangeEmailAsync()
+        public async Task<IActionResult> OnPostAsync()
         {
             var user = await this._userManager.GetUserAsync(this.User);
             if (user == null)
@@ -97,10 +98,20 @@
                     pageHandler: null,
                     values: new { userId = userId, email = this.Input.NewEmail, code = code },
                     protocol: this.Request.Scheme);
-                await this._emailSender.SendEmailAsync(
-                    this.Input.NewEmail,
-                    "Confirm your email",
-                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                if (await this._userManager.IsEmailConfirmedAsync(user))
+                {
+                    this.mailHelper.SendFromIdentity(
+                        email,
+                        "Confirm your email",
+                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                }
+                else
+                {
+                    this.mailHelper.SendFromIdentity(
+                        this.Input.NewEmail,
+                        "Confirm your email",
+                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                }
 
                 this.StatusMessage = "Confirmation link to change email sent. Please check your email.";
                 return this.RedirectToPage();
@@ -133,7 +144,7 @@
                 pageHandler: null,
                 values: new { area = "Identity", userId = userId, code = code },
                 protocol: this.Request.Scheme);
-            await this._emailSender.SendEmailAsync(
+            this.mailHelper.SendFromIdentity(
                 email,
                 "Confirm your email",
                 $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");

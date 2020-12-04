@@ -1,8 +1,8 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace MyHotelManager.Web.ViewModels.Users
+﻿namespace MyHotelManager.Web.ViewModels.Users
 {
+    using System;
+    using System.ComponentModel.DataAnnotations;
+
     public class UserCreateInputModel
     {
         [Required]

@@ -7,22 +7,22 @@
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Identity.UI.Services;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.AspNetCore.WebUtilities;
     using MyHotelManager.Data.Models;
+    using MyHotelManager.Services.Messaging;
 
     [AllowAnonymous]
     public class ForgotPasswordModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IEmailSender _emailSender;
+        private readonly IMailHelper mailHelper;
 
-        public ForgotPasswordModel(UserManager<ApplicationUser> userManager, IEmailSender emailSender)
+        public ForgotPasswordModel(UserManager<ApplicationUser> userManager, IMailHelper mailHelper)
         {
             this._userManager = userManager;
-            this._emailSender = emailSender;
+            this.mailHelper = mailHelper;
         }
 
         [BindProperty]
@@ -56,7 +56,7 @@
                     values: new { area = "Identity", code },
                     protocol: this.Request.Scheme);
 
-                await this._emailSender.SendEmailAsync(
+                this.mailHelper.SendFromIdentity(
                     this.Input.Email,
                     "Reset Password",
                     $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");

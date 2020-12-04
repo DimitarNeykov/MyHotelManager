@@ -1,4 +1,7 @@
-﻿namespace MyHotelManager.Web.Areas.Identity.Pages.Account
+﻿using System.Text.Encodings.Web;
+using MyHotelManager.Services.Messaging;
+
+namespace MyHotelManager.Web.Areas.Identity.Pages.Account
 {
     using System.Text;
     using System.Threading.Tasks;
@@ -15,12 +18,12 @@
     public class RegisterConfirmationModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IEmailSender _sender;
+        private readonly IMailHelper mailHelper;
 
-        public RegisterConfirmationModel(UserManager<ApplicationUser> userManager, IEmailSender sender)
+        public RegisterConfirmationModel(UserManager<ApplicationUser> userManager, IMailHelper mailHelper)
         {
             this._userManager = userManager;
-            this._sender = sender;
+            this.mailHelper = mailHelper;
         }
 
         public string Email { get; set; }
@@ -43,21 +46,6 @@
             }
 
             this.Email = email;
-
-            // Once you add a real email sender, you should remove this code that lets you confirm the account
-            this.DisplayConfirmAccountLink = true;
-            if (this.DisplayConfirmAccountLink)
-            {
-                var userId = await this._userManager.GetUserIdAsync(user);
-                var code = await this._userManager.GenerateEmailConfirmationTokenAsync(user);
-                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                this.EmailConfirmationUrl = this.Url.Page(
-                    "/Account/ConfirmEmail",
-                    pageHandler: null,
-                    values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
-                    protocol: this.Request.Scheme);
-            }
-
             return this.Page();
         }
     }

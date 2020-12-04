@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace MyHotelManager.Web.Areas.Identity.Pages.Account.Manage
+﻿namespace MyHotelManager.Web.Areas.Identity.Pages.Account.Manage
 {
+    using System;
     using System.ComponentModel.DataAnnotations;
     using System.Threading.Tasks;
 

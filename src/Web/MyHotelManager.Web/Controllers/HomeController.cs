@@ -13,13 +13,16 @@
     {
         private readonly IAboutUsService aboutUsService;
         private readonly IContactUsService contactUsService;
-        private readonly IEmailSender emailSender;
+        private readonly IMailHelper mailHelper;
 
-        public HomeController(IAboutUsService aboutUsService, IContactUsService contactUsService, IEmailSender emailSender)
+        public HomeController(
+            IAboutUsService aboutUsService,
+            IContactUsService contactUsService,
+            IMailHelper mailHelper)
         {
             this.aboutUsService = aboutUsService;
             this.contactUsService = contactUsService;
-            this.emailSender = emailSender;
+            this.mailHelper = mailHelper;
         }
 
         public IActionResult Index()
@@ -49,14 +52,7 @@
 
             await this.contactUsService.CreateAsync(input.Name, input.Email, input.Title, input.Content);
 
-            var aboutUsInformation = await this.aboutUsService.GetInformationAsync<AboutUsViewModel>();
-
-            await this.emailSender.SendEmailAsync(
-                input.Email,
-                input.Name,
-                aboutUsInformation.Email,
-                input.Title,
-                input.Content);
+            this.mailHelper.SendContactForm(input.Email, input.Name, input.Title, input.Content);
 
             return this.RedirectToAction("Index");
         }

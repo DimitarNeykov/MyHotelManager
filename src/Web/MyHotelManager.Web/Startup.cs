@@ -57,7 +57,8 @@
             services.AddHangfireServer();
 
             services.AddSession();
-            services.Configure<CookieTempDataProviderOptions>(options => {
+            services.Configure<CookieTempDataProviderOptions>(options =>
+            {
                 options.Cookie.IsEssential = true;
             });
             services.AddDbContext<ApplicationDbContext>(
@@ -90,8 +91,6 @@
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             // Application services
-            services.AddTransient<IEmailSender>(
-                serviceProvider => new SendGridEmailSender(this.configuration["SendGrid:ApiKey"]));
             services.AddTransient<ICompaniesService, CompaniesService>();
             services.AddTransient<IHotelsService, HotelsService>();
             services.AddTransient<ICitiesService, CitiesService>();
@@ -105,6 +104,7 @@
             services.AddTransient<IClearOldReservation, ClearOldReservations>();
             services.AddTransient<IAboutUsService, AboutUsService>();
             services.AddTransient<IContactUsService, ContactUsService>();
+            services.AddTransient<IMailHelper, MailHelper>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

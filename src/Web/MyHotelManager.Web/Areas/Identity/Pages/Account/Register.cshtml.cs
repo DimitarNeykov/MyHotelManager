@@ -17,6 +17,7 @@
     using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.Extensions.Logging;
     using MyHotelManager.Data.Models;
+    using MyHotelManager.Services.Messaging;
 
     [AllowAnonymous]
     public partial class RegisterModel : PageModel
@@ -24,18 +25,18 @@
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
+        private readonly IMailHelper mailHelper;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IMailHelper mailHelper)
         {
             this._userManager = userManager;
             this._signInManager = signInManager;
             this._logger = logger;
-            this._emailSender = emailSender;
+            this.mailHelper = mailHelper;
         }
 
         [BindProperty]
@@ -125,7 +126,9 @@
                         values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
                         protocol: this.Request.Scheme);
 
-                    await this._emailSender.SendEmailAsync(this.Input.Email, "Confirm your email",
+                    this.mailHelper.SendFromIdentity(
+                        this.Input.Email,
+                        "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     if (this._userManager.Options.SignIn.RequireConfirmedAccount)
