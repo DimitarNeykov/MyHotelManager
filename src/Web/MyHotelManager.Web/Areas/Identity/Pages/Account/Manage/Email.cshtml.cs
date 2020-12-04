@@ -142,7 +142,9 @@
             }
 
             var userId = await this._userManager.GetUserIdAsync(user);
+
             var email = await this._userManager.GetEmailAsync(user);
+
             var code = await this._userManager.GenerateEmailConfirmationTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
             var callbackUrl = this.Url.Page(

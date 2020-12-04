@@ -9,14 +9,17 @@
     using MyHotelManager.Common;
     using MyHotelManager.Data.Common.Repositories;
     using MyHotelManager.Data.Models;
+    using MyHotelManager.Services.CloudinaryManage;
 
     public class MailHelper : IMailHelper
     {
         private readonly IDeletableEntityRepository<AboutUs> aboutUs;
+        private readonly ICloudinaryService cloudinaryService;
 
-        public MailHelper(IDeletableEntityRepository<AboutUs> aboutUs)
+        public MailHelper(IDeletableEntityRepository<AboutUs> aboutUs, ICloudinaryService cloudinaryService)
         {
             this.aboutUs = aboutUs;
+            this.cloudinaryService = cloudinaryService;
         }
 
         public async Task SendContactFormAsync(string email, string names, string subject, string content)
@@ -31,9 +34,12 @@
             var fromAddress = new MailAddress(aboutUsInformation.Email, $"{names} - Contact Form");
             var toAddress = new MailAddress(aboutUsInformation.Email, GlobalConstants.SystemName);
 
+            var headerImg = this.cloudinaryService.GetImgByName("email_snw4un.png");
+            var footerImg = this.cloudinaryService.GetImgByName("email_footer1_rqljpo.jpg");
+
             string bodyBuilder = "<div style=\"background-color: #BADEF7;\"><a href=\"https://localhost:44313\" title=\"HTML Email Check\" target=\"_blank\">"
                 + "<p style=\"text-align: center;\">"
-                + "<IMG SRC=\"https://scontent.fsof6-1.fna.fbcdn.net/v/t1.15752-9/129001704_383969669609728_4231849282714224807_n.png?_nc_cat=107&ccb=2&_nc_sid=ae9488&_nc_ohc=A4lSDlwICWwAX9128EL&_nc_ht=scontent.fsof6-1.fna&oh=619c3b231eb2d959f18f7ea8354844f3&oe=5FEFD506\" alt=\"Logo\">"
+                + $"<img src=\"{headerImg}\" alt=\"Logo\">"
                 + "</p>"
                 + "</a>"
                 + "<p style=\"text-align: center;\">"
@@ -51,7 +57,7 @@
                 + "</font>"
                 + "<hr>"
                 + "<a href=\"https://localhost:44313\" title=\"HTML Email Check\" target=\"_blank\">"
-                + "<IMG SRC=\"https://scontent.fsof6-1.fna.fbcdn.net/v/t1.15752-9/129180179_378261166761462_189153749511486553_n.jpg?_nc_cat=108&ccb=2&_nc_sid=ae9488&_nc_ohc=8PL_zD-_V1kAX_IhS8t&_nc_ht=scontent.fsof6-1.fna&oh=21c23bf78f32a1fb9d2cd6201b2ecb47&oe=5FF19B5A\" alt=\"Logo\">"
+                + $"<img src=\"{footerImg}\" alt=\"Logo\">"
                 + "</a>"
                 + "</div>";
 
@@ -66,9 +72,12 @@
             var fromAddress = new MailAddress(aboutUsInformation.Email, GlobalConstants.SystemName);
             var toAddress = new MailAddress(email);
 
+            var headerImg = this.cloudinaryService.GetImgByName("email_snw4un.png");
+            var footerImg = this.cloudinaryService.GetImgByName("email_footer1_rqljpo.jpg");
+
             string bodyBuilder = "<div style=\"background-color: #BADEF7;\"><a href=\"https://localhost:44313\" title=\"HTML Email Check\" target=\"_blank\">"
                 + "<p style=\"text-align: center;\">"
-                + "<img src=\"https://scontent.fsof6-1.fna.fbcdn.net/v/t1.15752-9/129001704_383969669609728_4231849282714224807_n.png?_nc_cat=107&ccb=2&_nc_sid=ae9488&_nc_ohc=A4lSDlwICWwAX9128EL&_nc_ht=scontent.fsof6-1.fna&oh=619c3b231eb2d959f18f7ea8354844f3&oe=5FEFD506\" alt=\"Logo\">"
+                + $"<img src=\"{headerImg}\" alt =\"Logo\">"
                 + "</p>"
                 + "</a>"
                 + "<hr>"
@@ -94,7 +103,7 @@
                 + "</font>"
                 + "<hr>"
                 + "<a href=\"https://localhost:44313\" title=\"HTML Email Check\" target=\"_blank\">"
-                + "<img src=\"https://scontent.fsof6-1.fna.fbcdn.net/v/t1.15752-9/129180179_378261166761462_189153749511486553_n.jpg?_nc_cat=108&ccb=2&_nc_sid=ae9488&_nc_ohc=8PL_zD-_V1kAX_IhS8t&_nc_ht=scontent.fsof6-1.fna&oh=21c23bf78f32a1fb9d2cd6201b2ecb47&oe=5FF19B5A\" alt=\"Logo\">"
+                + $"<img src=\"{footerImg}\" alt=\"Logo\">"
                 + "</a>"
                 + "</div>";
 

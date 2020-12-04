@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\MyHotelManager.Data.Models\MyHotelManager.Data.Models.csproj" />
     <ProjectReference Include="..\..\MyHotelManager.Common\MyHotelManager.Common.csproj" />
+    <ProjectReference Include="..\MyHotelManager.Services.Cloudinary\MyHotelManager.Services.CloudinaryManage.csproj" />
     <ProjectReference Include="..\MyHotelManager.Services.Mapping\MyHotelManager.Services.Mapping.csproj" />
   </ItemGroup>
 

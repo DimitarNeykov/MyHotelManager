@@ -30,6 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CloudinaryDotNet" Version="1.14.0" />
     <PackageReference Include="Hangfire.AspNetCore" Version="1.7.18" />
     <PackageReference Include="Hangfire.Console" Version="1.4.2" />
     <PackageReference Include="Hangfire.SqlServer" Version="1.7.18" />
@@ -65,6 +66,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\MyHotelManager.Data.Models\MyHotelManager.Data.Models.csproj" />
     <ProjectReference Include="..\..\Data\MyHotelManager.Data\MyHotelManager.Data.csproj" />
+    <ProjectReference Include="..\..\Services\MyHotelManager.Services.Cloudinary\MyHotelManager.Services.CloudinaryManage.csproj" />
     <ProjectReference Include="..\..\Services\MyHotelManager.Services.CronJobs\MyHotelManager.Services.CronJobs.csproj" />
     <ProjectReference Include="..\..\Services\MyHotelManager.Services.Data\MyHotelManager.Services.Data.csproj" />
     <ProjectReference Include="..\..\Services\MyHotelManager.Services.Mapping\MyHotelManager.Services.Mapping.csproj" />

@@ -1,4 +1,6 @@
-﻿namespace MyHotelManager.Web
+﻿using CloudinaryDotNet;
+
+namespace MyHotelManager.Web
 {
     using System;
     using System.Reflection;
@@ -22,6 +24,7 @@
     using MyHotelManager.Data.Models;
     using MyHotelManager.Data.Repositories;
     using MyHotelManager.Data.Seeding;
+    using MyHotelManager.Services.CloudinaryManage;
     using MyHotelManager.Services.CronJobs;
     using MyHotelManager.Services.Data;
     using MyHotelManager.Services.Mapping;
@@ -66,6 +69,10 @@
 
             services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
                 .AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddTransient<ICloudinaryService>(serviceProvider =>
+                new CloudinaryService(this.configuration["Cloudinary:CloudName"], this.configuration["Cloudinary:ApiKey"],
+                    this.configuration["Cloudinary:ApiSecret"]));
 
             services.Configure<CookiePolicyOptions>(
                 options =>

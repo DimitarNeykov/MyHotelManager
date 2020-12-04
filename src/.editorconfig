@@ -53,3 +53,6 @@ dotnet_diagnostic.IDE0052.severity = silent
 
 # SA1600: Elements should be documented
 dotnet_diagnostic.SA1600.severity = silent
+
+# Default severity for analyzer diagnostics with category 'StyleCop.CSharp.DocumentationRules'
+dotnet_analyzer_diagnostic.category-StyleCop.CSharp.DocumentationRules.severity = silent
