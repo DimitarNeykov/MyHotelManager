@@ -58,8 +58,11 @@
 
                 await this.mailHelper.SendFromIdentityAsync(
                     this.Input.Email,
-                    "Reset Password",
-                    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    "Password reset",
+                    $"{user.FirstName} {user.LastName}",
+                    "You are receiving this email because we received a password reset request for your account.",
+                    HtmlEncoder.Default.Encode(callbackUrl),
+                    "If you did not request a password reset, no further action is required.");
 
                 return this.RedirectToPage("./ForgotPasswordConfirmation");
             }

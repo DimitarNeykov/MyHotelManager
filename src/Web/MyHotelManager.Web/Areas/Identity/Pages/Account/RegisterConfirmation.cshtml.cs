@@ -1,18 +1,14 @@
-﻿using System.Text.Encodings.Web;
-using MyHotelManager.Services.Messaging;
-
-namespace MyHotelManager.Web.Areas.Identity.Pages.Account
+﻿namespace MyHotelManager.Web.Areas.Identity.Pages.Account
 {
     using System.Text;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Identity.UI.Services;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
-    using Microsoft.AspNetCore.WebUtilities;
     using MyHotelManager.Data.Models;
+    using MyHotelManager.Services.Messaging;
 
     [AllowAnonymous]
     public class RegisterConfirmationModel : PageModel

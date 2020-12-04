@@ -98,22 +98,28 @@
                     pageHandler: null,
                     values: new { userId = userId, email = this.Input.NewEmail, code = code },
                     protocol: this.Request.Scheme);
+
+                string sendToAddress;
+
                 if (await this._userManager.IsEmailConfirmedAsync(user))
                 {
-                    await this.mailHelper.SendFromIdentityAsync(
-                        email,
-                        "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    sendToAddress = email;
                 }
                 else
                 {
-                    await this.mailHelper.SendFromIdentityAsync(
-                        this.Input.NewEmail,
-                        "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    sendToAddress = this.Input.NewEmail;
                 }
 
+                await this.mailHelper.SendFromIdentityAsync(
+                    sendToAddress,
+                    "Confirm your email",
+                    $"{user.FirstName} {user.LastName}",
+                    "You are receiving this email because we received an email reset request for your account in My Hotel Manager.",
+                    HtmlEncoder.Default.Encode(callbackUrl),
+                    "If you did not request an email reset, no further action is required.");
+
                 this.StatusMessage = "Confirmation link to change email sent. Please check your email.";
+
                 return this.RedirectToPage();
             }
 
@@ -144,10 +150,6 @@
                 pageHandler: null,
                 values: new { area = "Identity", userId = userId, code = code },
                 protocol: this.Request.Scheme);
-            await this.mailHelper.SendFromIdentityAsync(
-                email,
-                "Confirm your email",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
             this.StatusMessage = "Verification email sent. Please check your email.";
             return this.RedirectToPage();

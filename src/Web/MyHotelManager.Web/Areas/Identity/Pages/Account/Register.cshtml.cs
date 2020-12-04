@@ -128,8 +128,11 @@
 
                     await this.mailHelper.SendFromIdentityAsync(
                         this.Input.Email,
-                        "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                        "Confirm your registration",
+                        $"{user.FirstName} {user.LastName}",
+                        "You are receiving this email because we received a registration confirmation request.",
+                        HtmlEncoder.Default.Encode(callbackUrl),
+                        "If you did not request a registration confirmation, no further action is needed.");
 
                     if (this._userManager.Options.SignIn.RequireConfirmedAccount)
                     {

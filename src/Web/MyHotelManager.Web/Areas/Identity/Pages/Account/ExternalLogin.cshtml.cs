@@ -1,21 +1,18 @@
-﻿using MyHotelManager.Services.Messaging;
-
-namespace MyHotelManager.Web.Areas.Identity.Pages.Account
+﻿namespace MyHotelManager.Web.Areas.Identity.Pages.Account
 {
     using System.ComponentModel.DataAnnotations;
     using System.Security.Claims;
     using System.Text;
-    using System.Text.Encodings.Web;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Identity.UI.Services;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.Extensions.Logging;
     using MyHotelManager.Data.Models;
+    using MyHotelManager.Services.Messaging;
 
     [AllowAnonymous]
     public class ExternalLoginModel : PageModel
@@ -144,9 +141,6 @@ namespace MyHotelManager.Web.Areas.Identity.Pages.Account
                             pageHandler: null,
                             values: new { area = "Identity", userId = userId, code = code },
                             protocol: this.Request.Scheme);
-
-                        await this.mailHelper.SendFromIdentityAsync(this.Input.Email, "Confirm your email",
-                            $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                         // If account confirmation is required, we need to show the link if we don't have a real email sender
                         if (this._userManager.Options.SignIn.RequireConfirmedAccount)
