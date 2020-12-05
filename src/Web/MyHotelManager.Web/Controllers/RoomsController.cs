@@ -66,6 +66,11 @@
                 return null;
             }
 
+            if (returnDate.Value.Date <= DateTime.UtcNow.ToLocalTime().Date)
+            {
+                return null;
+            }
+
             var userId = this.userManager.GetUserId(this.User);
 
             var viewModel = this.roomsService.AvailableRooms<RoomViewModel>(userId, (DateTime)arrivalDate, (DateTime)returnDate);
@@ -82,6 +87,11 @@
         public async Task<IActionResult> AvailableRoomsWithReservationRoom(DateTime? arrivalDate, DateTime? returnDate, string reservationId)
         {
             if (arrivalDate == null || returnDate == null)
+            {
+                return null;
+            }
+
+            if (returnDate.Value.Date <= DateTime.UtcNow.ToLocalTime().Date)
             {
                 return null;
             }
