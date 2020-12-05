@@ -3,23 +3,11 @@
 }
 @if (TempData.ContainsKey("Message"))
 {
-    if (TempData.ContainsKey("MessageType"))
-    {
-        @if (TempData["MessageType"].ToString() == "Success")
-        {
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-    @TempData["Message"].ToString()
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-</div>
-        }
-        else if (TempData["MessageType"].ToString() == "Warning")
-        {
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
-    @TempData["Message"].ToString()
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-</div>
-        }
-    }
+    var statusMessageClass = TempData["Message"].ToString().StartsWith("Error") ? "danger" : "success";
+    <div class="alert alert-@statusMessageClass alert-dismissible fade show" role="alert">
+        @TempData["Message"].ToString()
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
 }
 <div class="jumbotron">
     <h1 class="display-4">Hello, world!</h1>

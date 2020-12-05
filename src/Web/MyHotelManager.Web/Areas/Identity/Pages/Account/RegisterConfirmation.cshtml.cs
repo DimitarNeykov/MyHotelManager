@@ -43,9 +43,7 @@
 
             this.Email = email;
 
-            this.TempData["MessageType"] = "Success";
-            this.TempData["Message"] =
-                "Thanks for signing up. Please visit your email and verify your account to continue.";
+            this.TempData["Message"] = "Thanks for signing up. Please visit your email and verify your account to continue.";
 
             return this.RedirectToAction("Index", "Home");
         }

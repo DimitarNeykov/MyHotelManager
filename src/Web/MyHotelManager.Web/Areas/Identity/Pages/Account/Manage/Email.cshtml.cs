@@ -93,6 +93,7 @@
             {
                 var userId = await this._userManager.GetUserIdAsync(user);
                 var code = await this._userManager.GenerateChangeEmailTokenAsync(user, this.Input.NewEmail);
+                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                 var callbackUrl = this.Url.Page(
                     "/Account/ConfirmEmailChange",
                     pageHandler: null,
