@@ -38,8 +38,15 @@
 
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             var result = await this._userManager.ConfirmEmailAsync(user, code);
-            this.StatusMessage = result.Succeeded ? "Thank you for confirming your email." : "Error confirming your email.";
-            return this.Page();
+
+            if (await this._userManager.IsEmailConfirmedAsync(user))
+            {
+                result = IdentityResult.Failed();
+            }
+
+            this.TempData["Message"] = result.Succeeded ? "Thank you for confirming your registration." : "Error! Your registration has already been confirmed.";
+
+            return this.RedirectToPage("Login");
         }
     }
 }
