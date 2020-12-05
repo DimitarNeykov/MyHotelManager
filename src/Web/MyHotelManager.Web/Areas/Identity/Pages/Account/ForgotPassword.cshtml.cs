@@ -42,8 +42,8 @@
                 var user = await this._userManager.FindByEmailAsync(this.Input.Email);
                 if (user == null || !(await this._userManager.IsEmailConfirmedAsync(user)))
                 {
-                    // Don't reveal that the user does not exist or is not confirmed
-                    return this.RedirectToPage("./ForgotPasswordConfirmation");
+                    this.TempData["Message"] = "Error! We could not find a user with this E-mail.";
+                    return this.RedirectToAction("Index", "Home");
                 }
 
                 // For more information on how to enable account confirmation and password reset please
