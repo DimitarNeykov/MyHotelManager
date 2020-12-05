@@ -44,7 +44,7 @@
                 var hotelViewModel = await this.hotelsService.GetByIdWithDeletedAsync<HotelDashboardViewModel>((int)user.HotelId);
 
                 var availableRoomsCount =
-                    this.roomsService.AvailableRooms<RoomViewModel>((int)user.HotelId, DateTime.Now, DateTime.Now.AddDays(1)).Count();
+                    this.roomsService.AvailableRooms<RoomViewModel>((int)user.HotelId, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddDays(1)).Count();
 
                 hotelViewModel.AvailableRoomsCount = availableRoomsCount;
                 return this.View(hotelViewModel);

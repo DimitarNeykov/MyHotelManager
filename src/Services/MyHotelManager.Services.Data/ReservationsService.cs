@@ -88,8 +88,8 @@
                 .ThenInclude(c => c.Country)
                 .Include(r => r.Room)
                 .Where(x => x.Room.HotelId == hotelId &&
-                            DateTime.UtcNow <= x.ReturnDate &&
-                            DateTime.Now.Date > x.ArrivalDate &&
+                            DateTime.UtcNow.Date <= x.ReturnDate.Date &&
+                            DateTime.UtcNow.Date > x.ArrivalDate.Date &&
                             x.HasBreakfast)
                 .To<T>()
                 .ToList();
@@ -108,8 +108,8 @@
                 .ThenInclude(c => c.Country)
                 .Include(r => r.Room)
                 .Where(x => x.Room.HotelId == hotelId &&
-                            DateTime.UtcNow <= x.ReturnDate &&
-                            DateTime.Now.Date >= x.ArrivalDate &&
+                            DateTime.UtcNow.Date <= x.ReturnDate.Date &&
+                            DateTime.UtcNow.Date >= x.ArrivalDate.Date &&
                             x.HasLunch)
                 .To<T>()
                 .ToList();
@@ -128,8 +128,8 @@
                 .ThenInclude(c => c.Country)
                 .Include(r => r.Room)
                 .Where(x => x.Room.HotelId == hotelId &&
-                            DateTime.Now.Date < x.ReturnDate &&
-                            DateTime.Now.Date >= x.ArrivalDate &&
+                            DateTime.UtcNow.Date < x.ReturnDate.Date &&
+                            DateTime.UtcNow.Date >= x.ArrivalDate.Date &&
                             x.HasDinner)
                 .To<T>()
                 .ToList();

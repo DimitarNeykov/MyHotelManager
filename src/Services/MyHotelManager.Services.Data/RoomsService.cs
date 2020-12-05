@@ -143,9 +143,9 @@
                 .AsEnumerable()
                 .Where(x => x.HotelId == hotelId &&
                             x.Reservations.Any(r =>
-                                (DateTime.Now.Date - r.ArrivalDate.Date).Days % x.Hotel.CleaningPerDays == 0 &&
-                                r.ArrivalDate.Date < DateTime.Now.Date ||
-                                r.ReturnDate.Date == DateTime.Now.Date))
+                                (DateTime.UtcNow.Date - r.ArrivalDate.Date).Days % x.Hotel.CleaningPerDays == 0 &&
+                                r.ArrivalDate.Date < DateTime.UtcNow.Date ||
+                                r.ReturnDate.Date == DateTime.UtcNow.Date))
                 .AsQueryable()
                 .OrderBy(x => x.Number)
                 .To<T>()

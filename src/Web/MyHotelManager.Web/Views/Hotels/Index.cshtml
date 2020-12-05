@@ -2,9 +2,9 @@
 
 @{
     this.ViewData["Title"] = "My Hotels";
-    var thisYear = DateTime.Now.Year;
-    var oneYearEarly = DateTime.Now.Year - 1;
-    var twoYearEarly = DateTime.Now.Year - 2;
+    var thisYear = DateTime.UtcNow.Year;
+    var oneYearEarly = DateTime.UtcNow.Year - 1;
+    var twoYearEarly = DateTime.UtcNow.Year - 2;
 }
 <h1 class="text-center mb-5 font-italic">@Model.Name</h1>
 <div class="row text-center">
