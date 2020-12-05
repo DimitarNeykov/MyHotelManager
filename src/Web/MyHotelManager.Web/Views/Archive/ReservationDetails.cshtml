@@ -286,7 +286,7 @@
                                 <tr>
                                     <td class="text-center align-middle">@guest.FirstName @guest.LastName</td>
                                     <td class="text-center align-middle">@guest.PhoneNumber</td>
-                                    <td class="text-center align-middle">@guest.PNF</td>
+                                    <td class="text-center align-middle">@guest.UniqueNumberForeigner</td>
                                     <td class="text-center align-middle">@guest.DocumentNumber</td>
                                     <td class="text-center align-middle">@guest.DateOfIssue</td>
                                     <td class="text-center align-middle">@guest.DateOfExpiry</td>
@@ -318,7 +318,7 @@
                                     {
                                         <td></td>
                                     }
-                                    @if (guest.PNF != null)
+                                    @if (guest.UniqueNumberForeigner != null)
                                     {
                                         <td class="text-center align-middle text-success"><i class="fas fa-check"></i></td>
                                     }

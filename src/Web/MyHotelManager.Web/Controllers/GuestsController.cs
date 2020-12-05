@@ -50,8 +50,8 @@
                 input.PhoneNumber,
                 input.CityId,
                 input.CountryId,
-                input.UCN,
-                input.PNF,
+                input.IdentificationNumber,
+                input.UniqueNumberForeigner,
                 input.DocumentNumber,
                 input.DateOfExpiry,
                 input.DateOfIssue,
@@ -79,8 +79,8 @@
                 DocumentNumber = guest.DocumentNumber,
                 GenderId = guest.GenderId,
                 PhoneNumber = guest.PhoneNumber,
-                PNF = guest.PNF,
-                UCN = guest.UCN,
+                UniqueNumberForeigner = guest.UniqueNumberForeigner,
+                IdentificationNumber = guest.IdentificationNumber,
                 Cities = cities,
                 Countries = countries,
                 ReservationId = guest.ReservationId,
@@ -92,7 +92,7 @@
         [HttpPost]
         public async Task<IActionResult> Update(GuestUpdateInputModel input)
         {
-            if (input.UCN == null && input.PNF == null)
+            if (input.IdentificationNumber == null && input.UniqueNumberForeigner == null)
             {
                 return this.View(input);
             }
@@ -105,8 +105,8 @@
                 input.PhoneNumber,
                 input.CityId,
                 input.CountryId,
-                input.UCN,
-                input.PNF,
+                input.IdentificationNumber,
+                input.UniqueNumberForeigner,
                 input.DocumentNumber,
                 input.DateOfExpiry,
                 input.DateOfIssue);

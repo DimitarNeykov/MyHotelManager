@@ -19,9 +19,9 @@
 
         public int CountryId { get; set; }
 
-        public string UCN { get; set; }
+        public string IdentificationNumber { get; set; }
 
-        public string PNF { get; set; }
+        public string UniqueNumberForeigner { get; set; }
 
         public string DocumentNumber { get; set; }
 

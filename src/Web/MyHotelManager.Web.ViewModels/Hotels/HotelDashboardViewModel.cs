@@ -22,7 +22,7 @@
 
         public double ArrivedReservationsForToday => this.Rooms.Sum(r => r.Reservations
             .Count(r => r.ArrivalDate.Date == DateTime.Now.Date && r.CancelDate == null && r.IsDeleted == false &&
-                        r.Guests.Any(x => x.PNF != null || x.UCN != null)));
+                        r.Guests.Any(x => x.UniqueNumberForeigner != null || x.IdentificationNumber != null)));
 
         public double PercentageOfArrivedReservations =>
             (this.ArrivedReservationsForToday / this.ReservationsForToday) * 100;

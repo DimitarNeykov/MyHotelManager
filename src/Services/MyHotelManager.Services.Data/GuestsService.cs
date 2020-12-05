@@ -18,10 +18,10 @@
             this.guestRepository = guestRepository;
         }
 
-        public async Task CreateAsync(string firstName, string lastName, int genderId, string phoneNumber, int? cityId, int? countryId, string UCN, string PNF, string documentNumber, DateTime dateOfExpiry, DateTime dateOfIssue, string reservationId)
+        public async Task CreateAsync(string firstName, string lastName, int genderId, string phoneNumber, int? cityId, int? countryId, string identificationNumber, string uniqueNumberForeigner, string documentNumber, DateTime dateOfExpiry, DateTime dateOfIssue, string reservationId)
         {
             Guest guest;
-            if (PNF == null)
+            if (uniqueNumberForeigner == null)
             {
                 guest = new Guest
                 {
@@ -33,7 +33,7 @@
                     LastName = lastName,
                     GenderId = genderId,
                     PhoneNumber = phoneNumber,
-                    UCN = UCN,
+                    IdentificationNumber = identificationNumber,
                     ReservationId = reservationId,
                 };
             }
@@ -49,7 +49,7 @@
                     LastName = lastName,
                     GenderId = genderId,
                     PhoneNumber = phoneNumber,
-                    PNF = PNF,
+                    UniqueNumberForeigner = uniqueNumberForeigner,
                     ReservationId = reservationId,
                 };
             }
@@ -69,7 +69,7 @@
             return guest;
         }
 
-        public async Task UpdateAsync(string id, string firstName, string lastName, int genderId, string phoneNumber, int? cityId, int? countryId, string UCN, string PNF, string documentNumber, DateTime? dateOfExpiry, DateTime? dateOfIssue)
+        public async Task UpdateAsync(string id, string firstName, string lastName, int genderId, string phoneNumber, int? cityId, int? countryId, string identificationNumber, string uniqueNumberForeigner, string documentNumber, DateTime? dateOfExpiry, DateTime? dateOfIssue)
         {
             var guest = await this.guestRepository
                 .All()
@@ -91,8 +91,8 @@
             guest.PhoneNumber = phoneNumber;
             guest.CityId = cityId;
             guest.CountryId = countryId;
-            guest.UCN = UCN;
-            guest.PNF = PNF;
+            guest.IdentificationNumber = identificationNumber;
+            guest.UniqueNumberForeigner = uniqueNumberForeigner;
             guest.DocumentNumber = documentNumber;
             guest.DateOfExpiry = dateOfExpiry;
             guest.DateOfIssue = dateOfIssue;

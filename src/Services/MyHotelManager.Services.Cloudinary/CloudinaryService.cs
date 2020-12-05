@@ -10,13 +10,13 @@
 
         public CloudinaryService(string cloudName, string apiKey, string apiSecret)
         {
-            cloudinaryAccount = new Account(cloudName, apiKey, apiSecret);
-            cloudinary = new Cloudinary(cloudinaryAccount);
+            this.cloudinaryAccount = new Account(cloudName, apiKey, apiSecret);
+            this.cloudinary = new Cloudinary(this.cloudinaryAccount);
         }
 
         public string GetImgByName(string name)
         {
-            return cloudinary.Api.UrlImgUp.BuildUrl(name);
+            return this.cloudinary.Api.UrlImgUp.BuildUrl(name);
         }
     }
 }
