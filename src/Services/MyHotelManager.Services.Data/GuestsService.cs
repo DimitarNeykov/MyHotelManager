@@ -58,16 +58,22 @@
             await this.guestRepository.SaveChangesAsync();
         }
 
-        public T GetById<T>(string id)
+        public async Task<T> GetByIdAsync<T>(string id)
         {
-            var guest = this.guestRepository.All().Where(x => x.Id == id).To<T>().FirstOrDefault();
+            var guest = await this.guestRepository
+                .All()
+                .Where(x => x.Id == id)
+                .To<T>()
+                .FirstOrDefaultAsync();
 
             return guest;
         }
 
         public async Task UpdateAsync(string id, string firstName, string lastName, int genderId, string phoneNumber, int? cityId, int? countryId, string UCN, string PNF, string documentNumber, DateTime? dateOfExpiry, DateTime? dateOfIssue)
         {
-            var guest = await this.guestRepository.All().FirstOrDefaultAsync(x => x.Id == id);
+            var guest = await this.guestRepository
+                .All()
+                .FirstOrDefaultAsync(x => x.Id == id);
 
             if (countryId == 0)
             {

@@ -18,7 +18,10 @@
 
         public async Task<T> GetInformationAsync<T>()
         {
-            var aboutUsInformation = await this.aboutUsRepository.All().To<T>().FirstOrDefaultAsync();
+            var aboutUsInformation = await this.aboutUsRepository
+                .All()
+                .To<T>()
+                .FirstOrDefaultAsync();
 
             return aboutUsInformation;
         }

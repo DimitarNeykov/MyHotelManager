@@ -34,7 +34,7 @@
         {
             var user = await this.userManager.GetUserAsync(this.User);
 
-            var viewModel = this.reservationsService.GetDeletedById<ReservationViewModel>(id);
+            var viewModel = await this.reservationsService.GetDeletedByIdAsync<ReservationViewModel>(id);
 
             if (user.HotelId != viewModel.Room.HotelId)
             {

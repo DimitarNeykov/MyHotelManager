@@ -41,7 +41,7 @@
 
             if (user.HotelId != null)
             {
-                var hotelViewModel = this.hotelsService.GetByIdWithDeleted<HotelDashboardViewModel>((int)user.HotelId);
+                var hotelViewModel = await this.hotelsService.GetByIdWithDeletedAsync<HotelDashboardViewModel>((int)user.HotelId);
 
                 var availableRoomsCount =
                     this.roomsService.AvailableRooms<RoomViewModel>(user.Id, DateTime.Now, DateTime.Now.AddDays(1)).Count();
@@ -114,7 +114,7 @@
                 return this.NotFound();
             }
 
-            var viewModel = this.hotelsService.GetById<HotelViewModel>((int)user.HotelId);
+            var viewModel = await this.hotelsService.GetByIdAsync<HotelViewModel>((int)user.HotelId);
 
             return this.View(viewModel);
         }
@@ -129,7 +129,7 @@
                 return this.NotFound();
             }
 
-            var hotel = this.hotelsService.GetById<HotelEditViewModel>((int)user.HotelId);
+            var hotel = await this.hotelsService.GetByIdAsync<HotelEditViewModel>((int)user.HotelId);
 
             var cities = this.citiesService.GetAll<CityDropDownViewModel>();
             var stars = this.starsService.GetAll<StarsDropDownViewModel>();

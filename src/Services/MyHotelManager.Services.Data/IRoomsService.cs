@@ -12,13 +12,13 @@
 
         IEnumerable<T> GetAllRoomsForCleaningToday<T>(int hotelId);
 
-        T GetById<T>(int id);
+        Task<T> GetByIdAsync<T>(int id);
 
-        Task Delete(int roomId);
+        Task DeleteAsync(int roomId);
 
         IEnumerable<T> AvailableRooms<T>(string userId, DateTime arrivalDate, DateTime returnDate);
 
-        IEnumerable<T> AvailableRoomsWithReservationRoom<T>(string userId, DateTime arrivalDate, DateTime returnDate, string reservationId);
+        Task<IEnumerable<T>> AvailableRoomsWithReservationRoomAsync<T>(string userId, DateTime arrivalDate, DateTime returnDate, string reservationId);
 
         Task UpdateAsync(int roomId, int floor, string number, int roomTypeId, decimal price, int maxAdultCount, int maxChildCount, string description);
     }

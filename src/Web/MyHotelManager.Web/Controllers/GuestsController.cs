@@ -60,9 +60,9 @@
             return this.RedirectToAction("Details", "Reservations", new { Id = input.ReservationId });
         }
 
-        public IActionResult Update(string guestId)
+        public async Task<IActionResult> Update(string guestId)
         {
-            var guest = this.guestsService.GetById<GuestUpdateViewModel>(guestId);
+            var guest = await this.guestsService.GetByIdAsync<GuestUpdateViewModel>(guestId);
 
             var cities = this.citiesService.GetAll<CityDropDownViewModel>();
             var countries = this.countriesService.GetAll<CountryDropDownViewModel>();

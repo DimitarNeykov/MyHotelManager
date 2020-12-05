@@ -9,7 +9,7 @@
             int? countryId, string UCN, string PNF, string documentNumber, DateTime dateOfExpiry, DateTime dateOfIssue,
             string reservationId);
 
-        T GetById<T>(string id);
+        Task<T> GetByIdAsync<T>(string id);
 
         Task UpdateAsync(string id, string firstName, string lastName, int genderId, string phoneNumber, int? cityId,
             int? countryId, string UCN, string PNF, string documentNumber, DateTime? dateOfExpiry, DateTime? dateOfIssue);

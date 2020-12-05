@@ -8,9 +8,9 @@
     {
         Task CreateAsync(string name, int cityId, string address, int starsId, int cleaningPerDays, ApplicationUser user);
 
-        T GetById<T>(int id);
+        Task<T> GetByIdAsync<T>(int id);
 
-        T GetByIdWithDeleted<T>(int id);
+        Task<T> GetByIdWithDeletedAsync<T>(int id);
 
         Task UpdateAsync(int hotelId, string name, int cityId, string address, int starsId, int cleaningPerDays);
     }

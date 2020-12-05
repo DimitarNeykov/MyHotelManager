@@ -18,9 +18,13 @@
 
         public IEnumerable<T> GetAll<T>()
         {
-            var query = this.citiesRepository.All().OrderBy(x => x.Name).To<T>().ToList();
+            var cities = this.citiesRepository
+                .All()
+                .OrderBy(x => x.Name)
+                .To<T>()
+                .ToList();
 
-            return query;
+            return cities;
         }
     }
 }

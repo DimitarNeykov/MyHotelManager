@@ -127,9 +127,8 @@
             {
                 Subject = subject,
                 Body = body,
+                IsBodyHtml = true,
             };
-
-            message.IsBodyHtml = true;
 
             await smtp.SendMailAsync(message);
         }

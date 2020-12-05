@@ -18,7 +18,10 @@
 
         public IEnumerable<T> GetAll<T>()
         {
-            var gender = this.genderRepository.All().To<T>().ToList();
+            var gender = this.genderRepository
+                .All()
+                .To<T>()
+                .ToList();
 
             return gender;
         }

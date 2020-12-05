@@ -23,14 +23,19 @@
 
         public async Task CreateAsync(string name, string bulstat, string phoneNumber, string email, int cityId, string address, int hotelId)
         {
-            var company = await this.companyRepository.All().FirstOrDefaultAsync(c => c.Bulstat == bulstat);
+            var company = await this.companyRepository
+                .All()
+                .FirstOrDefaultAsync(c => c.Bulstat == bulstat);
 
-            var hotel = await this.hotelRepository.All().FirstOrDefaultAsync(h => h.Id == hotelId);
+            var hotel = await this.hotelRepository
+                .All()
+                .FirstOrDefaultAsync(h => h.Id == hotelId);
 
             if (company != null)
             {
                 company.Hotels.Add(hotel);
                 await this.companyRepository.SaveChangesAsync();
+
                 return;
             }
 
@@ -51,14 +56,19 @@
 
         public async Task EditAsync(int id, int hotelId, string name, string bulstat, string phoneNumber, string email, int cityId, string address)
         {
-            var company = await this.companyRepository.All()
+            var company = await this.companyRepository
+                .All()
                 .FirstOrDefaultAsync(c => c.Id == id);
 
             if (company.Bulstat != bulstat)
             {
-                company = await this.companyRepository.All().FirstOrDefaultAsync(c => c.Bulstat == bulstat);
+                company = await this.companyRepository
+                    .All()
+                    .FirstOrDefaultAsync(c => c.Bulstat == bulstat);
 
-                var hotel = await this.hotelRepository.All().FirstOrDefaultAsync(h => h.Id == hotelId);
+                var hotel = await this.hotelRepository
+                    .All()
+                    .FirstOrDefaultAsync(h => h.Id == hotelId);
 
                 if (company != null)
                 {
@@ -96,9 +106,10 @@
             await this.companyRepository.SaveChangesAsync();
         }
 
-        public async Task<T> GetById<T>(int id)
+        public async Task<T> GetByIdAsync<T>(int id)
         {
-            var company = await this.companyRepository.All()
+            var company = await this.companyRepository
+                .All()
                 .Where(c => c.Id == id)
                 .To<T>()
                 .FirstOrDefaultAsync();

@@ -34,22 +34,24 @@
             await this.hotelRepository.SaveChangesAsync();
         }
 
-        public T GetByIdWithDeleted<T>(int id)
+        public async Task<T> GetByIdWithDeletedAsync<T>(int id)
         {
-            var hotel = this.hotelRepository.AllWithDeleted()
+            var hotel = await this.hotelRepository
+                .AllWithDeleted()
                 .Include(h => h.Rooms)
                 .ThenInclude(r => r.Reservations)
                 .ThenInclude(r => r.Guests)
                 .Where(x => x.Id == id)
                 .To<T>()
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             return hotel;
         }
 
-        public T GetById<T>(int id)
+        public async Task<T> GetByIdAsync<T>(int id)
         {
-            var hotel = this.hotelRepository.All()
+            var hotel = await this.hotelRepository
+                .All()
                 .Include(x => x.City)
                 .Include(x => x.Company)
                 .ThenInclude(x => x.Hotels)
@@ -61,14 +63,16 @@
                 .ThenInclude(r => r.Reservations)
                 .Where(x => x.Id == id)
                 .To<T>()
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             return hotel;
         }
 
         public async Task UpdateAsync(int hotelId, string name, int cityId, string address, int starsId, int cleaningPerDays)
         {
-            var hotel = await this.hotelRepository.All().FirstOrDefaultAsync(h => h.Id == hotelId);
+            var hotel = await this.hotelRepository
+                .All()
+                .FirstOrDefaultAsync(h => h.Id == hotelId);
 
             hotel.Name = name;
             hotel.CityId = cityId;

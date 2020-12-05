@@ -97,7 +97,7 @@
                 return this.NotFound();
             }
 
-            var company = await this.companiesService.GetById<CompanyEditViewModel>((int)user.Hotel.CompanyId);
+            var company = await this.companiesService.GetByIdAsync<CompanyEditViewModel>((int)user.Hotel.CompanyId);
 
             var cities = this.citiesService.GetAll<CityDropDownViewModel>();
 

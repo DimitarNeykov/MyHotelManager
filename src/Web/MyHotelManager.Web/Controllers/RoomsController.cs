@@ -42,7 +42,7 @@
         {
             var user = await this.userManager.GetUserAsync(this.User);
 
-            var viewModel = this.roomsService.GetById<AvailableRoomViewModel>(roomId);
+            var viewModel = await this.roomsService.GetByIdAsync<AvailableRoomViewModel>(roomId);
 
             if (viewModel.HotelId != user.HotelId)
             {
@@ -99,10 +99,10 @@
             var user = await this.userManager.GetUserAsync(this.User);
 
             var viewModel =
-                this.roomsService.AvailableRoomsWithReservationRoom<AvailableRoomViewModel>(
+               await this.roomsService.AvailableRoomsWithReservationRoomAsync<AvailableRoomViewModel>(
                     user.Id, (DateTime)arrivalDate, (DateTime)returnDate, reservationId);
 
-            if (!viewModel.All(r => r.HotelId == user.HotelId))
+            if (viewModel.Any(r => r.HotelId != user.HotelId))
             {
                 return this.RedirectToAction("Manager", "Reservations");
             }
@@ -155,14 +155,14 @@
         {
             var user = await this.userManager.GetUserAsync(this.User);
 
-            var room = this.roomsService.GetById<RoomViewModel>(roomId);
+            var room = await this.roomsService.GetByIdAsync<RoomViewModel>(roomId);
 
             if (room.HotelId != user.HotelId)
             {
                 return this.RedirectToAction("AllRooms");
             }
 
-            await this.roomsService.Delete(roomId);
+            await this.roomsService.DeleteAsync(roomId);
 
             return this.RedirectToAction("AllRooms");
         }
@@ -172,7 +172,7 @@
         {
             var user = await this.userManager.GetUserAsync(this.User);
             var roomTypes = this.roomTypesService.GetAll<RoomTypeDropDownViewModel>();
-            var room = this.roomsService.GetById<RoomUpdateViewModel>(roomId);
+            var room = await this.roomsService.GetByIdAsync<RoomUpdateViewModel>(roomId);
 
             if (room.HotelId != user.HotelId)
             {
@@ -201,7 +201,7 @@
         {
             var user = await this.userManager.GetUserAsync(this.User);
 
-            var room = this.roomsService.GetById<RoomUpdateViewModel>(input.Id);
+            var room = await this.roomsService.GetByIdAsync<RoomUpdateViewModel>(input.Id);
 
             if (room.HotelId != user.HotelId)
             {

@@ -18,7 +18,11 @@
 
         public IEnumerable<T> GetAll<T>()
         {
-            var countries = this.countriesRepository.All().OrderBy(x => x.Name).To<T>().ToList();
+            var countries = this.countriesRepository
+                .All()
+                .OrderBy(x => x.Name)
+                .To<T>()
+                .ToList();
 
             return countries;
         }

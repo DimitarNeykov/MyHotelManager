@@ -34,7 +34,7 @@
         {
             var user = await this.userManager.GetUserAsync(this.User);
 
-            var viewModel = this.reservationsService.GetById<ReservationViewModel>(id);
+            var viewModel = await this.reservationsService.GetByIdAsync<ReservationViewModel>(id);
 
             if (user.HotelId != viewModel.Room.HotelId)
             {
@@ -75,7 +75,7 @@
         {
             var user = await this.userManager.GetUserAsync(this.User);
 
-            var room = this.roomsService.GetById<RoomModel>(roomId);
+            var room = await this.roomsService.GetByIdAsync<RoomModel>(roomId);
 
             if (room.HotelId != user.HotelId)
             {
@@ -107,7 +107,7 @@
 
             var user = await this.userManager.GetUserAsync(this.User);
 
-            var room = this.roomsService.GetById<RoomModel>(input.RoomId);
+            var room = await this.roomsService.GetByIdAsync<RoomModel>(input.RoomId);
 
             var availableRooms = this.roomsService.AvailableRooms<AvailableRoomViewModel>(
                 user.Id,
@@ -156,8 +156,8 @@
         public async Task<IActionResult> Update(string reservationId)
         {
             var user = await this.userManager.GetUserAsync(this.User);
-            var reservation = this.reservationsService.GetById<ReservationUpdateViewModel>(reservationId);
-            var room = this.roomsService.GetById<RoomModel>(reservation.RoomId);
+            var reservation = await this.reservationsService.GetByIdAsync<ReservationUpdateViewModel>(reservationId);
+            var room = await this.roomsService.GetByIdAsync<RoomModel>(reservation.RoomId);
 
             if (user.HotelId != room.HotelId)
             {
@@ -208,7 +208,7 @@
 
             var user = await this.userManager.GetUserAsync(this.User);
 
-            var room = this.roomsService.GetById<RoomModel>(input.RoomId);
+            var room = await this.roomsService.GetByIdAsync<RoomModel>(input.RoomId);
 
             if (room.HotelId != user.HotelId)
             {
@@ -243,7 +243,7 @@
         public async Task<IActionResult> Delete(string reservationId)
         {
             var userId = this.userManager.GetUserId(this.User);
-            await this.reservationsService.Delete(reservationId, userId);
+            await this.reservationsService.DeleteAsync(reservationId, userId);
 
             return this.RedirectToAction("Manager");
         }

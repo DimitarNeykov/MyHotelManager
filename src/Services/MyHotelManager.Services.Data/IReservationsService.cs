@@ -10,15 +10,13 @@
 
         IEnumerable<T> GetAll<T>(string userId);
 
-        T GetDeletedById<T>(string reservationId);
+        Task<T> GetDeletedByIdAsync<T>(string reservationId);
 
         IEnumerable<T> GetAllDeleted<T>(int hotelId);
 
-        T GetById<T>(string reservationId);
+        Task<T> GetByIdAsync<T>(string reservationId);
 
-        Task Delete(string reservationId, string editorId);
-
-        Task DeleteOldReservation(string reservationId);
+        Task DeleteAsync(string reservationId, string editorId);
 
         Task UpdateAsync(string userId, string reservationId, int roomId, DateTime arrivalDate, DateTime returnDate, int adultCount, int childCount, string firstName, string lastName, string phoneNumber, string description, decimal price, bool hasBreakfast, bool hasLunch, bool hasDinner);
 

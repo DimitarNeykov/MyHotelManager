@@ -18,7 +18,10 @@
 
         public IEnumerable<T> GetAll<T>()
         {
-            var roomTypes = this.roomTypesRepository.All().To<T>().ToList();
+            var roomTypes = this.roomTypesRepository
+                .All()
+                .To<T>()
+                .ToList();
 
             return roomTypes;
         }

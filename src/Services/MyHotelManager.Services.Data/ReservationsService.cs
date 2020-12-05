@@ -55,9 +55,11 @@
             await this.reservationRepository.SaveChangesAsync();
         }
 
-        public async Task Delete(string reservationId, string editorId)
+        public async Task DeleteAsync(string reservationId, string editorId)
         {
-            var reservation = this.reservationRepository.All().FirstOrDefault(x => x.Id == reservationId);
+            var reservation = await this.reservationRepository
+                .All()
+                .FirstOrDefaultAsync(x => x.Id == reservationId);
 
             this.reservationRepository.Delete(reservation);
 
@@ -92,7 +94,10 @@
                 .ThenInclude(g => g.City)
                 .ThenInclude(c => c.Country)
                 .Include(r => r.Room)
-                .Where(x => x.Room.HotelId == hotelId && DateTime.UtcNow <= x.ReturnDate && DateTime.Now.Date > x.ArrivalDate && x.HasBreakfast)
+                .Where(x => x.Room.HotelId == hotelId &&
+                            DateTime.UtcNow <= x.ReturnDate &&
+                            DateTime.Now.Date > x.ArrivalDate &&
+                            x.HasBreakfast)
                 .To<T>()
                 .ToList();
 
@@ -109,7 +114,10 @@
                 .ThenInclude(g => g.City)
                 .ThenInclude(c => c.Country)
                 .Include(r => r.Room)
-                .Where(x => x.Room.HotelId == hotelId && DateTime.UtcNow <= x.ReturnDate && DateTime.Now.Date >= x.ArrivalDate && x.HasLunch)
+                .Where(x => x.Room.HotelId == hotelId &&
+                            DateTime.UtcNow <= x.ReturnDate &&
+                            DateTime.Now.Date >= x.ArrivalDate &&
+                            x.HasLunch)
                 .To<T>()
                 .ToList();
 
@@ -126,7 +134,10 @@
                 .ThenInclude(g => g.City)
                 .ThenInclude(c => c.Country)
                 .Include(r => r.Room)
-                .Where(x => x.Room.HotelId == hotelId && DateTime.Now.Date < x.ReturnDate && DateTime.Now.Date >= x.ArrivalDate && x.HasDinner)
+                .Where(x => x.Room.HotelId == hotelId &&
+                            DateTime.Now.Date < x.ReturnDate &&
+                            DateTime.Now.Date >= x.ArrivalDate &&
+                            x.HasDinner)
                 .To<T>()
                 .ToList();
 
@@ -139,16 +150,18 @@
                 .AllWithDeleted()
                 .Include(g => g.Guests)
                 .Include(r => r.Editor)
-                .Where(x => x.Room.HotelId == hotelId && x.Guests.First() != null && x.DeletedOn != null)
+                .Where(x => x.Room.HotelId == hotelId &&
+                            x.Guests.First() != null &&
+                            x.DeletedOn != null)
                 .To<T>()
                 .ToList();
 
             return reservations;
         }
 
-        public T GetById<T>(string reservationId)
+        public async Task<T> GetByIdAsync<T>(string reservationId)
         {
-            var reservation = this.reservationRepository
+            var reservation = await this.reservationRepository
                 .AllWithDeleted()
                 .Include(x => x.Guests)
                 .ThenInclude(r => r.Gender)
@@ -163,14 +176,14 @@
                 .Include(r => r.Editor)
                 .Where(r => r.Id == reservationId && r.IsDeleted == false)
                 .To<T>()
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             return reservation;
         }
 
-        public T GetDeletedById<T>(string reservationId)
+        public async Task<T> GetDeletedByIdAsync<T>(string reservationId)
         {
-            var reservation = this.reservationRepository
+            var reservation = await this.reservationRepository
                 .AllWithDeleted()
                 .Include(x => x.Guests)
                 .ThenInclude(r => r.Gender)
@@ -185,17 +198,17 @@
                 .Include(r => r.Editor)
                 .Where(r => r.Id == reservationId)
                 .To<T>()
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             return reservation;
         }
 
         public async Task UpdateAsync(string userId, string reservationId, int roomId, DateTime arrivalDate, DateTime returnDate, int adultCount, int childCount, string firstName, string lastName, string phoneNumber, string description, decimal price, bool hasBreakfast, bool hasLunch, bool hasDinner)
         {
-            var reservation = this.reservationRepository
+            var reservation = await this.reservationRepository
                 .All()
                 .Include(r => r.Guests)
-                .First(x => x.Id == reservationId);
+                .FirstOrDefaultAsync(x => x.Id == reservationId);
 
             reservation.EditorId = userId;
             reservation.RoomId = roomId;
@@ -211,17 +224,6 @@
             reservation.HasBreakfast = hasBreakfast;
             reservation.HasLunch = hasLunch;
             reservation.HasDinner = hasDinner;
-
-            await this.reservationRepository.SaveChangesAsync();
-        }
-
-        public async Task DeleteOldReservation(string reservationId)
-        {
-            var reservation = this.reservationRepository.All().FirstOrDefault(x => x.Id == reservationId);
-
-            this.reservationRepository.Delete(reservation);
-
-            reservation.CancelDate = DateTime.UtcNow;
 
             await this.reservationRepository.SaveChangesAsync();
         }
