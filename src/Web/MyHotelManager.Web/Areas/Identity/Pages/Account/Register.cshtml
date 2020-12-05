@@ -29,12 +29,12 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input type="date" asp-for="Input.BirthDate" class="form-control form-control-user text-center" placeholder="Birth Date">
+                                    <input type="date" asp-for="Input.BirthDate" class="form-control rounded-pill text-center" placeholder="Birth Date">
                                     <span asp-validation-for="Input.BirthDate" class="text-danger"></span>
                                 </div>
                                 <div class="col-sm-6 h-100">
-                                    <select asp-for="Input.GenderId" class="form-control form-control-user p-3 w-100 h-100" style="text-align-last: center; text-align: center; -ms-text-align-last: center; -moz-text-align-last: center;">
-                                        <option disabled selected>Select Sex</option>
+                                    <select asp-for="Input.GenderId" class="form-control rounded-pill custom-select" style="text-align-last: center; text-align: center; -ms-text-align-last: center; -moz-text-align-last: center;" required>
+                                        <option value="" disabled selected>Select Sex</option>
                                         <option value="1">Male</option>
                                         <option value="2">Female</option>
                                         <option value="3">Other</option>
