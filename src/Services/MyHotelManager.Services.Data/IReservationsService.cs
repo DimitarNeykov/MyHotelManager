@@ -8,7 +8,7 @@
     {
         Task CreateAsync(string phoneNumber, string userId, int roomId, DateTime arrivalDate, DateTime returnDate, int adultCount, int childCount, string firstName, string lastName, string description, decimal price, bool hasBreakfast, bool hasLunch, bool hasDinner);
 
-        IEnumerable<T> GetAll<T>(string userId);
+        IEnumerable<T> GetAll<T>(int hotelId);
 
         Task<T> GetDeletedByIdAsync<T>(string reservationId);
 

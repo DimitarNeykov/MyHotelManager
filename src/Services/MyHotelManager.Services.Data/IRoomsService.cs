@@ -8,7 +8,7 @@
     {
         Task CreateAsync(int floor, string number, int roomTypeId, decimal price, int maxAdultCount, int maxChildCount, string description, int hotelId);
 
-        IEnumerable<T> GetAll<T>(string userId);
+        IEnumerable<T> GetAll<T>(int hotelId);
 
         IEnumerable<T> GetAllRoomsForCleaningToday<T>(int hotelId);
 
@@ -16,9 +16,9 @@
 
         Task DeleteAsync(int roomId);
 
-        IEnumerable<T> AvailableRooms<T>(string userId, DateTime arrivalDate, DateTime returnDate);
+        IEnumerable<T> AvailableRooms<T>(int hotelId, DateTime arrivalDate, DateTime returnDate);
 
-        Task<IEnumerable<T>> AvailableRoomsWithReservationRoomAsync<T>(string userId, DateTime arrivalDate, DateTime returnDate, string reservationId);
+        Task<IEnumerable<T>> AvailableRoomsWithReservationRoomAsync<T>(int hotelId, DateTime arrivalDate, DateTime returnDate, string reservationId);
 
         Task UpdateAsync(int roomId, int floor, string number, int roomTypeId, decimal price, int maxAdultCount, int maxChildCount, string description);
     }

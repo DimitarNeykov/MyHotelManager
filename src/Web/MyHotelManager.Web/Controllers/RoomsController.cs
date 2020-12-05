@@ -29,11 +29,11 @@
             this.userManager = userManager;
         }
 
-        public IActionResult AllRooms()
+        public async Task<IActionResult> AllRooms()
         {
-            var userId = this.userManager.GetUserId(this.User);
+            var user = await this.userManager.GetUserAsync(this.User);
 
-            var viewModel = this.roomsService.GetAll<RoomViewModel>(userId);
+            var viewModel = this.roomsService.GetAll<RoomViewModel>((int)user.HotelId);
 
             return this.View(viewModel);
         }
@@ -59,7 +59,7 @@
             return this.View(viewModel);
         }
 
-        public IActionResult AvailableRooms(DateTime? arrivalDate, DateTime? returnDate)
+        public async Task<IActionResult> AvailableRooms(DateTime? arrivalDate, DateTime? returnDate)
         {
             if (arrivalDate == null || returnDate == null)
             {
@@ -71,9 +71,13 @@
                 return null;
             }
 
-            var userId = this.userManager.GetUserId(this.User);
+            var user = await this.userManager.GetUserAsync(this.User);
 
-            var viewModel = this.roomsService.AvailableRooms<RoomViewModel>(userId, (DateTime)arrivalDate, (DateTime)returnDate);
+            var viewModel = this.roomsService
+                .AvailableRooms<RoomViewModel>(
+                    (int)user.HotelId,
+                    (DateTime)arrivalDate,
+                    (DateTime)returnDate);
 
             foreach (var roomViewModel in viewModel)
             {
@@ -100,7 +104,10 @@
 
             var viewModel =
                await this.roomsService.AvailableRoomsWithReservationRoomAsync<AvailableRoomViewModel>(
-                    user.Id, (DateTime)arrivalDate, (DateTime)returnDate, reservationId);
+                   (int)user.HotelId,
+                   (DateTime)arrivalDate,
+                   (DateTime)returnDate,
+                   reservationId);
 
             if (viewModel.Any(r => r.HotelId != user.HotelId))
             {

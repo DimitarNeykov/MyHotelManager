@@ -5,7 +5,6 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using MyHotelManager.Data.Common.Repositories;
     using MyHotelManager.Data.Models;
@@ -14,14 +13,10 @@
     public class ReservationsService : IReservationsService
     {
         private readonly IDeletableEntityRepository<Reservation> reservationRepository;
-        private readonly UserManager<ApplicationUser> userManager;
 
-        public ReservationsService(
-            IDeletableEntityRepository<Reservation> reservationRepository,
-            UserManager<ApplicationUser> userManager)
+        public ReservationsService(IDeletableEntityRepository<Reservation> reservationRepository)
         {
             this.reservationRepository = reservationRepository;
-            this.userManager = userManager;
         }
 
         public async Task CreateAsync(string phoneNumber, string userId, int roomId, DateTime arrivalDate, DateTime returnDate, int adultCount, int childCount, string firstName, string lastName, string description, decimal price, bool hasBreakfast, bool hasLunch, bool hasDinner)
@@ -69,14 +64,12 @@
             await this.reservationRepository.SaveChangesAsync();
         }
 
-        public IEnumerable<T> GetAll<T>(string userId)
+        public IEnumerable<T> GetAll<T>(int hotelId)
         {
-            var user = this.userManager.Users.First(x => x.Id == userId);
-
             var reservations = this.reservationRepository
                 .AllWithDeleted()
                 .Include(g => g.Guests)
-                .Where(x => x.Room.HotelId == user.HotelId && x.Guests.First() != null && x.IsDeleted == false)
+                .Where(x => x.Room.HotelId == hotelId && x.Guests.First() != null && x.IsDeleted == false)
                 .OrderBy(x => x.ArrivalDate)
                 .To<T>()
                 .ToList();

@@ -5,7 +5,6 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using MyHotelManager.Data.Common.Repositories;
     using MyHotelManager.Data.Models;
@@ -14,16 +13,13 @@
     public class RoomsService : IRoomsService
     {
         private readonly IDeletableEntityRepository<Room> roomRepository;
-        private readonly UserManager<ApplicationUser> userManager;
         private readonly IDeletableEntityRepository<Reservation> reservationRepository;
 
         public RoomsService(
             IDeletableEntityRepository<Room> roomRepository,
-            UserManager<ApplicationUser> userManager,
             IDeletableEntityRepository<Reservation> reservationRepository)
         {
             this.roomRepository = roomRepository;
-            this.userManager = userManager;
             this.reservationRepository = reservationRepository;
         }
 
@@ -45,13 +41,11 @@
             await this.roomRepository.SaveChangesAsync();
         }
 
-        public IEnumerable<T> GetAll<T>(string userId)
+        public IEnumerable<T> GetAll<T>(int hotelId)
         {
-            var user = this.userManager.Users.First(x => x.Id == userId);
-
             var rooms = this.roomRepository
                 .All()
-                .Where(x => x.HotelId == user.HotelId)
+                .Where(x => x.HotelId == hotelId)
                 .OrderBy(x => x.Number)
                 .To<T>()
                 .ToList();
@@ -70,13 +64,11 @@
             return room;
         }
 
-        public IEnumerable<T> AvailableRooms<T>(string userId, DateTime arrivalDate, DateTime returnDate)
+        public IEnumerable<T> AvailableRooms<T>(int hotelId, DateTime arrivalDate, DateTime returnDate)
         {
-            var user = this.userManager.Users.First(x => x.Id == userId);
-
             var rooms = this.roomRepository
                 .All()
-                .Where(x => x.HotelId == user.HotelId && x.Reservations
+                .Where(x => x.HotelId == hotelId && x.Reservations
                     .FirstOrDefault(r => returnDate > r.ArrivalDate &&
                                          arrivalDate < r.ReturnDate) == null)
                 .OrderBy(x => x.Number)
@@ -86,10 +78,8 @@
             return rooms;
         }
 
-        public async Task<IEnumerable<T>> AvailableRoomsWithReservationRoomAsync<T>(string userId, DateTime arrivalDate, DateTime returnDate, string reservationId)
+        public async Task<IEnumerable<T>> AvailableRoomsWithReservationRoomAsync<T>(int hotelId, DateTime arrivalDate, DateTime returnDate, string reservationId)
         {
-            var user = this.userManager.Users.First(x => x.Id == userId);
-
             var reservation = await this.reservationRepository
                 .All()
                 .FirstOrDefaultAsync(x => x.Id == reservationId);
@@ -104,7 +94,7 @@
             room.First(x => x.Id == reservation.RoomId).Reservations.Remove(reservation);
 
             var rooms = room
-                .Where(x => x.HotelId == user.HotelId && x.Reservations
+                .Where(x => x.HotelId == hotelId && x.Reservations
                     .FirstOrDefault(r => returnDate > r.ArrivalDate &&
                                          arrivalDate < r.ReturnDate) == null)
                 .ToList()
