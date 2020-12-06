@@ -43,39 +43,39 @@
                                 <th colspan="1" class="text-center">@Model.Sum(x => x.TotalCount)</th>
                             </tr>
                         }
-                        </tfoot>
+                    </tfoot>
                     <tbody>
-                    @{
-                        foreach (var reservation in Model)
-                        {
-                            <tr>
-                                <th class="text-center align-middle">@reservation.Room.Number</th>
-                                <th class="text-center align-middle">
-                                    @foreach (var guest in reservation.Guests.OrderBy(x => x.CreatedOn))
+                        @{
+                            foreach (var reservation in Model)
+                            {
+                                <tr>
+                                    <th class="text-center align-middle">@reservation.Room.Number</th>
+                                    <th class="text-center align-middle">
+                                        @foreach (var guest in reservation.Guests.OrderBy(x => x.CreatedOn))
+                                        {
+                                            <span>@guest.FirstName @guest.LastName</span>
+                                            <br />
+                                        }
+                                    </th>
+                                    @if (reservation.Guests.OrderBy(x => x.CreatedOn).First().Country != null)
                                     {
-                                        <span>@guest.FirstName @guest.LastName</span>
-                                        <br/>
+                                        <th class="text-center align-middle">@reservation.Guests.OrderBy(x => x.CreatedOn).First().Country.Name</th>
                                     }
-                                </th>
-                                @if (reservation.Guests.OrderBy(x => x.CreatedOn).First().Country != null)
-                                {
-                                    <th class="text-center align-middle">@reservation.Guests.OrderBy(x => x.CreatedOn).First().Country.Name</th>
-                                }
-                                else if (reservation.Guests.OrderBy(x => x.CreatedOn).First().City != null)
-                                {
-                                    <th class="text-center align-middle">@reservation.Guests.OrderBy(x => x.CreatedOn).First().City.Country.Name</th>
-                                }
-                                else
-                                {
-                                    <th></th>
-                                }
-                                <th class="text-center align-middle">@reservation.AdultCount</th>
-                                <th class="text-center align-middle">@reservation.ChildCount</th>
-                                <th class="text-center align-middle">@reservation.TotalCount</th>
-                                <th class="text-center align-middle"></th>
-                            </tr>
+                                    else if (reservation.Guests.OrderBy(x => x.CreatedOn).First().City != null)
+                                    {
+                                        <th class="text-center align-middle">@reservation.Guests.OrderBy(x => x.CreatedOn).First().City.Country.Name</th>
+                                    }
+                                    else
+                                    {
+                                        <th></th>
+                                    }
+                                    <th class="text-center align-middle">@reservation.AdultCount</th>
+                                    <th class="text-center align-middle">@reservation.ChildCount</th>
+                                    <th class="text-center align-middle">@reservation.TotalCount</th>
+                                    <th class="text-center align-middle"></th>
+                                </tr>
+                            }
                         }
-                    }
                     </tbody>
                 </table>
             </div>
@@ -84,23 +84,5 @@
 </div>
 @section Scripts
 {
-    <script>
-        window.onload = function() {
-            table = $('#example').DataTable( {
-                paging: true
-            });
-
-        }
-
-        function PrintOnlyTable() {
-            table.destroy();
-            $('#example').dataTable( {
-                "pageLength": -1
-            } );
-            var HTML = $("body");
-            HTML.html($("#example"));
-            window.print();
-            location.reload();
-        }
-    </script>
+    <script src="~/js/custom/PrintDataTable.js"></script>
 }

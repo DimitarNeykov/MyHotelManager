@@ -1,0 +1,30 @@
+﻿var UCN = document.getElementById('UCN');
+var PNF = document.getElementById('PNF');
+var documentNumber = document.getElementById('documentNumber');
+var nationalitySelect = document.getElementById('nationalitySelect');
+var dateExpiryIssue = document.getElementById('dateExpiryIssue');
+var city = document.getElementById('city');
+var country = document.getElementById('country');
+
+function Nationality() {
+
+    if (nationalitySelect.selectedIndex === 2) {
+        UCN.hidden = "hidden";
+        PNF.hidden = "";
+        documentNumber.hidden = "";
+        dateExpiryIssue.hidden = "";
+        city.hidden = "hidden";
+        country.hidden = "";
+        document.getElementById('citySelect').value = "";
+        document.getElementById('UCNinput').value = null;
+    } else {
+        UCN.hidden = "";
+        PNF.hidden = "hidden";
+        documentNumber.hidden = "";
+        dateExpiryIssue.hidden = "";
+        city.hidden = "";
+        country.hidden = "hidden";
+        document.getElementById('countrySelect').value = "";
+        document.getElementById('PNFinput').value = null;
+    }
+}

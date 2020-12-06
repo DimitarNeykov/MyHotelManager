@@ -30,34 +30,34 @@
                         </tr>
                     </thead>
                     <tfoot>
-                            <tr>
-                                <th colspan="5" class="text-right"></th>
-                            </tr>
+                        <tr>
+                            <th colspan="5" class="text-right"></th>
+                        </tr>
 
-                            <tr>
-                                <th colspan="4" class="text-right">Total Rooms:</th>
-                                <th colspan="1" class="text-center">@Model.Count()</th>
-                            </tr>
+                        <tr>
+                            <th colspan="4" class="text-right">Total Rooms:</th>
+                            <th colspan="1" class="text-center">@Model.Count()</th>
+                        </tr>
                     </tfoot>
                     <tbody>
                         @{
                             foreach (var rooms in Model)
                             {
-                                                <tr>
-                                                    <th class="text-center align-middle">@rooms.Number</th>
-                                                    <th class="text-center align-middle">@rooms.RoomType.Name</th>
-                                                    @if (rooms.Reservation.ReturnDate.Date == DateTime.UtcNow.Date)
-                                                    {
-                                                        <th></th>
-                                                        <th class="text-center align-middle text-success"><i class="fas fa-check"></i></th>
-                                                    }
-                                                    else
-                                                    {
-                                                        <th class="text-center align-middle text-success"><i class="fas fa-check"></i></th>
-                                                        <th></th>
-                                                    }
-                                                    <th></th>
-                                                </tr>
+                                <tr>
+                                    <th class="text-center align-middle">@rooms.Number</th>
+                                    <th class="text-center align-middle">@rooms.RoomType.Name</th>
+                                    @if (rooms.Reservation.ReturnDate.Date == DateTime.UtcNow.Date)
+                                    {
+                                        <th></th>
+                                        <th class="text-center align-middle text-success"><i class="fas fa-check"></i></th>
+                                    }
+                                    else
+                                    {
+                                        <th class="text-center align-middle text-success"><i class="fas fa-check"></i></th>
+                                        <th></th>
+                                    }
+                                    <th></th>
+                                </tr>
                             }
                         }
                     </tbody>
@@ -68,23 +68,5 @@
 </div>
 @section Scripts
 {
-    <script>
-        window.onload = function() {
-            table = $('#example').DataTable( {
-                paging: true
-            });
-
-        }
-
-        function PrintOnlyTable() {
-            table.destroy();
-            $('#example').dataTable( {
-                "pageLength": -1
-            } );
-            var HTML = $("body");
-            HTML.html($("#example"));
-            window.print();
-            location.reload();
-        }
-    </script>
+    <script src="~/js/custom/PrintDataTable.js"></script>
 }

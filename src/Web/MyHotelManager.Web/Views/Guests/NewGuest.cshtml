@@ -51,7 +51,7 @@
                             <div class="form-group row was-validated justify-content-center">
                                 <div class="col-sm-6">
                                     <label>Nationality</label>
-                                    <select onchange="Nationality()" class="form-control rounded-pill custom-select" id="nationalitySelect"  style="text-align-last: center; text-align: center; -ms-text-align-last: center; -moz-text-align-last: center;" required>
+                                    <select onchange="Nationality()" class="form-control rounded-pill custom-select" id="nationalitySelect" style="text-align-last: center; text-align: center; -ms-text-align-last: center; -moz-text-align-last: center;" required>
                                         <option value="" disabled selected>Select Nationality</option>
                                         <option value="1">Bulgarian</option>
                                         <option value="2">Foreign</option>
@@ -79,41 +79,41 @@
                                 </div>
                             </div>
                             <div class="form-group row was-validated">
-                                    <div class="col-sm-6 mb-3 mb-sm-0" hidden="" id="UCN">
-                                        <label asp-for="IdentificationNumber"></label>
-                                        <input asp-for="IdentificationNumber" id="UCNinput" class="form-control form-control-user is-invalid text-center" placeholder="UCN" required>
-                                        <span asp-validation-for="IdentificationNumber" class="text-danger"></span>
-                                    </div>
-                                    <div class="col-sm-6 mb-3 mb-sm-0" hidden="" id="PNF">
-                                        <label asp-for="UniqueNumberForeigner"></label>
-                                        <input asp-for="UniqueNumberForeigner" id="PNFinput" class="form-control form-control-user is-invalid text-center" placeholder="PNF" required>
-                                        <span asp-validation-for="UniqueNumberForeigner" class="text-danger"></span>
-                                    </div>
-                                    <div class="col-sm-6" id="documentNumber" hidden="">
-                                        <label asp-for="DocumentNumber"></label>
-                                        <input asp-for="DocumentNumber" class="form-control form-control-user is-invalid text-center" placeholder="Document Number" required>
-                                        <span asp-validation-for="DocumentNumber" class="text-danger"></span>
-                                    </div>
+                                <div class="col-sm-6 mb-3 mb-sm-0" hidden="" id="UCN">
+                                    <label asp-for="IdentificationNumber"></label>
+                                    <input asp-for="IdentificationNumber" id="UCNinput" class="form-control form-control-user is-invalid text-center" placeholder="UCN" required>
+                                    <span asp-validation-for="IdentificationNumber" class="text-danger"></span>
                                 </div>
-
-                                <div class="form-group row was-validated" id="dateExpiryIssue" hidden="">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <label asp-for="DateOfExpiry"></label>
-                                        <input value="" type="date" asp-for="DateOfExpiry" class="form-control form-control-user is-invalid text-center" placeholder="Date Of Expiry" required>
-                                        <span asp-validation-for="DateOfExpiry" class="text-danger"></span>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label asp-for="DateOfIssue"></label>
-                                        <input value="" type="date" asp-for="DateOfIssue" class="form-control form-control-user is-invalid text-center" placeholder="Date Of Issue" required>
-                                        <span asp-validation-for="DateOfIssue" class="text-danger"></span>
-                                    </div>
+                                <div class="col-sm-6 mb-3 mb-sm-0" hidden="" id="PNF">
+                                    <label asp-for="UniqueNumberForeigner"></label>
+                                    <input asp-for="UniqueNumberForeigner" id="PNFinput" class="form-control form-control-user is-invalid text-center" placeholder="PNF" required>
+                                    <span asp-validation-for="UniqueNumberForeigner" class="text-danger"></span>
                                 </div>
-                                <input asp-for="ReservationId" hidden="" />
+                                <div class="col-sm-6" id="documentNumber" hidden="">
+                                    <label asp-for="DocumentNumber"></label>
+                                    <input asp-for="DocumentNumber" class="form-control form-control-user is-invalid text-center" placeholder="Document Number" required>
+                                    <span asp-validation-for="DocumentNumber" class="text-danger"></span>
+                                </div>
+                            </div>
 
-                                <button type="submit" class="btn btn-success btn-user btn-block">
-                                    Add Guest
-                                </button>
-</form>
+                            <div class="form-group row was-validated" id="dateExpiryIssue" hidden="">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <label asp-for="DateOfExpiry"></label>
+                                    <input value="" type="date" asp-for="DateOfExpiry" class="form-control form-control-user is-invalid text-center" placeholder="Date Of Expiry" required>
+                                    <span asp-validation-for="DateOfExpiry" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label asp-for="DateOfIssue"></label>
+                                    <input value="" type="date" asp-for="DateOfIssue" class="form-control form-control-user is-invalid text-center" placeholder="Date Of Issue" required>
+                                    <span asp-validation-for="DateOfIssue" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <input asp-for="ReservationId" hidden="" />
+
+                            <button type="submit" class="btn btn-success btn-user btn-block">
+                                Add Guest
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -123,36 +123,5 @@
 
 @section Scripts
 {
-    <script>
-        var UCN = document.getElementById('UCN');
-        var PNF = document.getElementById('PNF');
-        var documentNumber = document.getElementById('documentNumber');
-        var nationalitySelect = document.getElementById('nationalitySelect');
-        var dateExpiryIssue = document.getElementById('dateExpiryIssue');
-        var city = document.getElementById('city');
-        var country = document.getElementById('country');
-        function Nationality() {
-
-            if (nationalitySelect.selectedIndex === 2) {
-                UCN.hidden = "hidden";
-                PNF.hidden = "";
-                documentNumber.hidden = "";
-                dateExpiryIssue.hidden = "";
-                city.hidden = "hidden";
-                country.hidden = "";
-                document.getElementById('citySelect').value = "";
-                document.getElementById('UCNinput').value = null;
-            }
-            else{
-                UCN.hidden = "";
-                PNF.hidden = "hidden";
-                documentNumber.hidden = "";
-                dateExpiryIssue.hidden = "";
-                city.hidden = "";
-                country.hidden = "hidden";
-                document.getElementById('countrySelect').value = "";
-                document.getElementById('PNFinput').value = null;
-            }
-        }
-    </script>
+    <script src="~/js/custom/Guest/NationalityFunction.js"></script>
 }
