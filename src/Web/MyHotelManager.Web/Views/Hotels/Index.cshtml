@@ -5,6 +5,7 @@
     var thisYear = DateTime.UtcNow.Year;
     var oneYearEarly = DateTime.UtcNow.Year - 1;
     var twoYearEarly = DateTime.UtcNow.Year - 2;
+    var percentage = Model.PercentageOfArrivedReservations != 0 ? Model.PercentageOfArrivedReservations : 10;
 }
 <h1 class="text-center mb-5 font-italic">@Model.Name</h1>
 <div class="row text-center">
@@ -52,7 +53,7 @@
 
 <h6 class="m-0 font-weight-bold text-primary text-center mb-4 text-capitalize">Reservations in process!</h6>
 <div class="progress mb-4">
-    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="@Model.ArrivedReservationsForToday" aria-valuemin="0" aria-valuemax="@Model.ReservationsForToday" style="width: @Model.PercentageOfArrivedReservations%">@Model.ArrivedReservationsForToday / @Model.ReservationsForToday</div>
+    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="@Model.ArrivedReservationsForToday" aria-valuemin="0" aria-valuemax="@Model.ReservationsForToday" style="width: @percentage%">@Model.ArrivedReservationsForToday / @Model.ReservationsForToday</div>
 </div>
 
 <hr class="mb-4" />
