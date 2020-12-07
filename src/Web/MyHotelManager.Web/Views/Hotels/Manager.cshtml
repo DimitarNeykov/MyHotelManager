@@ -28,9 +28,9 @@
                                     <li class="list-group-item rounded-pill border-bottom-light bg-gray-200">City: <span class="float-right"> @Model.CityName</span></li>
                                     <li class="list-group-item rounded-pill border-bottom-light bg-gray-200">Address: <span class="float-right"> @Model.Address</span></li>
                                     <li class="list-group-item rounded-pill border-bottom-light bg-gray-200">Rooms Count: <span class="float-right"> @Model.RoomsCount</span></li>
-                                    <li class="list-group-item rounded-pill border-bottom-light bg-gray-200">Users Count: <span class="float-right"> @Model.UsersCount</span></li>
+                                    <li class="list-group-item rounded-pill border-bottom-light bg-gray-200">Users Count: <span class="float-right"> @Model.Users.Count</span></li>
                                     <li class="list-group-item rounded-pill border-bottom-light bg-gray-200">Cleaning Per Day: <span class="float-right"> @Model.CleaningPerDays</span></li>
-                                    <li class="list-group-item rounded-pill border-bottom-light bg-gray-200">Company Name: <span class="float-right"> @Model.CompanyName</span></li>
+                                    <li class="list-group-item rounded-pill border-bottom-light bg-gray-200">Company Name: <span class="float-right"> @Model.Company.Name</span></li>
                                     <li class="list-group-item rounded-pill border-bottom-light bg-gray-200 text-warning text-center">
 
                                         @for (int i = 0; i < Model.StarsStarsInNumbers; i++)
@@ -62,7 +62,7 @@
                     </h2>
                 </div>
                 <div id="CompanyInfo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                    @if (Model.CompanyName == null)
+                    @if (Model.Company == null)
                     {
                         <div class="card-body text-center text-danger">
                             <h5>You don't have a company! Please click the button bellow and add information for your company!</h5>
@@ -83,12 +83,12 @@
                                 <div class="card border-0">
                                     <ul class="list-group list-group-flush text-black-50 font-weight-bold text-lg font-italic">
                                         <li class="list-group-item rounded-pill border-bottom-light bg-gray-200 justify-content-center">Company Name: <span class="float-right"> @Model.Company.Name</span></li>
-                                        <li class="list-group-item rounded-pill border-bottom-light bg-gray-200">City: <span class="float-right"> @Model.Company.City.Name</span></li>
+                                        <li class="list-group-item rounded-pill border-bottom-light bg-gray-200">City: <span class="float-right"> @Model.Company.CityName</span></li>
                                         <li class="list-group-item rounded-pill border-bottom-light bg-gray-200">Address: <span class="float-right"> @Model.Company.Address</span></li>
                                         <li class="list-group-item rounded-pill border-bottom-light bg-gray-200">Phone Number: <span class="float-right"> @Model.Company.PhoneNumber</span></li>
                                         <li class="list-group-item rounded-pill border-bottom-light bg-gray-200">Bulstat: <span class="float-right"> @Model.Company.Bulstat</span></li>
                                         <li class="list-group-item rounded-pill border-bottom-light bg-gray-200">Email: <span class="float-right"> @Model.Company.Email</span></li>
-                                        <li class="list-group-item rounded-pill border-bottom-light bg-gray-200">Company Hotels: <span class="float-right"> @Model.Company.Hotels.Count</span></li>
+                                        <li class="list-group-item rounded-pill border-bottom-light bg-gray-200">Company Hotels: <span class="float-right"> @Model.Company.HotelsCount</span></li>
                                     </ul>
                                 </div>
                             </div>
@@ -139,7 +139,7 @@
                                             <tr>
                                                 <th class="text-center align-middle">@user.FirstName @user.LastName</th>
                                                 <th class="text-center align-middle">@user.BirthDate.ToShortDateString()</th>
-                                                <th class="text-center align-middle">@user.Gender.Name</th>
+                                                <th class="text-center align-middle">@user.GenderName</th>
                                                 <th class="text-center align-middle">@string.Join(", ", await UserManager.GetRolesAsync(UserManager.Users.FirstOrDefault(x => x.Id == user.Id)))</th>
                                                 <td class="text-center align-middle">
                                                     <a class="btn btn-warning w-100" data-toggle="modal" data-target="#manage-@user.Id">

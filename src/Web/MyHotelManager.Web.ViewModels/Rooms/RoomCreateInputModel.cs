@@ -8,11 +8,6 @@
 
     public class RoomCreateInputModel : IMapTo<Room>
     {
-        public RoomCreateInputModel()
-        {
-            this.RoomTypes = new HashSet<RoomTypeDropDownViewModel>();
-        }
-
         [Required]
         public string Number { get; set; }
 

@@ -1,5 +1,4 @@
-﻿@model MyHotelManager.Web.ViewModels.Rooms.DatesInputViewModel
-@{
+﻿@{
 
     this.ViewData["Title"] = "";
 }
@@ -16,14 +15,12 @@
                         <form class="user">
                             <div class="form-group row was-validated">
                                 <div class="col-sm-6 mb-3 mb-sm-0 text-center">
-                                    <label class="text-white" asp-for="ArrivalDate"></label>
-                                    <input value="" type="date" asp-for="ArrivalDate" class="form-control form-control-user is-invalid" id="arrivalDate" oninput="availableRooms()" placeholder="Room Number" required>
-                                    <span asp-validation-for="ArrivalDate" class="text-danger"></span>
+                                    <label class="text-white">Arrival Date</label>
+                                    <input value="" type="date" class="form-control form-control-user is-invalid" id="arrivalDate" oninput="availableRooms()" placeholder="Room Number" required>
                                 </div>
                                 <div class="col-sm-6 text-center">
-                                    <label class="text-white" asp-for="ReturnDate"></label>
-                                    <input value="" type="date" asp-for="ReturnDate" class="form-control form-control-user is-invalid" id="returnDate" oninput="availableRooms()" placeholder="Room Price" required>
-                                    <span asp-validation-for="ReturnDate" class="text-danger"></span>
+                                    <label class="text-white">Return Date</label>
+                                    <input value="" type="date" class="form-control form-control-user is-invalid" id="returnDate" oninput="availableRooms()" placeholder="Room Price" required>
                                 </div>
                             </div>
                         </form>

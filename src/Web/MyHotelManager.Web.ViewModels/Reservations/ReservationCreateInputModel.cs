@@ -8,7 +8,7 @@
 
     public class ReservationCreateInputModel : IMapTo<Reservation>
     {
-        public int RoomId { get; set; }
+        public RoomViewModel Room { get; set; }
 
         public string ArrivalDate { get; set; }
 
@@ -24,19 +24,9 @@
 
         public int ChildCount { get; set; }
 
-        public int MaxAdultCount { get; set; }
-
-        public int MaxChildCount { get; set; }
-
-        public string RoomNumber { get; set; }
-
-        public string RoomType { get; set; }
-
-        public decimal RoomPrice { get; set; }
-
         public decimal CustomPrice { get; set; }
 
-        public decimal AllPrice => this.Nights * this.RoomPrice;
+        public decimal AllPrice => this.Nights * this.Room.Price;
 
         [DisplayName("Breakfast")]
         public bool HasBreakfast { get; set; }
@@ -49,6 +39,6 @@
 
         public string Description { get; set; }
 
-        public ReservationGuestInfoInputModel GuestInfo { get; set; }
+        public ReservedByGuestInputModel ReservedByGuest { get; set; }
     }
 }

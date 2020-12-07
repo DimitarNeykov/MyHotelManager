@@ -11,6 +11,7 @@
     using MyHotelManager.Services.Data;
     using MyHotelManager.Web.Infrastructure.Attributes;
     using MyHotelManager.Web.ViewModels.Hotels;
+    using MyHotelManager.Web.ViewModels.Reservations;
 
     public class HotelsController : Controller
     {

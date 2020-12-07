@@ -69,7 +69,7 @@
             var reservations = this.reservationRepository
                 .AllWithDeleted()
                 .Include(g => g.Guests)
-                .Where(x => x.Room.HotelId == hotelId && x.Guests.First() != null && x.IsDeleted == false)
+                .Where(x => x.Room.HotelId == hotelId && x.IsDeleted == false)
                 .OrderBy(x => x.ArrivalDate)
                 .To<T>()
                 .ToList();
@@ -81,12 +81,6 @@
         {
             var reservations = this.reservationRepository
                 .All()
-                .Include(g => g.Guests)
-                .ThenInclude(g => g.Country)
-                .Include(g => g.Guests)
-                .ThenInclude(g => g.City)
-                .ThenInclude(c => c.Country)
-                .Include(r => r.Room)
                 .Where(x => x.Room.HotelId == hotelId &&
                             DateTime.UtcNow.Date <= x.ReturnDate.Date &&
                             DateTime.UtcNow.Date > x.ArrivalDate.Date &&
@@ -101,12 +95,6 @@
         {
             var reservations = this.reservationRepository
                 .All()
-                .Include(g => g.Guests)
-                .ThenInclude(g => g.Country)
-                .Include(g => g.Guests)
-                .ThenInclude(g => g.City)
-                .ThenInclude(c => c.Country)
-                .Include(r => r.Room)
                 .Where(x => x.Room.HotelId == hotelId &&
                             DateTime.UtcNow.Date <= x.ReturnDate.Date &&
                             DateTime.UtcNow.Date >= x.ArrivalDate.Date &&
@@ -121,12 +109,6 @@
         {
             var reservations = this.reservationRepository
                 .All()
-                .Include(g => g.Guests)
-                .ThenInclude(g => g.Country)
-                .Include(g => g.Guests)
-                .ThenInclude(g => g.City)
-                .ThenInclude(c => c.Country)
-                .Include(r => r.Room)
                 .Where(x => x.Room.HotelId == hotelId &&
                             DateTime.UtcNow.Date < x.ReturnDate.Date &&
                             DateTime.UtcNow.Date >= x.ArrivalDate.Date &&
@@ -156,17 +138,6 @@
         {
             var reservation = await this.reservationRepository
                 .AllWithDeleted()
-                .Include(x => x.Guests)
-                .ThenInclude(r => r.Gender)
-                .Include(x => x.Guests)
-                .ThenInclude(r => r.City)
-                .ThenInclude(x => x.Country)
-                .Include(x => x.Guests)
-                .ThenInclude(r => r.Country)
-                .Include(r => r.Room)
-                .ThenInclude(r => r.RoomType)
-                .Include(r => r.Creator)
-                .Include(r => r.Editor)
                 .Where(r => r.Id == reservationId && r.IsDeleted == false)
                 .To<T>()
                 .FirstOrDefaultAsync();

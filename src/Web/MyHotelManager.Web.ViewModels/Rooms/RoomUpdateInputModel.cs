@@ -19,10 +19,10 @@
 
         public int RoomTypeId { get; set; }
 
-        public IEnumerable<RoomTypeDropDownViewModel> RoomTypes { get; set; }
-
         public string Description { get; set; }
 
         public decimal Price { get; set; }
+
+        public IEnumerable<RoomTypeDropDownViewModel> RoomTypes { get; set; }
     }
 }

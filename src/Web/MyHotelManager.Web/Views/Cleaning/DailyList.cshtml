@@ -45,8 +45,8 @@
                             {
                                 <tr>
                                     <th class="text-center align-middle">@rooms.Number</th>
-                                    <th class="text-center align-middle">@rooms.RoomType.Name</th>
-                                    @if (rooms.Reservation.ReturnDate.Date == DateTime.UtcNow.Date)
+                                    <th class="text-center align-middle">@rooms.RoomTypeName</th>
+                                    @if (rooms.ReservationReturnDate.Date == DateTime.UtcNow.Date)
                                     {
                                         <th></th>
                                         <th class="text-center align-middle text-success"><i class="fas fa-check"></i></th>

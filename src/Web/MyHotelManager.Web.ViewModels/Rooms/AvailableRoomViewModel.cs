@@ -13,12 +13,10 @@
 
         public int MaxChildCount { get; set; }
 
-        public int HotelId { get; set; }
-
         public string Description { get; set; }
 
         public decimal Price { get; set; }
 
-        public RoomType RoomType { get; set; }
+        public string RoomTypeName { get; set; }
     }
 }

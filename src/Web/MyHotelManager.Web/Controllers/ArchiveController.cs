@@ -1,9 +1,11 @@
 ﻿namespace MyHotelManager.Web.Controllers
 {
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
     using MyHotelManager.Common;
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Data;
@@ -32,13 +34,18 @@
 
         public async Task<IActionResult> ReservationDetails(string id)
         {
-            var user = await this.userManager.GetUserAsync(this.User);
+            var userId = this.userManager.GetUserId(this.User);
+            var user = await this.userManager
+                .Users
+                .Include(u => u.Hotel)
+                .ThenInclude(h => h.Rooms)
+                .FirstOrDefaultAsync(x => x.Id == userId);
 
-            var viewModel = await this.reservationsService.GetDeletedByIdAsync<ReservationViewModel>(id);
+            var viewModel = await this.reservationsService.GetDeletedByIdAsync<ReservationDetailsViewModel>(id);
 
-            if (user.HotelId != viewModel.Room.HotelId)
+            if (!user.Hotel.Rooms.Any(x => x.Id == viewModel.Room.Id))
             {
-                return this.RedirectToAction("Reservation");
+                return this.RedirectToAction("Manager", "Reservations");
             }
 
             var customPrice = 0.0M;

@@ -6,6 +6,7 @@
 
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
     using MyHotelManager.Common;
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Data;
@@ -40,13 +41,19 @@
 
         public async Task<IActionResult> GetRoomByIdJson(int roomId)
         {
-            var user = await this.userManager.GetUserAsync(this.User);
+            var userId = this.userManager.GetUserId(this.User);
+
+            var user = await this.userManager
+                .Users
+                .Include(u => u.Hotel)
+                .ThenInclude(h => h.Rooms)
+                .FirstOrDefaultAsync(u => u.Id == userId);
 
             var viewModel = await this.roomsService.GetByIdAsync<AvailableRoomViewModel>(roomId);
 
-            if (viewModel.HotelId != user.HotelId)
+            if (!user.Hotel.Rooms.Any(r => r.Id == viewModel.Id))
             {
-                return this.RedirectToAction("Manager", "Reservations");
+                return null;
             }
 
             return this.Json(viewModel);
@@ -54,9 +61,7 @@
 
         public IActionResult DateSearch()
         {
-            var viewModel = new DatesInputViewModel();
-
-            return this.View(viewModel);
+            return this.View();
         }
 
         public async Task<IActionResult> AvailableRooms(DateTime? arrivalDate, DateTime? returnDate)
@@ -95,7 +100,7 @@
                 return null;
             }
 
-            if (returnDate.Value.Date <= DateTime.UtcNow.ToLocalTime().Date)
+            if (returnDate.Value.Date <= DateTime.UtcNow.Date)
             {
                 return null;
             }
@@ -108,11 +113,6 @@
                    (DateTime)arrivalDate,
                    (DateTime)returnDate,
                    reservationId);
-
-            if (viewModel.Any(r => r.HotelId != user.HotelId))
-            {
-                return this.RedirectToAction("Manager", "Reservations");
-            }
 
             return this.PartialView(viewModel);
         }
@@ -160,11 +160,17 @@
         [AuthorizeRoles(new[] { GlobalConstants.ManagerRoleName, GlobalConstants.AdministratorRoleName })]
         public async Task<IActionResult> Delete(int roomId)
         {
-            var user = await this.userManager.GetUserAsync(this.User);
+            var userId = this.userManager.GetUserId(this.User);
+
+            var user = await this.userManager
+                .Users
+                .Include(u => u.Hotel)
+                .ThenInclude(h => h.Rooms)
+                .FirstOrDefaultAsync(u => u.Id == userId);
 
             var room = await this.roomsService.GetByIdAsync<RoomViewModel>(roomId);
 
-            if (room.HotelId != user.HotelId)
+            if (!user.Hotel.Rooms.Any(r => r.Id == room.Id))
             {
                 return this.RedirectToAction("AllRooms");
             }
@@ -177,11 +183,17 @@
         [AuthorizeRoles(new[] { GlobalConstants.ManagerRoleName, GlobalConstants.AdministratorRoleName })]
         public async Task<IActionResult> Update(int roomId)
         {
-            var user = await this.userManager.GetUserAsync(this.User);
+            var userId = this.userManager.GetUserId(this.User);
+            var user = await this.userManager
+                .Users
+                .Include(u => u.Hotel)
+                .ThenInclude(h => h.Rooms)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+
             var roomTypes = this.roomTypesService.GetAll<RoomTypeDropDownViewModel>();
             var room = await this.roomsService.GetByIdAsync<RoomUpdateViewModel>(roomId);
 
-            if (room.HotelId != user.HotelId)
+            if (!user.Hotel.Rooms.Any(r => r.Id == room.Id))
             {
                 return this.RedirectToAction("AllRooms");
             }
@@ -206,11 +218,14 @@
         [AuthorizeRoles(new[] { GlobalConstants.ManagerRoleName, GlobalConstants.AdministratorRoleName })]
         public async Task<IActionResult> Update(RoomUpdateInputModel input)
         {
-            var user = await this.userManager.GetUserAsync(this.User);
+            var userId = this.userManager.GetUserId(this.User);
+            var user = await this.userManager
+                .Users
+                .Include(u => u.Hotel)
+                .ThenInclude(h => h.Rooms)
+                .FirstOrDefaultAsync(u => u.Id == userId);
 
-            var room = await this.roomsService.GetByIdAsync<RoomUpdateViewModel>(input.Id);
-
-            if (room.HotelId != user.HotelId)
+            if (!user.Hotel.Rooms.Any(r => r.Id == input.Id))
             {
                 return this.RedirectToAction("AllRooms");
             }

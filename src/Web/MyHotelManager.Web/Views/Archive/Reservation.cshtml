@@ -48,9 +48,9 @@
                                 @if (reservation.CancelDate != new DateTime())
                                 {
                                     <tr title="@reservation.Description" class="bg-gradient-danger text-white">
-                                        <td class="text-center align-middle">@reservation.Room.Number</td>
-                                        <td class="text-center align-middle">@reservation.ReservationGuest.FirstName @reservation.ReservationGuest.LastName</td>
-                                        <td class="text-center align-middle">@reservation.ReservationGuest.PhoneNumber</td>
+                                        <td class="text-center align-middle">@reservation.RoomNumber</td>
+                                        <td class="text-center align-middle">@reservation.ReservedByGuest.FirstName @reservation.ReservedByGuest.LastName</td>
+                                        <td class="text-center align-middle">@reservation.ReservedByGuest.PhoneNumber</td>
                                         <td class="text-center align-middle">@reservation.BookDate.ToString("dd.MM.yyyy")</td>
                                         <td class="text-center align-middle">@reservation.ArrivalDate.ToString("dd.MM.yyyy")</td>
                                         <td class="text-center align-middle">@reservation.ReturnDate.ToString("dd.MM.yyyy")</td>
@@ -64,9 +64,9 @@
                                 else
                                 {
                                     <tr title="@reservation.Description" class="bg-gradient-success text-white">
-                                        <td class="text-center align-middle">@reservation.Room.Number</td>
-                                        <td class="text-center align-middle">@reservation.ReservationGuest.FirstName @reservation.ReservationGuest.LastName</td>
-                                        <td class="text-center align-middle">@reservation.ReservationGuest.PhoneNumber</td>
+                                        <td class="text-center align-middle">@reservation.RoomNumber</td>
+                                        <td class="text-center align-middle">@reservation.ReservedByGuest.FirstName @reservation.ReservedByGuest.LastName</td>
+                                        <td class="text-center align-middle">@reservation.ReservedByGuest.PhoneNumber</td>
                                         <td class="text-center align-middle">@reservation.BookDate.ToString("dd.MM.yyyy")</td>
                                         <td class="text-center align-middle">@reservation.ArrivalDate.ToString("dd.MM.yyyy")</td>
                                         <td class="text-center align-middle">@reservation.ReturnDate.ToString("dd.MM.yyyy")</td>

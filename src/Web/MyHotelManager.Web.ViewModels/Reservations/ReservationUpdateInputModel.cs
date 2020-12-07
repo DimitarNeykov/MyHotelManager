@@ -10,29 +10,15 @@
     {
         public string Id { get; set; }
 
-        public int RoomId { get; set; }
-
-        public int OldRoomId { get; set; }
-
         public DateTime ArrivalDate { get; set; }
 
         public DateTime ReturnDate { get; set; }
 
-        public int Nights => (int)(Convert.ToDateTime(this.ReturnDate) - Convert.ToDateTime(this.ArrivalDate)).TotalDays;
+        public int Nights => (int)(this.ReturnDate - this.ArrivalDate).TotalDays;
 
         public int AdultCount { get; set; }
 
         public int ChildCount { get; set; }
-
-        public int MaxAdultCount { get; set; }
-
-        public int MaxChildCount { get; set; }
-
-        public string RoomNumber { get; set; }
-
-        public string RoomType { get; set; }
-
-        public decimal RoomPrice { get; set; }
 
         public decimal CustomPrice { get; set; }
 
@@ -49,10 +35,8 @@
 
         public string Description { get; set; }
 
-        public string GuestFirstName { get; set; }
+        public ReservedByGuestInputModel ReservedByGuest { get; set; }
 
-        public string GuestLastName { get; set; }
-
-        public string GuestPhoneNumber { get; set; }
+        public RoomViewModel Room { get; set; }
     }
 }

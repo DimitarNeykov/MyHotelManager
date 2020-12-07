@@ -6,12 +6,12 @@
 
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
     using MyHotelManager.Common;
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Data;
     using MyHotelManager.Web.Infrastructure.Attributes;
     using MyHotelManager.Web.ViewModels.Reservations;
-    using MyHotelManager.Web.ViewModels.Rooms;
 
     [AuthorizeRoles(new[] { GlobalConstants.ManagerRoleName, GlobalConstants.AdministratorRoleName, GlobalConstants.ReceptionistRoleName })]
     public class ReservationsController : Controller
@@ -32,13 +32,18 @@
 
         public async Task<IActionResult> Details(string id)
         {
-            var user = await this.userManager.GetUserAsync(this.User);
+            var userId = this.userManager.GetUserId(this.User);
+            var user = await this.userManager
+                .Users
+                .Include(u => u.Hotel)
+                .ThenInclude(h => h.Rooms)
+                .FirstOrDefaultAsync(x => x.Id == userId);
 
-            var viewModel = await this.reservationsService.GetByIdAsync<ReservationViewModel>(id);
+            var viewModel = await this.reservationsService.GetByIdAsync<ReservationDetailsViewModel>(id);
 
-            if (user.HotelId != viewModel.Room.HotelId)
+            if (!user.Hotel.Rooms.Any(x => x.Id == viewModel.Room.Id))
             {
-                return this.RedirectToAction("Index");
+                return this.RedirectToAction("Manager", "Reservations");
             }
 
             var customPrice = 0.0M;
@@ -49,7 +54,6 @@
             }
 
             viewModel.CustomPrice = customPrice;
-
             return this.View(viewModel);
         }
 
@@ -73,25 +77,25 @@
 
         public async Task<IActionResult> Create(int roomId, string arrivalDate, string returnDate)
         {
-            var user = await this.userManager.GetUserAsync(this.User);
+            var userId = this.userManager.GetUserId(this.User);
+            var user = await this.userManager
+                .Users
+                .Include(u => u.Hotel)
+                .ThenInclude(h => h.Rooms)
+                .FirstOrDefaultAsync(x => x.Id == userId);
 
-            var room = await this.roomsService.GetByIdAsync<RoomModel>(roomId);
+            var room = await this.roomsService.GetByIdAsync<RoomViewModel>(roomId);
 
-            if (room.HotelId != user.HotelId)
+            if (!user.Hotel.Rooms.Any(x => x.Id == room.Id))
             {
-                return this.RedirectToAction("DateSearch", "Rooms");
+                return this.RedirectToAction("Manager");
             }
 
             var viewModel = new ReservationCreateInputModel
             {
-                RoomId = roomId,
+                Room = room,
                 ArrivalDate = arrivalDate,
                 ReturnDate = returnDate,
-                RoomType = room.RoomType.Name,
-                RoomNumber = room.Number,
-                RoomPrice = room.Price,
-                MaxChildCount = room.MaxChildCount,
-                MaxAdultCount = room.MaxAdultCount,
             };
 
             return this.View(viewModel);
@@ -105,47 +109,44 @@
                 return this.View(input);
             }
 
-            var user = await this.userManager.GetUserAsync(this.User);
-
-            var room = await this.roomsService.GetByIdAsync<RoomModel>(input.RoomId);
+            var userId = this.userManager.GetUserId(this.User);
+            var user = await this.userManager
+                .Users
+                .Include(u => u.Hotel)
+                .ThenInclude(h => h.Rooms)
+                .FirstOrDefaultAsync(x => x.Id == userId);
 
             var availableRooms = this.roomsService
-                .AvailableRooms<AvailableRoomViewModel>(
+                .AvailableRooms<RoomViewModel>(
                 (int)user.HotelId,
                 Convert.ToDateTime(input.ArrivalDate),
                 Convert.ToDateTime(input.ReturnDate));
 
-            if (!availableRooms.Any(x => x.Id == room.Id))
+            if (!availableRooms.Any(x => x.Id == input.Room.Id))
             {
                 return this.RedirectToAction("DateSearch", "Rooms");
             }
 
-            if (room.HotelId != user.HotelId)
+            if (!user.Hotel.Rooms.Any(x => x.Id == input.Room.Id))
             {
-                return this.RedirectToAction("DateSearch", "Rooms");
+                return this.RedirectToAction("Manager");
             }
 
-            if (room.MaxAdultCount < input.AdultCount || input.AdultCount < 1 || room.MaxChildCount < input.ChildCount || input.ChildCount < 0)
+            if (input.Room.MaxAdultCount < input.AdultCount || input.AdultCount < 1 || input.Room.MaxChildCount < input.ChildCount || input.ChildCount < 0)
             {
-                input.RoomId = room.Id;
-                input.RoomType = room.RoomType.Name;
-                input.RoomNumber = room.Number;
-                input.RoomPrice = room.Price;
-                input.MaxChildCount = room.MaxChildCount;
-                input.MaxAdultCount = room.MaxAdultCount;
                 return this.View(input);
             }
 
             await this.reservationsService.CreateAsync(
-                input.GuestInfo.PhoneNumber,
+                input.ReservedByGuest.PhoneNumber,
                 user.Id,
-                input.RoomId,
+                input.Room.Id,
                 Convert.ToDateTime(input.ArrivalDate),
                 Convert.ToDateTime(input.ReturnDate),
                 input.AdultCount,
                 input.ChildCount,
-                input.GuestInfo.FirstName,
-                input.GuestInfo.LastName,
+                input.ReservedByGuest.FirstName,
+                input.ReservedByGuest.LastName,
                 input.Description,
                 input.AllPrice,
                 input.HasBreakfast,
@@ -157,46 +158,47 @@
 
         public async Task<IActionResult> Update(string reservationId)
         {
-            var user = await this.userManager.GetUserAsync(this.User);
-            var reservation = await this.reservationsService.GetByIdAsync<ReservationUpdateViewModel>(reservationId);
-            var room = await this.roomsService.GetByIdAsync<RoomModel>(reservation.RoomId);
+            var userId = this.userManager.GetUserId(this.User);
+            var user = await this.userManager
+                .Users
+                .Include(u => u.Hotel)
+                .ThenInclude(h => h.Rooms)
+                .FirstOrDefaultAsync(x => x.Id == userId);
 
-            if (user.HotelId != room.HotelId)
+            var reservation = await this.reservationsService.GetByIdAsync<ReservationUpdateViewModel>(reservationId);
+
+            if (!user.Hotel.Rooms.Any(x => x.Id == reservation.Room.Id))
             {
                 return this.RedirectToAction("Manager", "Reservations");
             }
 
             var customPrice = 0.0M;
 
-            if (room.Price * reservation.Nights != reservation.Price)
+            if (reservation.Room.Price * reservation.Nights != reservation.Price)
             {
                 customPrice = reservation.Price / reservation.Nights;
             }
 
-            var viewModel = new ReservationUpdateInputModel
+            var viewModel = new ReservationUpdateInputModel()
             {
                 Id = reservation.Id,
-                RoomId = room.Id,
-                OldRoomId = room.Id,
-                RoomNumber = room.Number,
-                GuestFirstName = reservation.Guests.OrderBy(x => x.CreatedOn).First().FirstName,
-                GuestLastName = reservation.Guests.OrderBy(x => x.CreatedOn).First().LastName,
-                GuestPhoneNumber = reservation.Guests.OrderBy(x => x.CreatedOn).First().PhoneNumber,
+                Room = reservation.Room,
+                ReservedByGuest = new ReservedByGuestInputModel()
+                {
+                    FirstName = reservation.ReservedByGuest.FirstName,
+                    LastName = reservation.ReservedByGuest.LastName,
+                    PhoneNumber = reservation.ReservedByGuest.PhoneNumber,
+                },
                 ArrivalDate = reservation.ArrivalDate,
                 ReturnDate = reservation.ReturnDate,
                 AdultCount = reservation.AdultCount,
                 ChildCount = reservation.ChildCount,
-                MaxAdultCount = room.MaxAdultCount,
-                MaxChildCount = room.MaxChildCount,
-                RoomType = room.RoomType.Name,
                 HasBreakfast = reservation.HasBreakfast,
                 HasLunch = reservation.HasLunch,
                 HasDinner = reservation.HasDinner,
                 AllPrice = reservation.Price,
-                RoomPrice = room.Price,
                 CustomPrice = customPrice,
             };
-
             return this.View(viewModel);
         }
 
@@ -208,16 +210,19 @@
                 return this.View(input);
             }
 
-            var user = await this.userManager.GetUserAsync(this.User);
+            var userId = this.userManager.GetUserId(this.User);
+            var user = await this.userManager
+                .Users
+                .Include(u => u.Hotel)
+                .ThenInclude(h => h.Rooms)
+                .FirstOrDefaultAsync(x => x.Id == userId);
 
-            var room = await this.roomsService.GetByIdAsync<RoomModel>(input.RoomId);
-
-            if (room.HotelId != user.HotelId)
+            if (!user.Hotel.Rooms.Any(x => x.Id == input.Room.Id))
             {
                 return this.RedirectToAction("Manager");
             }
 
-            if (room.MaxAdultCount < input.AdultCount || input.AdultCount < 1 || room.MaxChildCount < input.ChildCount || input.ChildCount < 0)
+            if (input.Room.MaxAdultCount < input.AdultCount || input.AdultCount < 1 || input.Room.MaxChildCount < input.ChildCount || input.ChildCount < 0)
             {
                 return this.View(input);
             }
@@ -225,14 +230,14 @@
             await this.reservationsService.UpdateAsync(
                 user.Id,
                 input.Id,
-                input.RoomId,
+                input.Room.Id,
                 input.ArrivalDate,
                 input.ReturnDate,
                 input.AdultCount,
                 input.ChildCount,
-                input.GuestFirstName,
-                input.GuestLastName,
-                input.GuestPhoneNumber,
+                input.ReservedByGuest.FirstName,
+                input.ReservedByGuest.LastName,
+                input.ReservedByGuest.PhoneNumber,
                 input.Description,
                 input.AllPrice,
                 input.HasBreakfast,

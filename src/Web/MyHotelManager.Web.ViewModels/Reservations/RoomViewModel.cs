@@ -1,7 +1,5 @@
-﻿namespace MyHotelManager.Web.ViewModels.Hotels
+﻿namespace MyHotelManager.Web.ViewModels.Reservations
 {
-    using System;
-
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Mapping;
 
@@ -11,20 +9,16 @@
 
         public string Number { get; set; }
 
-        public DateTime ArrivalDate { get; set; }
-
-        public DateTime ReturnDate { get; set; }
-
         public int MaxAdultCount { get; set; }
 
         public int MaxChildCount { get; set; }
 
-        public string Description { get; set; }
-
         public decimal Price { get; set; }
 
-        public int HotelId { get; set; }
+        public string RoomTypeName { get; set; }
 
-        public RoomType RoomType { get; set; }
+        public string Description { get; set; }
+
+        public string Floor { get; set; }
     }
 }

@@ -1,17 +1,17 @@
 ﻿namespace MyHotelManager.Web.ViewModels.Reservations
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
 
+    using AutoMapper;
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Mapping;
 
-    public class ReservationManageViewModel : IMapFrom<Reservation>
+    public class ReservationManageViewModel : IMapFrom<Reservation>, IHaveCustomMappings
     {
         public string Id { get; set; }
 
-        public Room Room { get; set; }
+        public string RoomNumber { get; set; }
 
         public DateTime BookDate { get; set; }
 
@@ -25,8 +25,13 @@
 
         public string Description { get; set; }
 
-        public ICollection<Guest> Guests { get; set; }
+        public ReservedByGuestViewModel ReservedByGuest { get; set; }
 
-        public Guest ReservationGuest => this.Guests.OrderBy(x => x.CreatedOn).First();
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<Reservation, ReservationManageViewModel>()
+                .ForMember(x => x.ReservedByGuest, opt =>
+                    opt.MapFrom(x => x.Guests.OrderBy(g => g.CreatedOn).FirstOrDefault()));
+        }
     }
 }

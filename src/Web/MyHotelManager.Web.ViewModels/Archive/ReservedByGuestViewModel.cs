@@ -1,18 +1,14 @@
-﻿namespace MyHotelManager.Web.ViewModels.Reservations
+﻿namespace MyHotelManager.Web.ViewModels.Archive
 {
-    using System.ComponentModel.DataAnnotations;
-
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Mapping;
 
-    public class ReservationGuestInfoInputModel : IMapTo<Guest>
+    public class ReservedByGuestViewModel : IMapFrom<Guest>
     {
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
 
-        [MaxLength(10)]
-        [MinLength(10)]
         public string PhoneNumber { get; set; }
     }
 }

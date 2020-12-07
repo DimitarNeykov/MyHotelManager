@@ -1,4 +1,4 @@
-﻿@model MyHotelManager.Web.ViewModels.Archive.ReservationViewModel
+﻿@model MyHotelManager.Web.ViewModels.Archive.ReservationDetailsViewModel
 
 @{
     this.ViewData["Title"] = "Reservations";
@@ -156,8 +156,8 @@
                                         </div>
 
                                         <div class="col-sm-6 text-center">
-                                            <label asp-for="Room.RoomType.Name"></label>
-                                            <input value="@Model.Room.RoomType.Name" readonly="readonly" class="form-control form-control-user text-center">
+                                            <label asp-for="Room.RoomTypeName"></label>
+                                            <input value="@Model.Room.RoomTypeName" readonly="readonly" class="form-control form-control-user text-center">
                                         </div>
                                     </div>
 
@@ -290,34 +290,9 @@
                                     <td class="text-center align-middle">@guest.DocumentNumber</td>
                                     <td class="text-center align-middle">@guest.DateOfIssue</td>
                                     <td class="text-center align-middle">@guest.DateOfExpiry</td>
-                                    @if (guest.Gender != null)
-                                    {
-                                        <td class="text-center align-middle">@guest.Gender.Name</td>
-                                    }
-                                    else
-                                    {
-                                        <td></td>
-                                    }
-                                    @if (guest.City != null)
-                                    {
-                                        <td class="text-center align-middle">@guest.City.Name</td>
-                                    }
-                                    else
-                                    {
-                                        <td></td>
-                                    }
-                                    @if (guest.Country != null)
-                                    {
-                                        <td class="text-center align-middle">@guest.Country.Name</td>
-                                    }
-                                    else if (guest.Country == null && guest.City != null)
-                                    {
-                                        <td class="text-center align-middle">@guest.City.Country.Name</td>
-                                    }
-                                    else
-                                    {
-                                        <td></td>
-                                    }
+                                    <td class="text-center align-middle">@guest.GenderName</td>
+                                    <td class="text-center align-middle">@guest.CityName</td>
+                                    <td class="text-center align-middle">@guest.Country</td>
                                     @if (guest.UniqueNumberForeigner != null)
                                     {
                                         <td class="text-center align-middle text-success"><i class="fas fa-check"></i></td>

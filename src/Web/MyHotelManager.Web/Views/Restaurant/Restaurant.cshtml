@@ -49,26 +49,15 @@
                             foreach (var reservation in Model)
                             {
                                 <tr>
-                                    <th class="text-center align-middle">@reservation.Room.Number</th>
+                                    <th class="text-center align-middle">@reservation.RoomNumber</th>
                                     <th class="text-center align-middle">
-                                        @foreach (var guest in reservation.Guests.OrderBy(x => x.CreatedOn))
+                                        @foreach (var guest in reservation.Guests)
                                         {
                                             <span>@guest.FirstName @guest.LastName</span>
                                             <br />
                                         }
                                     </th>
-                                    @if (reservation.Guests.OrderBy(x => x.CreatedOn).First().Country != null)
-                                    {
-                                        <th class="text-center align-middle">@reservation.Guests.OrderBy(x => x.CreatedOn).First().Country.Name</th>
-                                    }
-                                    else if (reservation.Guests.OrderBy(x => x.CreatedOn).First().City != null)
-                                    {
-                                        <th class="text-center align-middle">@reservation.Guests.OrderBy(x => x.CreatedOn).First().City.Country.Name</th>
-                                    }
-                                    else
-                                    {
-                                        <th></th>
-                                    }
+                                    <th class="text-center align-middle">@reservation.Country</th>
                                     <th class="text-center align-middle">@reservation.AdultCount</th>
                                     <th class="text-center align-middle">@reservation.ChildCount</th>
                                     <th class="text-center align-middle">@reservation.TotalCount</th>

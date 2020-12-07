@@ -3,7 +3,10 @@
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    public class UserCreateInputModel
+    using MyHotelManager.Data.Models;
+    using MyHotelManager.Services.Mapping;
+
+    public class UserCreateInputModel : IMapTo<ApplicationUser>
     {
         [Required]
         [MinLength(3)]

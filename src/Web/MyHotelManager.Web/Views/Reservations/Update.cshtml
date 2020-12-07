@@ -34,22 +34,22 @@
                             </div>
                             <div class="form-group row was-validated text-center text-white-50">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <label asp-for="GuestFirstName"></label>
-                                    <input asp-for="GuestFirstName" id="guests" class="form-control form-control-user text-center is-invalid" placeholder="First Name" required>
-                                    <span asp-validation-for="GuestFirstName" class="text-danger"></span>
+                                    <label asp-for="ReservedByGuest.FirstName"></label>
+                                    <input asp-for="ReservedByGuest.FirstName" id="guests" class="form-control form-control-user text-center is-invalid" placeholder="First Name" required>
+                                    <span asp-validation-for="ReservedByGuest.FirstName" class="text-danger"></span>
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <label asp-for="GuestLastName"></label>
-                                    <input asp-for="GuestLastName" class="form-control form-control-user text-center is-invalid" placeholder="Last Name" required>
-                                    <span asp-validation-for="GuestLastName" class="text-danger"></span>
+                                    <label asp-for="ReservedByGuest.LastName"></label>
+                                    <input asp-for="ReservedByGuest.LastName" class="form-control form-control-user text-center is-invalid" placeholder="Last Name" required>
+                                    <span asp-validation-for="ReservedByGuest.LastName" class="text-danger"></span>
                                 </div>
                             </div>
 
                             <div class="form-group was-validated text-center text-white-50">
-                                <label asp-for="GuestPhoneNumber"></label>
-                                <input asp-for="GuestPhoneNumber" class="form-control form-control-user text-center is-invalid" placeholder="Phone Number" minlength="10" required>
-                                <span asp-validation-for="GuestPhoneNumber" class="text-danger"></span>
+                                <label asp-for="ReservedByGuest.PhoneNumber"></label>
+                                <input asp-for="ReservedByGuest.PhoneNumber" class="form-control form-control-user text-center is-invalid" placeholder="Phone Number" minlength="10" required>
+                                <span asp-validation-for="ReservedByGuest.PhoneNumber" class="text-danger"></span>
                             </div>
 
                             <div class="form-group row was-validated text-center text-white-50">
@@ -67,31 +67,31 @@
                             </div>
                             <div class="form-group row was-validated text-center text-white-50">
                                 <div class="col-sm-6 mb-3 mb-sm-0 text-center">
-                                    <label asp-for="MaxAdultCount"></label>
-                                    <input asp-for="MaxAdultCount" id="MaxAdultCount" readonly="readonly" class="form-control form-control-user text-center is-valid">
+                                    <label asp-for="Room.MaxAdultCount"></label>
+                                    <input asp-for="Room.MaxAdultCount" id="MaxAdultCount" readonly="readonly" class="form-control form-control-user text-center is-valid">
                                 </div>
 
                                 <div class="col-sm-6 text-center">
-                                    <label asp-for="MaxChildCount"></label>
-                                    <input asp-for="MaxChildCount" id="MaxChildCount" readonly="readonly" class="form-control form-control-user text-center is-valid">
+                                    <label asp-for="Room.MaxChildCount"></label>
+                                    <input asp-for="Room.MaxChildCount" id="MaxChildCount" readonly="readonly" class="form-control form-control-user text-center is-valid">
                                 </div>
                             </div>
                             <div class="form-group row was-validated text-center text-white-50">
                                 <div class="col-sm-6 mb-3 mb-sm-0 text-center">
-                                    <label asp-for="RoomNumber"></label>
-                                    <input asp-for="RoomNumber" id="roomNumber" readonly="readonly" class="form-control form-control-user text-center is-valid">
+                                    <label asp-for="Room.Number"></label>
+                                    <input asp-for="Room.Number" id="roomNumber" readonly="readonly" class="form-control form-control-user text-center is-valid">
                                 </div>
 
                                 <div class="col-sm-6 text-center">
-                                    <label asp-for="RoomType"></label>
-                                    <input asp-for="RoomType" id="roomType" readonly="readonly" class="form-control form-control-user text-center is-valid">
+                                    <label asp-for="Room.RoomTypeName"></label>
+                                    <input asp-for="Room.RoomTypeName" id="roomType" readonly="readonly" class="form-control form-control-user text-center is-valid">
                                 </div>
                             </div>
 
                             <div class="form-group row was-validated text-center text-white-50">
                                 <div class="col-sm-4 mb-3 mb-sm-0">
-                                    <label asp-for="RoomPrice"></label>
-                                    <input value="@Model.RoomPrice" asp-for="RoomPrice" id="roomPrice" readonly="readonly" class="form-control form-control-user text-center is-valid" placeholder="Room Price">
+                                    <label asp-for="Room.Price"></label>
+                                    <input asp-for="Room.Price" id="roomPrice" readonly="readonly" class="form-control form-control-user text-center is-valid" placeholder="Room Price">
                                 </div>
 
                                 <div class="col-sm-4 mb-3 mb-sm-0">
@@ -133,10 +133,10 @@
                                 <span asp-validation-for="Description" class="text-danger"></span>
                             </div>
 
-                            <input asp-for="RoomId" id="roomId" hidden="" readonly="readonly" class="custom-control-input">
+                            <input asp-for="Room.Id" id="roomId" hidden="" readonly="readonly" class="custom-control-input">
                             <input asp-for="Id" hidden="" id="reservationId" readonly="readonly" class="custom-control-input">
 
-                            <button type="submit" class="btn btn-success btn-user btn-block" asp-route="@Model.RoomId">
+                            <button type="submit" class="btn btn-success btn-user btn-block">
                                 Save
                             </button>
                         </form>
