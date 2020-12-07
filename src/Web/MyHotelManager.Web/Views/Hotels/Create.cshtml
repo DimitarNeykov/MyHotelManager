@@ -26,7 +26,7 @@
                                 </div>
                                 <div class="form-group was-validated">
                                     <label asp-for="CityId"></label>
-                                    <select asp-for="CityId" asp-items="cities" class="form-control rounded-pill custom-select" style="text-align-last: center; text-align: center; -ms-text-align-last: center; -moz-text-align-last: center;" required>
+                                    <select asp-for="CityId" asp-items="cities" class="form-control rounded-pill custom-select myselect" required>
                                         <option value="" disabled selected>Select City</option>
                                     </select>
                                     <span asp-validation-for="CityId" class="text-danger"></span>
@@ -38,7 +38,7 @@
                                 </div>
                                 <div class="form-group was-validated">
                                     <label asp-for="StarsId"></label>
-                                    <select asp-for="StarsId" asp-items="stars" class="form-control rounded-pill custom-select" style="text-align-last: center; text-align: center; -ms-text-align-last: center; -moz-text-align-last: center;" required>
+                                    <select asp-for="StarsId" asp-items="stars" class="form-control rounded-pill custom-select myselect" required>
                                         <option value="" disabled selected>Select Stars</option>
                                     </select>
                                     <span asp-validation-for="StarsId" class="text-danger"></span>

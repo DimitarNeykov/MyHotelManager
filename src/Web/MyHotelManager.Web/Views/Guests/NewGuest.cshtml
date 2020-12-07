@@ -32,7 +32,7 @@
                             <div class="form-group row was-validated justify-content-center">
                                 <div class="col-sm-6">
                                     <label asp-for="GenderId"></label>
-                                    <select asp-for="GenderId" class="form-control rounded-pill custom-select" style="text-align-last: center; text-align: center; -ms-text-align-last: center; -moz-text-align-last: center;" required>
+                                    <select asp-for="GenderId" class="form-control rounded-pill custom-select myselect" required>
                                         <option value="" disabled selected>Select Sex</option>
                                         <option value="1">Male</option>
                                         <option value="2">Female</option>
@@ -51,7 +51,7 @@
                             <div class="form-group row was-validated justify-content-center">
                                 <div class="col-sm-6">
                                     <label>Nationality</label>
-                                    <select onchange="Nationality()" class="form-control rounded-pill custom-select" id="nationalitySelect" style="text-align-last: center; text-align: center; -ms-text-align-last: center; -moz-text-align-last: center;" required>
+                                    <select onchange="Nationality()" class="form-control rounded-pill custom-select myselect" id="nationalitySelect" required>
                                         <option value="" disabled selected>Select Nationality</option>
                                         <option value="1">Bulgarian</option>
                                         <option value="2">Foreign</option>
@@ -64,7 +64,7 @@
                             <div class="form-group row was-validated justify-content-center">
                                 <div class="col-sm-6 mb-3 mb-sm-0" hidden="" id="city">
                                     <label asp-for="CityId"></label>
-                                    <select asp-for="CityId" asp-items="cities" id="citySelect" class="form-control rounded-pill custom-select" style="text-align-last: center; text-align: center; -ms-text-align-last: center; -moz-text-align-last: center;" required>
+                                    <select asp-for="CityId" asp-items="cities" id="citySelect" class="form-control rounded-pill custom-select myselect" required>
                                         <option value="" disabled selected>Select City</option>
                                     </select>
                                     <span asp-validation-for="CityId" class="text-danger"></span>
@@ -72,7 +72,7 @@
 
                                 <div class="col-sm-6 mb-3 mb-sm-0" hidden="" id="country">
                                     <label asp-for="CountryId"></label>
-                                    <select asp-for="CountryId" asp-items="countries" id="countrySelect" class="form-control rounded-pill custom-select" style="text-align-last: center; text-align: center; -ms-text-align-last: center; -moz-text-align-last: center;" required>
+                                    <select asp-for="CountryId" asp-items="countries" id="countrySelect" class="form-control rounded-pill custom-select myselect" required>
                                         <option value="" disabled selected>Select Country</option>
                                     </select>
                                     <span asp-validation-for="CountryId" class="text-danger"></span>

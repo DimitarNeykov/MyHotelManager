@@ -16,7 +16,7 @@
 
         public string GetImgByName(string name)
         {
-            return this.cloudinary.Api.UrlImgUp.BuildUrl(name);
+            return this.cloudinary.Api.UrlImgUp.BuildUrl(name).Insert(4, "s");
         }
     }
 }
