@@ -80,11 +80,11 @@
         public IEnumerable<T> GetActiveReservationsWithBreakfast<T>(int hotelId)
         {
             var reservations = this.reservationRepository
-                .All()
+                .AllWithDeleted()
                 .Where(x => x.Room.HotelId == hotelId &&
                             DateTime.UtcNow.Date <= x.ReturnDate.Date &&
                             DateTime.UtcNow.Date > x.ArrivalDate.Date &&
-                            x.HasBreakfast)
+                            x.HasBreakfast && x.IsDeleted == false)
                 .To<T>()
                 .ToList();
 
@@ -94,11 +94,11 @@
         public IEnumerable<T> GetActiveReservationsWithLunch<T>(int hotelId)
         {
             var reservations = this.reservationRepository
-                .All()
+                .AllWithDeleted()
                 .Where(x => x.Room.HotelId == hotelId &&
                             DateTime.UtcNow.Date <= x.ReturnDate.Date &&
                             DateTime.UtcNow.Date >= x.ArrivalDate.Date &&
-                            x.HasLunch)
+                            x.HasLunch && x.IsDeleted == false)
                 .To<T>()
                 .ToList();
 
@@ -108,11 +108,11 @@
         public IEnumerable<T> GetActiveReservationsWithDinner<T>(int hotelId)
         {
             var reservations = this.reservationRepository
-                .All()
+                .AllWithDeleted()
                 .Where(x => x.Room.HotelId == hotelId &&
                             DateTime.UtcNow.Date < x.ReturnDate.Date &&
                             DateTime.UtcNow.Date >= x.ArrivalDate.Date &&
-                            x.HasDinner)
+                            x.HasDinner && x.IsDeleted == false)
                 .To<T>()
                 .ToList();
 

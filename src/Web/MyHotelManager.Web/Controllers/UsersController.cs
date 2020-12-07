@@ -1,13 +1,17 @@
 ﻿namespace MyHotelManager.Web.Controllers
 {
     using System.Linq;
+    using System.Text;
+    using System.Text.Encodings.Web;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.EntityFrameworkCore;
     using MyHotelManager.Common;
     using MyHotelManager.Data.Models;
+    using MyHotelManager.Services.Messaging;
     using MyHotelManager.Web.Infrastructure.Attributes;
     using MyHotelManager.Web.ViewModels.Users;
 
@@ -15,10 +19,14 @@
     public class UsersController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly IMailHelper mailHelper;
 
-        public UsersController(UserManager<ApplicationUser> userManager)
+        public UsersController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IMailHelper mailHelper)
         {
             this.userManager = userManager;
+            this.signInManager = signInManager;
+            this.mailHelper = mailHelper;
         }
 
         public IActionResult Create()
@@ -47,8 +55,26 @@
                 Email = input.Email,
                 HotelId = user.HotelId,
             };
+            var result = await this.userManager.CreateAsync(newUser, input.Password);
+            if (result.Succeeded)
+            {
+                var code = await this.userManager.GenerateEmailConfirmationTokenAsync(newUser);
+                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
-            await this.userManager.CreateAsync(newUser, input.Password);
+                var callbackUrl = this.Url.Page(
+                    "/Account/ConfirmEmail",
+                    pageHandler: null,
+                    values: new { area = "Identity", userId = newUser.Id, code = code },
+                    protocol: this.Request.Scheme);
+
+                await this.mailHelper.SendFromIdentityAsync(
+                    input.Email,
+                    "Confirm your registration",
+                    $"{newUser.FirstName} {newUser.LastName}",
+                    "You are receiving this email because we received a registration confirmation request.",
+                    HtmlEncoder.Default.Encode(callbackUrl),
+                    "If you did not request a registration confirmation, no further action is needed.");
+            }
 
             switch (input.Role)
             {
@@ -108,9 +134,7 @@
             }
 
             user.IsDeleted = true;
-
             await this.userManager.UpdateAsync(user);
-
             return this.RedirectToAction("Manager", "Hotels");
         }
     }

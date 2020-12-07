@@ -51,7 +51,7 @@
                             </div>
 
                             <input asp-for="Id" hidden="" required>
-                            
+
                             <button type="submit" class="btn btn-success btn-user btn-block">
                                 Save
                             </button>
@@ -62,3 +62,6 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

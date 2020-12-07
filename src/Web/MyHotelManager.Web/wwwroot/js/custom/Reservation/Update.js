@@ -68,7 +68,7 @@ function selectRoom(siteUrl) {
         success: function (data) {
             document.getElementById('roomId').value = data['id'];
             document.getElementById('roomNumber').value = data['number'];
-            document.getElementById('roomType').value = data['roomType']['name'];
+            document.getElementById('roomType').value = data['roomTypeName'];
             document.getElementById('roomPrice').value = data['price'];
             document.getElementById('MaxAdultCount').value = data['maxAdultCount'];
             document.getElementById('MaxChildCount').value = data['maxChildCount'];

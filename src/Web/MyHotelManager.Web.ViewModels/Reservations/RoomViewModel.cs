@@ -20,5 +20,7 @@
         public string Description { get; set; }
 
         public string Floor { get; set; }
+
+        public int HotelId { get; set; }
     }
 }

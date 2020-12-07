@@ -32,16 +32,11 @@
 
         public async Task<IActionResult> Details(string id)
         {
-            var userId = this.userManager.GetUserId(this.User);
-            var user = await this.userManager
-                .Users
-                .Include(u => u.Hotel)
-                .ThenInclude(h => h.Rooms)
-                .FirstOrDefaultAsync(x => x.Id == userId);
+            var user = await this.userManager.GetUserAsync(this.User);
 
             var viewModel = await this.reservationsService.GetByIdAsync<ReservationDetailsViewModel>(id);
 
-            if (!user.Hotel.Rooms.Any(x => x.Id == viewModel.Room.Id))
+            if (user.HotelId != viewModel.Room.HotelId)
             {
                 return this.RedirectToAction("Manager", "Reservations");
             }
@@ -158,16 +153,11 @@
 
         public async Task<IActionResult> Update(string reservationId)
         {
-            var userId = this.userManager.GetUserId(this.User);
-            var user = await this.userManager
-                .Users
-                .Include(u => u.Hotel)
-                .ThenInclude(h => h.Rooms)
-                .FirstOrDefaultAsync(x => x.Id == userId);
+            var user = await this.userManager.GetUserAsync(this.User);
 
             var reservation = await this.reservationsService.GetByIdAsync<ReservationUpdateViewModel>(reservationId);
 
-            if (!user.Hotel.Rooms.Any(x => x.Id == reservation.Room.Id))
+            if (user.HotelId != reservation.Room.HotelId)
             {
                 return this.RedirectToAction("Manager", "Reservations");
             }

@@ -81,8 +81,14 @@
         public async Task<IEnumerable<T>> AvailableRoomsWithReservationRoomAsync<T>(int hotelId, DateTime arrivalDate, DateTime returnDate, string reservationId)
         {
             var reservation = await this.reservationRepository
-                .All()
+                .AllWithDeleted()
+                .Include(x => x.Room)
                 .FirstOrDefaultAsync(x => x.Id == reservationId);
+
+            if (reservation.Room.IsDeleted == true)
+            {
+                return this.AvailableRooms<T>(hotelId, arrivalDate, returnDate);
+            }
 
             var room = this.roomRepository
                 .All()
@@ -136,7 +142,7 @@
         public IEnumerable<T> GetAllRoomsForCleaningToday<T>(int hotelId)
         {
             var rooms = this.roomRepository
-                .All()
+                .AllWithDeleted()
                 .Include(x => x.Reservations)
                 .Include(x => x.RoomType)
                 .Include(x => x.Hotel)
@@ -144,8 +150,8 @@
                 .Where(x => x.HotelId == hotelId &&
                             x.Reservations.Any(r =>
                                 (DateTime.UtcNow.Date - r.ArrivalDate.Date).Days % x.Hotel.CleaningPerDays == 0 &&
-                                r.ArrivalDate.Date < DateTime.UtcNow.Date ||
-                                r.ReturnDate.Date == DateTime.UtcNow.Date))
+                                r.ArrivalDate.Date < DateTime.UtcNow.Date && r.IsDeleted == false ||
+                                r.ReturnDate.Date == DateTime.UtcNow.Date && r.IsDeleted == false))
                 .AsQueryable()
                 .OrderBy(x => x.Number)
                 .To<T>()

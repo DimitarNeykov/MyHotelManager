@@ -20,19 +20,22 @@
         private readonly ICitiesService citiesService;
         private readonly IStarsService starsService;
         private readonly IRoomsService roomsService;
+        private readonly SignInManager<ApplicationUser> signInManager;
 
         public HotelsController(
             UserManager<ApplicationUser> userManager,
             IHotelsService hotelsService,
             ICitiesService citiesService,
             IStarsService starsService,
-            IRoomsService roomsService)
+            IRoomsService roomsService,
+            SignInManager<ApplicationUser> signInManager)
         {
             this.userManager = userManager;
             this.hotelsService = hotelsService;
             this.citiesService = citiesService;
             this.starsService = starsService;
             this.roomsService = roomsService;
+            this.signInManager = signInManager;
         }
 
         [AuthorizeRoles(new[] { GlobalConstants.ManagerRoleName, GlobalConstants.AdministratorRoleName, GlobalConstants.ReceptionistRoleName })]
@@ -101,6 +104,7 @@
                 user);
 
             await this.userManager.AddToRoleAsync(user, GlobalConstants.ManagerRoleName);
+            await this.signInManager.SignOutAsync();
 
             return this.RedirectToAction("Index");
         }
