@@ -4,9 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30406.217
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{E389DEB6-5F90-444B-A054-12A10D39C76F}"
-	ProjectSection(SolutionItems) = preProject
-		validacii.txt = validacii.txt
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyHotelManager.Web", "Web\MyHotelManager.Web\MyHotelManager.Web.csproj", "{B90D1067-FE4C-400E-BA78-5413E30AB9ED}"
 EndProject
@@ -49,7 +46,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyHotelManager.Services.CronJobs", "Services\MyHotelManager.Services.CronJobs\MyHotelManager.Services.CronJobs.csproj", "{1C18AD85-5A74-476E-BF2E-7D61758E5AC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyHotelManager.Services.CloudinaryManage", "Services\MyHotelManager.Services.Cloudinary\MyHotelManager.Services.CloudinaryManage.csproj", "{0518183A-B8A0-4AD6-9BB9-8E05410BFBA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyHotelManager.Services.CloudinaryManage", "Services\MyHotelManager.Services.Cloudinary\MyHotelManager.Services.CloudinaryManage.csproj", "{0518183A-B8A0-4AD6-9BB9-8E05410BFBA6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

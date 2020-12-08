@@ -12,7 +12,7 @@
     {
         [Required(ErrorMessage = "The field is required!")]
         [MinLength(3, ErrorMessage = "The field requires more than 3 characters!")]
-        [MaxLength(60, ErrorMessage = "The field must not be more than 60 characters!")]
+        [MaxLength(40, ErrorMessage = "The field must not be more than 40 characters!")]
         [DisplayName("Company Name")]
         public string Name { get; set; }
 
