@@ -27,4 +27,8 @@
     <ProjectReference Include="..\MyHotelManager.Web.Infrastructure\MyHotelManager.Web.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Administration\Dashboard\" />
+  </ItemGroup>
+
 </Project>

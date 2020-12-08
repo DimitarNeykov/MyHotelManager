@@ -43,8 +43,10 @@
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage = "The field is required!")]
+            [EmailAddress(ErrorMessage = "Invalid Email!")]
+            [MinLength(10, ErrorMessage = "The field requires more than 10 characters!")]
+            [MaxLength(50, ErrorMessage = "The field must not be more than 50 characters!")]
             [Display(Name = "New email")]
             public string NewEmail { get; set; }
         }

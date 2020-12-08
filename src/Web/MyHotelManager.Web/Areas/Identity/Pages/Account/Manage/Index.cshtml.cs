@@ -1,4 +1,7 @@
-﻿namespace MyHotelManager.Web.Areas.Identity.Pages.Account.Manage
+﻿using System.ComponentModel;
+using MyHotelManager.Web.Infrastructure.Attributes;
+
+namespace MyHotelManager.Web.Areas.Identity.Pages.Account.Manage
 {
     using System;
     using System.ComponentModel.DataAnnotations;
@@ -32,25 +35,31 @@
 
         public class InputModel
         {
-            [Required]
-            [MinLength(3)]
-            [MaxLength(30)]
+            [Required(ErrorMessage = "The field is required!")]
+            [MinLength(3, ErrorMessage = "The field requires more than 3 characters!")]
+            [MaxLength(30, ErrorMessage = "The field must not be more than 30 characters!")]
+            [DisplayName("First Name")]
             public string FirstName { get; set; }
 
-            [Required]
-            [MinLength(3)]
-            [MaxLength(30)]
+            [Required(ErrorMessage = "The field is required!")]
+            [MinLength(3, ErrorMessage = "The field requires more than 3 characters!")]
+            [MaxLength(30, ErrorMessage = "The field must not be more than 30 characters!")]
+            [DisplayName("Last Name")]
             public string LastName { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "The field is required!")]
+            [DateBeforeToday("Birth date should not be after today!")]
+            [DisplayName("Birth Date")]
             public DateTime BirthDate { get; set; }
 
-            [Phone]
-            [Display(Name = "Phone number")]
+            [Required(ErrorMessage = "The field is required!")]
+            [RegularExpression("^([0-9]{10})$", ErrorMessage = "The field requires 10 digits!")]
+            [DisplayName("Phone Number")]
             public string PhoneNumber { get; set; }
 
-            [Required]
-            [Range(1, 3)]
+            [Required(ErrorMessage = "The field is required!")]
+            [Range(1, 3, ErrorMessage = "Please choose sex from the drop down menu!")]
+            [DisplayName("Gender")]
             public int GenderId { get; set; }
         }
 
