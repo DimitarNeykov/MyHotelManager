@@ -15,7 +15,7 @@
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            var date = (DateTime)value;
+            var date = DateTime.Parse(value.ToString());
 
             if (date.Date > DateTime.UtcNow.Date)
             {
