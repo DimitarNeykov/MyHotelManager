@@ -5,7 +5,19 @@ var nationalitySelect = document.getElementById('nationalitySelect');
 var dateExpiryIssue = document.getElementById('dateExpiryIssue');
 var city = document.getElementById('city');
 var country = document.getElementById('country');
-
+window.onload = function () {
+    if (document.getElementById('countrySelect').selectedIndex === 0 && document.getElementById('citySelect').selectedIndex === 0) {
+        nationalitySelect.selectedIndex = 0;
+    } else {
+        if (document.getElementById('countrySelect').selectedIndex === 0) {
+            nationalitySelect.selectedIndex = 1;
+            Nationality();
+        } else {
+            nationalitySelect.selectedIndex = 2;
+            Nationality();
+        }
+    }
+};
 function Nationality() {
 
     if (nationalitySelect.selectedIndex === 2) {

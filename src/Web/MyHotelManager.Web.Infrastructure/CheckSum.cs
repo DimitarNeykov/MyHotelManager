@@ -6,9 +6,7 @@
         {
             long sum = 0;
 
-            data /= 10;
-
-            for (long i = mass.Length - 1; i > -1; --i, data /= 10)
+            for (long i = mass.Length - 1; i > -1; --i)
             {
                 sum += (data % 10) * mass[i];
             }

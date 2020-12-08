@@ -14,26 +14,30 @@
         private readonly ICitiesService citiesService;
         private readonly IGuestsService guestsService;
         private readonly ICountriesService countriesService;
+        private readonly IGendersService gendersService;
 
         public GuestsController(
             ICitiesService citiesService,
             IGuestsService guestsService,
-            ICountriesService countriesService)
+            ICountriesService countriesService,
+            IGendersService gendersService)
         {
             this.citiesService = citiesService;
             this.guestsService = guestsService;
             this.countriesService = countriesService;
+            this.gendersService = gendersService;
         }
 
         public IActionResult NewGuest(string reservationId)
         {
             var cities = this.citiesService.GetAll<CityDropDownViewModel>();
             var countries = this.countriesService.GetAll<CountryDropDownViewModel>();
-
+            var genders = this.gendersService.GetAll<GenderDropDownViewModel>();
             var viewModel = new GuestsCreateInputModel
             {
                 Cities = cities,
                 Countries = countries,
+                Genders = genders,
                 ReservationId = reservationId,
             };
 
@@ -43,6 +47,19 @@
         [HttpPost]
         public async Task<IActionResult> NewGuest(GuestsCreateInputModel input)
         {
+            if (!this.ModelState.IsValid)
+            {
+                var cities = this.citiesService.GetAll<CityDropDownViewModel>();
+                var countries = this.countriesService.GetAll<CountryDropDownViewModel>();
+                var genders = this.gendersService.GetAll<GenderDropDownViewModel>();
+
+                input.Cities = cities;
+                input.Countries = countries;
+                input.Genders = genders;
+
+                return this.View(input);
+            }
+
             await this.guestsService.CreateAsync(
                 input.FirstName,
                 input.LastName,
@@ -66,6 +83,7 @@
 
             var cities = this.citiesService.GetAll<CityDropDownViewModel>();
             var countries = this.countriesService.GetAll<CountryDropDownViewModel>();
+            var genders = this.gendersService.GetAll<GenderDropDownViewModel>();
 
             var viewModel = new GuestUpdateInputModel
             {
@@ -83,6 +101,7 @@
                 IdentificationNumber = guest.IdentificationNumber,
                 Cities = cities,
                 Countries = countries,
+                Genders = genders,
                 ReservationId = guest.ReservationId,
             };
 

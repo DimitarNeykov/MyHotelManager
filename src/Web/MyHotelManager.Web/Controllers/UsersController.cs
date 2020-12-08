@@ -11,6 +11,7 @@
     using Microsoft.EntityFrameworkCore;
     using MyHotelManager.Common;
     using MyHotelManager.Data.Models;
+    using MyHotelManager.Services.Data;
     using MyHotelManager.Services.Messaging;
     using MyHotelManager.Web.Infrastructure.Attributes;
     using MyHotelManager.Web.ViewModels.Users;
@@ -19,19 +20,29 @@
     public class UsersController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly IGendersService gendersService;
         private readonly IMailHelper mailHelper;
 
-        public UsersController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IMailHelper mailHelper)
+        public UsersController(
+            UserManager<ApplicationUser> userManager,
+            IGendersService gendersService,
+            IMailHelper mailHelper)
         {
             this.userManager = userManager;
-            this.signInManager = signInManager;
+            this.gendersService = gendersService;
             this.mailHelper = mailHelper;
         }
 
         public IActionResult Create()
         {
-            return this.View();
+            var genders = this.gendersService.GetAll<GenderDropDownViewModel>();
+
+            var viewModel = new UserCreateInputModel
+            {
+                Genders = genders,
+            };
+
+            return this.View(viewModel);
         }
 
         [HttpPost]

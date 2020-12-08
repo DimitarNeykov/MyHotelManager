@@ -3,6 +3,7 @@
 @{
     var cities = Model.Cities.Select(x => new SelectListItem(x.Name + " / " + x.Region, x.Id.ToString()));
     var countries = Model.Countries.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+    var genders = Model.Genders.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
     this.ViewData["Title"] = "New Room";
 }
 <div class="container">
@@ -32,11 +33,8 @@
                             <div class="form-group row was-validated justify-content-center">
                                 <div class="col-sm-6">
                                     <label asp-for="GenderId"></label>
-                                    <select asp-for="GenderId" class="form-control rounded-pill custom-select myselect" required>
+                                    <select asp-for="GenderId" asp-items="genders" class="form-control rounded-pill custom-select myselect" required>
                                         <option value="" disabled selected>Select Sex</option>
-                                        <option value="1">Male</option>
-                                        <option value="2">Female</option>
-                                        <option value="3">Other</option>
                                     </select>
                                     <span asp-validation-for="GenderId" class="text-danger mt-4"></span>
                                 </div>
@@ -97,14 +95,29 @@
                             </div>
 
                             <div class="form-group row was-validated" id="dateExpiryIssue" hidden="">
+                                
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label asp-for="DateOfExpiry"></label>
-                                    <input value="" type="date" asp-for="DateOfExpiry" class="form-control form-control-user is-invalid text-center" placeholder="Date Of Expiry" required>
+                                    @if (Model.DateOfExpiry != new DateTime())
+                                    {
+                                        <input type="date" asp-for="DateOfExpiry" class="form-control form-control-user is-invalid text-center" placeholder="Date Of Expiry" required>
+                                    }
+                                    else
+                                    {
+                                        <input type="date" value="" asp-for="DateOfExpiry" class="form-control form-control-user is-invalid text-center" placeholder="Date Of Expiry" required>
+                                    }
                                     <span asp-validation-for="DateOfExpiry" class="text-danger"></span>
                                 </div>
                                 <div class="col-sm-6">
                                     <label asp-for="DateOfIssue"></label>
-                                    <input value="" type="date" asp-for="DateOfIssue" class="form-control form-control-user is-invalid text-center" placeholder="Date Of Issue" required>
+                                    @if (Model.DateOfIssue != new DateTime())
+                                    {
+                                        <input type="date" asp-for="DateOfIssue" class="form-control form-control-user is-invalid text-center" placeholder="Date Of Issue" required>
+                                    }
+                                    else
+                                    {
+                                        <input value="" type="date" asp-for="DateOfIssue" class="form-control form-control-user is-invalid text-center" placeholder="Date Of Issue" required>
+                                    }
                                     <span asp-validation-for="DateOfIssue" class="text-danger"></span>
                                 </div>
                             </div>

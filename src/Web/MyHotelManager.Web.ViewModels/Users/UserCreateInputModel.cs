@@ -1,6 +1,7 @@
 ﻿namespace MyHotelManager.Web.ViewModels.Users
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using MyHotelManager.Data.Models;
@@ -51,5 +52,7 @@
         public string ConfirmPassword { get; set; }
 
         public string Role { get; set; }
+
+        public IEnumerable<GenderDropDownViewModel> Genders { get; set; }
     }
 }
