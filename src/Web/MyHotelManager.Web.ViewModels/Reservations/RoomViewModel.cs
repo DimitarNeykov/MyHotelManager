@@ -11,6 +11,7 @@
         [Required]
         public int Id { get; set; }
 
+        [DisplayName("Room Number")]
         public string Number { get; set; }
 
         [DisplayName("Max Adult Count")]
