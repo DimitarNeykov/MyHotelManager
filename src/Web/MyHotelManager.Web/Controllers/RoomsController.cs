@@ -39,7 +39,7 @@
             return this.View(viewModel);
         }
 
-        public async Task<IActionResult> GetRoomByIdJson(int roomId)
+        public async Task<IActionResult> GetRoomByIdInJson(int roomId)
         {
             var userId = this.userManager.GetUserId(this.User);
 
@@ -49,14 +49,14 @@
                 .ThenInclude(h => h.Rooms)
                 .FirstOrDefaultAsync(u => u.Id == userId);
 
-            var viewModel = await this.roomsService.GetByIdAsync<AvailableRoomViewModel>(roomId);
-
-            if (!user.Hotel.Rooms.Any(r => r.Id == viewModel.Id))
+            if (user.Hotel.Rooms.Any(r => r.Id == roomId))
             {
-                return null;
+                var viewModel = await this.roomsService.GetByIdAsync<AvailableRoomViewModel>(roomId);
+
+                return this.Json(viewModel);
             }
 
-            return this.Json(viewModel);
+            return null;
         }
 
         public IActionResult DateSearch()
@@ -66,20 +66,14 @@
 
         public async Task<IActionResult> AvailableRooms(DateTime? arrivalDate, DateTime? returnDate)
         {
-            if (arrivalDate == null || returnDate == null)
-            {
-                return null;
-            }
-
-            if (returnDate.Value.Date <= DateTime.UtcNow.ToLocalTime().Date)
+            if (!this.CheckIsValidArrivalDateAndReturnDate(arrivalDate, returnDate))
             {
                 return null;
             }
 
             var user = await this.userManager.GetUserAsync(this.User);
 
-            var viewModel = this.roomsService
-                .AvailableRooms<RoomViewModel>(
+            var viewModel = this.roomsService.AvailableRooms<RoomViewModel>(
                     (int)user.HotelId,
                     (DateTime)arrivalDate,
                     (DateTime)returnDate);
@@ -95,24 +89,23 @@
 
         public async Task<IActionResult> AvailableRoomsWithReservationRoom(DateTime? arrivalDate, DateTime? returnDate, string reservationId)
         {
-            if (arrivalDate == null || returnDate == null)
-            {
-                return null;
-            }
-
-            if (returnDate.Value.Date <= DateTime.UtcNow.Date)
+            if (!this.CheckIsValidArrivalDateAndReturnDate(arrivalDate, returnDate))
             {
                 return null;
             }
 
             var user = await this.userManager.GetUserAsync(this.User);
 
-            var viewModel =
-               await this.roomsService.AvailableRoomsWithReservationRoomAsync<AvailableRoomViewModel>(
+            var viewModel = await this.roomsService.AvailableRoomsWithReservationRoomAsync<AvailableRoomViewModel>(
                    (int)user.HotelId,
                    (DateTime)arrivalDate,
                    (DateTime)returnDate,
                    reservationId);
+
+            if (viewModel.Any(x => x.HotelId != user.HotelId))
+            {
+                return null;
+            }
 
             return this.PartialView(viewModel);
         }
@@ -134,15 +127,14 @@
         [AuthorizeRoles(new[] { GlobalConstants.ManagerRoleName, GlobalConstants.AdministratorRoleName })]
         public async Task<IActionResult> Create(RoomCreateInputModel input)
         {
-            var user = await this.userManager.GetUserAsync(this.User);
-
-            var roomTypes = this.roomTypesService.GetAll<RoomTypeDropDownViewModel>();
-
             if (!this.ModelState.IsValid)
             {
+                var roomTypes = this.roomTypesService.GetAll<RoomTypeDropDownViewModel>();
                 input.RoomTypes = roomTypes;
                 return this.View(input);
             }
+
+            var user = await this.userManager.GetUserAsync(this.User);
 
             await this.roomsService.CreateAsync(
                 input.Floor,
@@ -160,17 +152,11 @@
         [AuthorizeRoles(new[] { GlobalConstants.ManagerRoleName, GlobalConstants.AdministratorRoleName })]
         public async Task<IActionResult> Delete(int roomId)
         {
-            var userId = this.userManager.GetUserId(this.User);
-
-            var user = await this.userManager
-                .Users
-                .Include(u => u.Hotel)
-                .ThenInclude(h => h.Rooms)
-                .FirstOrDefaultAsync(u => u.Id == userId);
+            var user = await this.userManager.GetUserAsync(this.User);
 
             var room = await this.roomsService.GetByIdAsync<RoomViewModel>(roomId);
 
-            if (!user.Hotel.Rooms.Any(r => r.Id == room.Id))
+            if (room.HotelId != user.HotelId)
             {
                 return this.RedirectToAction("AllRooms");
             }
@@ -183,20 +169,15 @@
         [AuthorizeRoles(new[] { GlobalConstants.ManagerRoleName, GlobalConstants.AdministratorRoleName })]
         public async Task<IActionResult> Update(int roomId)
         {
-            var userId = this.userManager.GetUserId(this.User);
-            var user = await this.userManager
-                .Users
-                .Include(u => u.Hotel)
-                .ThenInclude(h => h.Rooms)
-                .FirstOrDefaultAsync(u => u.Id == userId);
-
-            var roomTypes = this.roomTypesService.GetAll<RoomTypeDropDownViewModel>();
+            var user = await this.userManager.GetUserAsync(this.User);
             var room = await this.roomsService.GetByIdAsync<RoomUpdateViewModel>(roomId);
 
-            if (!user.Hotel.Rooms.Any(r => r.Id == room.Id))
+            if (room.HotelId != user.HotelId)
             {
                 return this.RedirectToAction("AllRooms");
             }
+
+            var roomTypes = this.roomTypesService.GetAll<RoomTypeDropDownViewModel>();
 
             var viewModel = new RoomUpdateInputModel
             {
@@ -218,6 +199,14 @@
         [AuthorizeRoles(new[] { GlobalConstants.ManagerRoleName, GlobalConstants.AdministratorRoleName })]
         public async Task<IActionResult> Update(RoomUpdateInputModel input)
         {
+            if (!this.ModelState.IsValid)
+            {
+                var roomTypes = this.roomTypesService.GetAll<RoomTypeDropDownViewModel>();
+                input.RoomTypes = roomTypes;
+
+                return this.View(input);
+            }
+
             var userId = this.userManager.GetUserId(this.User);
             var user = await this.userManager
                 .Users
@@ -228,14 +217,6 @@
             if (!user.Hotel.Rooms.Any(r => r.Id == input.Id))
             {
                 return this.RedirectToAction("AllRooms");
-            }
-
-            if (!this.ModelState.IsValid)
-            {
-                var roomTypes = this.roomTypesService.GetAll<RoomTypeDropDownViewModel>();
-                input.RoomTypes = roomTypes;
-
-                return this.View(input);
             }
 
             await this.roomsService.UpdateAsync(
@@ -249,6 +230,11 @@
                 input.Description);
 
             return this.RedirectToAction("AllRooms");
+        }
+
+        private bool CheckIsValidArrivalDateAndReturnDate(DateTime? arrivalDate, DateTime? returnDate)
+        {
+            return arrivalDate != null && returnDate != null && returnDate.Value.Date > DateTime.UtcNow.Date;
         }
     }
 }

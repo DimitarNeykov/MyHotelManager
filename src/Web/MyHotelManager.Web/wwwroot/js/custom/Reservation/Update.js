@@ -63,7 +63,7 @@ function selectRoom(siteUrl) {
     $.ajax({
         cache: false,
         type: "GET",
-        url: "/Rooms/GetRoomByIdJson",
+        url: "/Rooms/GetRoomByIdInJson",
         data: { "roomId": roomId },
         success: function (data) {
             document.getElementById('roomId').value = data['id'];

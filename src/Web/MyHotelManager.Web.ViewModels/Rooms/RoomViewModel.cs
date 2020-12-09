@@ -24,5 +24,7 @@
         public decimal Price { get; set; }
 
         public string RoomTypeName { get; set; }
+
+        public int HotelId { get; set; }
     }
 }

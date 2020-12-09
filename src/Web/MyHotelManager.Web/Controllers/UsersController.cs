@@ -105,11 +105,7 @@
         {
             var user = await this.userManager.Users.FirstOrDefaultAsync(u => u.Id == userId);
 
-            var manager = await this.userManager.GetUserAsync(this.User);
-
-            var hotelCreator = await this.userManager.Users.Where(u => u.HotelId == manager.HotelId).OrderBy(u => u.CreatedOn).FirstOrDefaultAsync();
-
-            if (user.HotelId != manager.HotelId || user.Id == manager.Id || user.Id == hotelCreator.Id)
+            if (!await this.CheckIsValidHotelAndUser(user.Id, (int)user.HotelId))
             {
                 return this.NotFound();
             }
@@ -135,11 +131,7 @@
         {
             var user = await this.userManager.Users.FirstOrDefaultAsync(u => u.Id == userId);
 
-            var manager = await this.userManager.GetUserAsync(this.User);
-
-            var hotelCreator = await this.userManager.Users.Where(u => u.HotelId == manager.HotelId).OrderBy(u => u.CreatedOn).FirstOrDefaultAsync();
-
-            if (user.HotelId != manager.HotelId || user.Id == manager.Id || user.Id == hotelCreator.Id)
+            if (!await this.CheckIsValidHotelAndUser(user.Id, (int)user.HotelId))
             {
                 return this.NotFound();
             }
@@ -147,6 +139,20 @@
             user.IsDeleted = true;
             await this.userManager.UpdateAsync(user);
             return this.RedirectToAction("Manager", "Hotels");
+        }
+
+        private async Task<bool> CheckIsValidHotelAndUser(string userId, int hotelId)
+        {
+            var manager = await this.userManager.GetUserAsync(this.User);
+
+            var hotelCreator = await this.userManager.Users.Where(u => u.HotelId == manager.HotelId).OrderBy(u => u.CreatedOn).FirstOrDefaultAsync();
+
+            if (hotelId != manager.HotelId || userId == manager.Id || userId == hotelCreator.Id)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

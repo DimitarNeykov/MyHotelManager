@@ -1,4 +1,6 @@
-﻿namespace MyHotelManager.Web.ViewModels.Rooms
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
+namespace MyHotelManager.Web.ViewModels.Rooms
 {
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Mapping;
@@ -18,5 +20,7 @@
         public decimal Price { get; set; }
 
         public string RoomTypeName { get; set; }
+
+        public int HotelId { get; set; }
     }
 }
