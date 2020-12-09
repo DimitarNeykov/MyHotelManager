@@ -34,14 +34,14 @@
 
         public async Task<IActionResult> ReservationDetails(string id)
         {
+            var viewModel = await this.reservationsService.GetDeletedByIdAsync<ReservationDetailsViewModel>(id);
+
             var userId = this.userManager.GetUserId(this.User);
             var user = await this.userManager
                 .Users
                 .Include(u => u.Hotel)
                 .ThenInclude(h => h.Rooms)
                 .FirstOrDefaultAsync(x => x.Id == userId);
-
-            var viewModel = await this.reservationsService.GetDeletedByIdAsync<ReservationDetailsViewModel>(id);
 
             if (!user.Hotel.Rooms.Any(x => x.Id == viewModel.Room.Id))
             {

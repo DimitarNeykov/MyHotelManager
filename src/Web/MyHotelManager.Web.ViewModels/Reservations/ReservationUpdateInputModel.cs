@@ -26,11 +26,11 @@
 
         [Required(ErrorMessage = "The field is required!")]
         [DisplayName("Adult Count")]
-        public int AdultCount { get; set; }
+        public int? AdultCount { get; set; }
 
         [Required(ErrorMessage = "The field is required!")]
         [DisplayName("Child Count")]
-        public int ChildCount { get; set; }
+        public int? ChildCount { get; set; }
 
         [Range(0, double.MaxValue, ErrorMessage = "The price can not be negative!")]
         [DisplayName("Custom Price")]

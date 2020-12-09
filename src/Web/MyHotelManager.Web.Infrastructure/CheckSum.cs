@@ -2,16 +2,18 @@
 {
     public class CheckSum
     {
-        internal long CalculateCheckSum(long data, byte[] mass)
+        internal int CalculateCheckSum(int data, byte[] mass)
         {
-            long sum = 0;
+            var sum = 0;
 
-            for (long i = mass.Length - 1; i > -1; --i)
+            data /= 10;
+
+            for (var i = mass.Length - 1; i > -1; --i, data /= 10)
             {
                 sum += (data % 10) * mass[i];
             }
 
-            return sum % 11;
+            return (sum % 11);
         }
     }
 }

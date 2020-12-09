@@ -22,9 +22,9 @@
             var bulstat = value.ToString();
             if (bulstat != null && (bulstat.Length == this.mass.Length + 1 || bulstat.Length == this.mass.Length + this.massDomain.Length))
             {
-                if (long.TryParse(bulstat.Substring(0, 9), out long workData))
+                if (int.TryParse(bulstat.Substring(0, 9), out var workData))
                 {
-                    long res = new CheckSum().CalculateCheckSum(workData, this.mass);
+                    int res = new CheckSum().CalculateCheckSum(workData, this.mass);
                     if (res == 10)
                     {
                         res = new CheckSum().CalculateCheckSum(workData, this.massExt);
@@ -37,7 +37,7 @@
 
                     if (bulstat.Length == 13)
                     {
-                        if (long.TryParse(bulstat.Substring(8, 4), out workData))
+                        if (int.TryParse(bulstat.Substring(8, 4), out workData))
                         {
                             res = new CheckSum().CalculateCheckSum(workData, this.massDomain);
                             if (res == 10)

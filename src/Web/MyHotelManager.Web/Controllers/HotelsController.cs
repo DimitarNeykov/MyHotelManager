@@ -43,18 +43,18 @@
         {
             var user = await this.userManager.GetUserAsync(this.User);
 
-            if (user.HotelId != null)
+            if (user.HotelId == null)
             {
-                var hotelViewModel = await this.hotelsService.GetByIdWithDeletedAsync<HotelDashboardViewModel>((int)user.HotelId);
-
-                var availableRoomsCount =
-                    this.roomsService.AvailableRooms<RoomViewModel>((int)user.HotelId, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddDays(1)).Count();
-
-                hotelViewModel.AvailableRoomsCount = availableRoomsCount;
-                return this.View(hotelViewModel);
+                return this.NotFound();
             }
 
-            return this.RedirectToAction("Create", "Hotels");
+            var hotelViewModel = await this.hotelsService.GetByIdWithDeletedAsync<HotelDashboardViewModel>((int)user.HotelId);
+
+            var availableRoomsCount =
+                this.roomsService.AvailableRooms<RoomViewModel>((int)user.HotelId, DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddDays(1)).Count();
+
+            hotelViewModel.AvailableRoomsCount = availableRoomsCount;
+            return this.View(hotelViewModel);
         }
 
         public async Task<IActionResult> Create()
@@ -92,6 +92,7 @@
             {
                 input.Cities = this.citiesService.GetAll<CityDropDownViewModel>();
                 input.Stars = this.starsService.GetAll<StarsDropDownViewModel>();
+
                 return this.View(input);
             }
 
@@ -157,6 +158,13 @@
         [AuthorizeRoles(new[] { GlobalConstants.ManagerRoleName, GlobalConstants.AdministratorRoleName })]
         public async Task<IActionResult> Edit(HotelEditInputModel input)
         {
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            if (user.HotelId == null)
+            {
+                return this.NotFound();
+            }
+
             if (!this.ModelState.IsValid)
             {
                 var cities = this.citiesService.GetAll<CityDropDownViewModel>();
@@ -166,13 +174,6 @@
                 input.Stars = stars;
 
                 return this.View(input);
-            }
-
-            var user = await this.userManager.GetUserAsync(this.User);
-
-            if (user.HotelId == null)
-            {
-                return this.NotFound();
             }
 
             await this.hotelsService.UpdateAsync(

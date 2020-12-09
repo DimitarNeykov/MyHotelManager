@@ -35,22 +35,18 @@ namespace MyHotelManager.Web.ViewModels.Guests
         [DisplayName("Phone Number")]
         public string PhoneNumber { get; set; }
 
-        [Required(ErrorMessage = "The field is required!")]
         [Range(1, 257, ErrorMessage = "Please choose city from the drop down menu!")]
         [DisplayName("City")]
-        public int CityId { get; set; }
+        public int? CityId { get; set; }
 
-        [Required(ErrorMessage = "The field is required!")]
         [Range(1, 243, ErrorMessage = "Please choose country from the drop down menu!")]
         [DisplayName("Country")]
-        public int CountryId { get; set; }
+        public int? CountryId { get; set; }
 
-        [Required(ErrorMessage = "The field is required!")]
         [ValidIdentificationNumber("Invalid identification number!")]
         [DisplayName("Identification Number")]
         public string IdentificationNumber { get; set; }
 
-        [Required(ErrorMessage = "The field is required!")]
         [RegularExpression("^([0-9]{10})$", ErrorMessage = "The field requires 10 digits!")]
         [DisplayName("Unique Number Foreigner")]
         public string UniqueNumberForeigner { get; set; }

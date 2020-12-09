@@ -30,7 +30,7 @@
 
             var viewModel = this.reservationsService.GetActiveReservationsWithBreakfast<ReservationViewModel>((int)user.HotelId);
 
-            this.ViewData["EatName"] = "Breakfasts".ToString();
+            this.TempData["EatName"] = "Breakfasts";
 
             return this.View("Restaurant", viewModel);
         }
@@ -41,7 +41,7 @@
 
             var viewModel = this.reservationsService.GetActiveReservationsWithLunch<ReservationViewModel>((int)user.HotelId);
 
-            this.ViewData["EatName"] = "Lunches".ToString();
+            this.TempData["EatName"] = "Lunches";
 
             return this.View("Restaurant", viewModel);
         }
@@ -52,7 +52,7 @@
 
             var viewModel = this.reservationsService.GetActiveReservationsWithDinner<ReservationViewModel>((int)user.HotelId);
 
-            this.ViewData["EatName"] = "Dinners".ToString();
+            this.TempData["EatName"] = "Dinners";
 
             return this.View("Restaurant", viewModel);
         }

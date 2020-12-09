@@ -32,23 +32,15 @@
 
         public async Task<IActionResult> Details(string id)
         {
-            var user = await this.userManager.GetUserAsync(this.User);
-
-            var viewModel = await this.reservationsService.GetByIdAsync<ReservationDetailsViewModel>(id);
-
-            if (user.HotelId != viewModel.Room.HotelId)
+            if (!await this.IsValidReservation(id))
             {
                 return this.RedirectToAction("Manager", "Reservations");
             }
 
-            var customPrice = 0.0M;
+            var viewModel = await this.reservationsService.GetByIdAsync<ReservationDetailsViewModel>(id);
 
-            if (viewModel.Room.Price * viewModel.Nights != viewModel.Price)
-            {
-                customPrice = viewModel.Price / viewModel.Nights;
-            }
+            viewModel.CustomPrice = this.CalculateCustomPrice(viewModel.Room.Price, viewModel.Nights, viewModel.Price);
 
-            viewModel.CustomPrice = customPrice;
             return this.View(viewModel);
         }
 
@@ -72,19 +64,12 @@
 
         public async Task<IActionResult> Create(int roomId, string arrivalDate, string returnDate)
         {
-            var userId = this.userManager.GetUserId(this.User);
-            var user = await this.userManager
-                .Users
-                .Include(u => u.Hotel)
-                .ThenInclude(h => h.Rooms)
-                .FirstOrDefaultAsync(x => x.Id == userId);
-
-            var room = await this.roomsService.GetByIdAsync<RoomViewModel>(roomId);
-
-            if (!user.Hotel.Rooms.Any(x => x.Id == room.Id))
+            if (!await this.IsValidRoom(DateTime.Parse(arrivalDate), DateTime.Parse(returnDate), roomId))
             {
                 return this.RedirectToAction("Manager");
             }
+
+            var room = await this.roomsService.GetByIdAsync<RoomViewModel>(roomId);
 
             var viewModel = new ReservationCreateInputModel
             {
@@ -99,47 +84,38 @@
         [HttpPost]
         public async Task<IActionResult> Create(ReservationCreateInputModel input)
         {
+            if (!await this.IsValidRoom(DateTime.Parse(input.ArrivalDate), DateTime.Parse(input.ReturnDate), input.Room.Id))
+            {
+                return this.RedirectToAction("Manager");
+            }
+
             if (!this.ModelState.IsValid)
             {
                 return this.View(input);
             }
 
             var userId = this.userManager.GetUserId(this.User);
-            var user = await this.userManager
-                .Users
-                .Include(u => u.Hotel)
-                .ThenInclude(h => h.Rooms)
-                .FirstOrDefaultAsync(x => x.Id == userId);
 
-            var availableRooms = this.roomsService
-                .AvailableRooms<RoomViewModel>(
-                (int)user.HotelId,
-                Convert.ToDateTime(input.ArrivalDate),
-                Convert.ToDateTime(input.ReturnDate));
-
-            if (!availableRooms.Any(x => x.Id == input.Room.Id))
+            if (input.Room.MaxAdultCount < input.AdultCount || input.AdultCount < 1)
             {
-                return this.RedirectToAction("DateSearch", "Rooms");
+                input.AdultCount = null;
+                return this.View(input);
             }
 
-            if (!user.Hotel.Rooms.Any(x => x.Id == input.Room.Id))
+            if (input.Room.MaxChildCount < input.ChildCount || input.ChildCount < 0)
             {
-                return this.RedirectToAction("Manager");
-            }
-
-            if (input.Room.MaxAdultCount < input.AdultCount || input.AdultCount < 1 || input.Room.MaxChildCount < input.ChildCount || input.ChildCount < 0)
-            {
+                input.ChildCount = null;
                 return this.View(input);
             }
 
             await this.reservationsService.CreateAsync(
                 input.ReservedByGuest.PhoneNumber,
-                user.Id,
+                userId,
                 input.Room.Id,
                 Convert.ToDateTime(input.ArrivalDate),
                 Convert.ToDateTime(input.ReturnDate),
-                input.AdultCount,
-                input.ChildCount,
+                (int)input.AdultCount,
+                (int)input.ChildCount,
                 input.ReservedByGuest.FirstName,
                 input.ReservedByGuest.LastName,
                 input.Description,
@@ -153,21 +129,12 @@
 
         public async Task<IActionResult> Update(string reservationId)
         {
-            var user = await this.userManager.GetUserAsync(this.User);
+            if (!await this.IsValidReservation(reservationId))
+            {
+                return this.NotFound();
+            }
 
             var reservation = await this.reservationsService.GetByIdAsync<ReservationUpdateViewModel>(reservationId);
-
-            if (user.HotelId != reservation.Room.HotelId)
-            {
-                return this.RedirectToAction("Manager", "Reservations");
-            }
-
-            var customPrice = 0.0M;
-
-            if (reservation.Room.Price * reservation.Nights != reservation.Price)
-            {
-                customPrice = reservation.Price / reservation.Nights;
-            }
 
             var viewModel = new ReservationUpdateInputModel()
             {
@@ -187,7 +154,7 @@
                 HasLunch = reservation.HasLunch,
                 HasDinner = reservation.HasDinner,
                 AllPrice = reservation.Price,
-                CustomPrice = customPrice,
+                CustomPrice = this.CalculateCustomPrice(reservation.Room.Price, reservation.Nights, reservation.Price),
             };
             return this.View(viewModel);
         }
@@ -195,6 +162,11 @@
         [HttpPost]
         public async Task<IActionResult> Update(ReservationUpdateInputModel input)
         {
+            if (!await this.IsValidReservation(input.Id))
+            {
+                return this.NotFound();
+            }
+
             if (!this.ModelState.IsValid)
             {
                 return this.View(input);
@@ -212,8 +184,15 @@
                 return this.RedirectToAction("Manager");
             }
 
-            if (input.Room.MaxAdultCount < input.AdultCount || input.AdultCount < 1 || input.Room.MaxChildCount < input.ChildCount || input.ChildCount < 0)
+            if (input.Room.MaxAdultCount < input.AdultCount || input.AdultCount < 1)
             {
+                input.AdultCount = null;
+                return this.View(input);
+            }
+
+            if (input.Room.MaxChildCount < input.ChildCount || input.ChildCount < 0)
+            {
+                input.ChildCount = null;
                 return this.View(input);
             }
 
@@ -223,8 +202,8 @@
                 input.Room.Id,
                 input.ArrivalDate,
                 input.ReturnDate,
-                input.AdultCount,
-                input.ChildCount,
+                (int)input.AdultCount,
+                (int)input.ChildCount,
                 input.ReservedByGuest.FirstName,
                 input.ReservedByGuest.LastName,
                 input.ReservedByGuest.PhoneNumber,
@@ -239,10 +218,73 @@
 
         public async Task<IActionResult> Delete(string reservationId)
         {
+            if (!await this.IsValidReservation(reservationId))
+            {
+                return this.NotFound();
+            }
+
             var userId = this.userManager.GetUserId(this.User);
             await this.reservationsService.DeleteAsync(reservationId, userId);
 
             return this.RedirectToAction("Manager");
+        }
+
+        private async Task<bool> IsValidReservation(string reservationId)
+        {
+            var userId = this.userManager.GetUserId(this.User);
+            var user = await this.userManager
+                .Users
+                .Include(u => u.Hotel)
+                .ThenInclude(h => h.Rooms)
+                .ThenInclude(r => r.Reservations)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+
+            if (!user.Hotel.Rooms.Any(x => x.Reservations.Any(r => r.Id == reservationId)))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private async Task<bool> IsValidRoom(DateTime arrivalDate, DateTime returnDate, int roomId)
+        {
+            var userId = this.userManager.GetUserId(this.User);
+            var user = await this.userManager
+                .Users
+                .Include(u => u.Hotel)
+                .ThenInclude(h => h.Rooms)
+                .FirstOrDefaultAsync(x => x.Id == userId);
+
+            if (!user.Hotel.Rooms.Any(x => x.Id == roomId))
+            {
+                return false;
+            }
+
+            var availableRooms = this.roomsService
+                .AvailableRooms<RoomViewModel>(
+                    (int)user.HotelId,
+                    arrivalDate,
+                    returnDate);
+
+            if (!availableRooms.Any(x => x.Id == roomId))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private decimal CalculateCustomPrice(decimal roomPrice, int nights, decimal price)
+        {
+            var customPrice = 0.0M;
+
+            if (roomPrice * nights != price)
+            {
+                customPrice = price / nights;
+            }
+
+            return customPrice;
         }
     }
 }

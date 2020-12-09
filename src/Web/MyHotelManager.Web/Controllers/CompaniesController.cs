@@ -36,7 +36,7 @@
                 .Include(u => u.Hotel)
                 .FirstOrDefaultAsync(u => u.Id == userId);
 
-            if (user.Hotel.CompanyId != null)
+            if (user.HotelId == null || user.Hotel.CompanyId != null)
             {
                 return this.NotFound();
             }
@@ -54,13 +54,6 @@
         [HttpPost]
         public async Task<IActionResult> Create(CompanyCreateInputModel input)
         {
-            if (!this.ModelState.IsValid)
-            {
-                var cities = this.citiesService.GetAll<CityDropDownViewModel>();
-                input.Cities = cities;
-                return this.View(input);
-            }
-
             var userId = this.userManager.GetUserId(this.User);
 
             var user = await this.userManager.Users
@@ -70,6 +63,14 @@
             if (user.HotelId == null || user.Hotel.CompanyId != null)
             {
                 return this.NotFound();
+            }
+
+            if (!this.ModelState.IsValid)
+            {
+                var cities = this.citiesService.GetAll<CityDropDownViewModel>();
+                input.Cities = cities;
+
+                return this.View(input);
             }
 
             await this.companiesService.CreateAsync(
@@ -92,7 +93,7 @@
                 .Include(u => u.Hotel)
                 .FirstOrDefaultAsync(u => u.Id == userId);
 
-            if (user.Hotel.CompanyId == null)
+            if (user.HotelId == null || user.Hotel.CompanyId == null)
             {
                 return this.NotFound();
             }
