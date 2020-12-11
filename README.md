@@ -53,13 +53,13 @@ This website is designed and runs using the **main** technologies below:
    7) **HTML5**
    8) **CSS**
    9) **Microsoft Visual Studio Enterprise 2019**
-   11) **Microsoft Azure**
-   12) **Theme - SB Admin 2**
-   13) **Hangfire**
-   14) **Google reCAPTCHA v3**
-   15) **Cloudinary**
-   16) **Custom Email Sender**
-   17) **Momentjs**
-   18) **Chart.js**
-   19) **DataTables**
-   20) **OpenStreetMap**
+   10) **Microsoft Azure**
+   11) **Theme - SB Admin 2**
+   12) **Hangfire**
+   13) **Google reCAPTCHA v3**
+   14) **Cloudinary**
+   15) **Custom Email Sender**
+   16) **Momentjs**
+   17) **Chart.js**
+   18) **DataTables**
+   19) **OpenStreetMap**
