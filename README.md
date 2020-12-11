@@ -11,7 +11,7 @@
 - *My Hotel Manager is suitable for both computers and mobile devices, and it offers amazing features – creating, updating and deleting reservations fast and easy, keeping track of the hotel’s capacity, modifying room information, preparing a daily list with breakfasts, lunches and dinners automatically, different roles and rights and many, many more!*
 
 ------------
-[My Hotel Manager](https://res.cloudinary.com/shaddowmike/image/upload/v1607264070/HomePageLogo_qxwvlf.jpg)
+![My Hotel Manager](https://res.cloudinary.com/shaddowmike/image/upload/v1607264070/HomePageLogo_qxwvlf.jpg)
 ------------
 
 ## **Database**
