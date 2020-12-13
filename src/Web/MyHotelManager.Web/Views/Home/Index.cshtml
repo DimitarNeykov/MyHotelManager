@@ -1,4 +1,8 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using MyHotelManager.Data.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
     this.ViewData["Title"] = "Home Page";
 }
 @if (TempData.ContainsKey("Message"))
@@ -24,10 +28,24 @@
             <p class="lead text-justify font-italic">We promise that your expectations will be fulfilled! </p>
         </div>
     </div>
-    
-    <div class="text-center">
-        <a class="btn btn-primary btn-lg" href="#" role="button">See it for yourself</a>
-    </div>
+    @if (!SignInManager.IsSignedIn(this.User))
+    {
+        <div class="text-center">
+            <a class="btn btn-primary btn-lg" asp-area="Identity" asp-page="/Account/Register" role="button">See it for yourself</a>
+        </div>
+    }
+    else if (SignInManager.IsSignedIn(this.User) && UserManager.GetUserAsync(this.User).Result.HotelId == null)
+    {
+<div class="text-center">
+    <a class="btn btn-primary btn-lg" asp-controller="Hotels" asp-action="Create" role="button">See it for yourself</a>
+</div>
+    }
+    else
+    {
+<div class="text-center">
+    <a class="btn btn-primary btn-lg" asp-controller="Hotels" asp-action="Index" role="button">See it for yourself</a>
+</div>
+    }
 </div>
 
 <div class="row mb-3">

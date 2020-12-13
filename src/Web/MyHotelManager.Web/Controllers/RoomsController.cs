@@ -146,7 +146,7 @@
                 input.Description,
                 (int)user.HotelId);
 
-            return this.RedirectToAction("Index", "Home");
+            return this.RedirectToAction("AllRooms");
         }
 
         [AuthorizeRoles(new[] { GlobalConstants.ManagerRoleName, GlobalConstants.AdministratorRoleName })]

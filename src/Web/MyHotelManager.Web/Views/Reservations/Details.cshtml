@@ -189,132 +189,139 @@
     </div>
 
     <!-- Restaurant Info -->
-<div class="container col-xl-6 col-md-6 mb-4">
-    <div class="card o-hidden border-0 shadow-lg bg-gradient-primary rounded-pill">
-        <div class="card-body p-0">
-            <div class="row justify-content-center">
-                <div class="col-lg-10 mt-4">
-                    <div class="row">
-                        <div class="text-center col-xl-4 col-md-6">
-                            <h4 class="mb-4 text-white-50 font-italic">
-                                Breakfast:
-                                @if (Model.HasBreakfast)
-                                {
-                                    <span class="text-success"><i class="fas fa-check"></i></span>
-                                }
-                                else
-                                {
-                                    <span class="text-danger"><i class="fas fa-times"></i></span>
-                                }
-                            </h4>
-                        </div>
-                        <div class="text-center col-xl-4 col-md-6">
-                            <h4 class="mb-4 text-white-50 font-italic">
-                                Lunch:
-                                @if (Model.HasLunch)
-                                {
-                                    <span class="text-success"><i class="fas fa-check"></i></span>
-                                }
-                                else
-                                {
-                                    <span class="text-danger"><i class="fas fa-times"></i></span>
-                                }
-                            </h4>
-                        </div>
-                        <div class="text-center col-xl-4 col-md-6">
-                            <h4 class="mb-4 text-white-50 font-italic">
-                                Dinner:
-                                @if (Model.HasDinner)
-                                {
-                                    <span class="text-success"><i class="fas fa-check"></i></span>
-                                }
-                                else
-                                {
-                                    <span class="text-danger"><i class="fas fa-times"></i></span>
-                                }
-                            </h4>
+    <div class="container col-xl-6 col-md-6 mb-4">
+        <div class="card o-hidden border-0 shadow-lg bg-gradient-primary rounded-pill">
+            <div class="card-body p-0">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10 mt-4">
+                        <div class="row">
+                            <div class="text-center col-xl-4 col-md-6">
+                                <h4 class="mb-4 text-white-50 font-italic">
+                                    Breakfast:
+                                    @if (Model.HasBreakfast)
+                                    {
+                                        <span class="text-success"><i class="fas fa-check"></i></span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-danger"><i class="fas fa-times"></i></span>
+                                    }
+                                </h4>
+                            </div>
+                            <div class="text-center col-xl-4 col-md-6">
+                                <h4 class="mb-4 text-white-50 font-italic">
+                                    Lunch:
+                                    @if (Model.HasLunch)
+                                    {
+                                        <span class="text-success"><i class="fas fa-check"></i></span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-danger"><i class="fas fa-times"></i></span>
+                                    }
+                                </h4>
+                            </div>
+                            <div class="text-center col-xl-4 col-md-6">
+                                <h4 class="mb-4 text-white-50 font-italic">
+                                    Dinner:
+                                    @if (Model.HasDinner)
+                                    {
+                                        <span class="text-success"><i class="fas fa-check"></i></span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-danger"><i class="fas fa-times"></i></span>
+                                    }
+                                </h4>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!-- Guests Information -->
-<div class="card shadow mb-4" id="guestInformation">
-    <div class="card-header py-3">
-        <div class="row">
-        <h6 class="m-0 font-weight-bold text-primary h3 col-xl-10 col-md-6">Guest information</h6>
-        <a class="btn btn-success rounded-pill btn-user btn-block col-xl-2 col-md-6" asp-action="NewGuest" asp-controller="Guests" asp-route-reservationId="@Model.Id">New Guest</a>
+    <!-- Guests Information -->
+    <div class="card shadow mb-4" id="guestInformation">
+        <div class="card-header py-3">
+            <div class="row">
+                <h6 class="m-0 font-weight-bold text-primary h3 col-xl-10 col-md-6">Guest information</h6>
+                <a class="btn btn-success rounded-pill btn-user btn-block col-xl-2 col-md-6" asp-action="NewGuest" asp-controller="Guests" asp-route-reservationId="@Model.Id">New Guest</a>
+            </div>
         </div>
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover font-italic table-sm" id="dataTable" width="100%">
-                <thead>
-                    <tr class="bg-primary text-white-50">
-                        <th class="text-center align-middle">Guest Names</th>
-                        <th class="text-center align-middle">Phone Number</th>
-                        <th class="text-center align-middle">PNF/UCN</th>
-                        <th class="text-center align-middle">Document №</th>
-                        <th class="text-center align-middle">Issue Date</th>
-                        <th class="text-center align-middle">Expiry Date</th>
-                        <th class="text-center align-middle">Gender</th>
-                        <th class="text-center align-middle">City</th>
-                        <th class="text-center align-middle">Country</th>
-                        <th class="text-center align-middle">Foreign</th>
-                        <th class="text-center align-middle">Edit</th>
-                    </tr>
-                </thead>
-                <tfoot>
-                    <tr class="bg-primary text-white-50">
-                        <th class="text-center align-middle">Guest Names</th>
-                        <th class="text-center align-middle">Phone Number</th>
-                        <th class="text-center align-middle">PNF/UCN</th>
-                        <th class="text-center align-middle">Document №</th>
-                        <th class="text-center align-middle">Issue Date</th>
-                        <th class="text-center align-middle">Expiry Date</th>
-                        <th class="text-center align-middle">Gender</th>
-                        <th class="text-center align-middle">City</th>
-                        <th class="text-center align-middle">Country</th>
-                        <th class="text-center align-middle">Foreign</th>
-                        <th class="text-center align-middle">Edit</th>
-                    </tr>
-                </tfoot>
-                <tbody>
-                @{
-                    foreach (var guest in Model.Guests)
-                    {
-                                    <tr>
-                                        <td class="text-center align-middle">@guest.FirstName @guest.LastName</td>
-                                        <td class="text-center align-middle">@guest.PhoneNumber</td>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover font-italic table-sm" id="dataTable" width="100%">
+                    <thead>
+                        <tr class="bg-primary text-white-50">
+                            <th class="text-center align-middle">Guest Names</th>
+                            <th class="text-center align-middle">Phone Number</th>
+                            <th class="text-center align-middle">PNF/UCN</th>
+                            <th class="text-center align-middle">Document №</th>
+                            <th class="text-center align-middle">Issue Date</th>
+                            <th class="text-center align-middle">Expiry Date</th>
+                            <th class="text-center align-middle">Gender</th>
+                            <th class="text-center align-middle">City</th>
+                            <th class="text-center align-middle">Country</th>
+                            <th class="text-center align-middle">Foreign</th>
+                            <th class="text-center align-middle">Edit</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr class="bg-primary text-white-50">
+                            <th class="text-center align-middle">Guest Names</th>
+                            <th class="text-center align-middle">Phone Number</th>
+                            <th class="text-center align-middle">IN/UNF</th>
+                            <th class="text-center align-middle">Document №</th>
+                            <th class="text-center align-middle">Issue Date</th>
+                            <th class="text-center align-middle">Expiry Date</th>
+                            <th class="text-center align-middle">Gender</th>
+                            <th class="text-center align-middle">City</th>
+                            <th class="text-center align-middle">Country</th>
+                            <th class="text-center align-middle">Foreign</th>
+                            <th class="text-center align-middle">Edit</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @{
+                            foreach (var guest in Model.Guests)
+                            {
+                                <tr>
+                                    <td class="text-center align-middle">@guest.FirstName @guest.LastName</td>
+                                    <td class="text-center align-middle">@guest.PhoneNumber</td>
+                                    @if (guest.UniqueNumberForeigner != null)
+                                    {
                                         <td class="text-center align-middle">@guest.UniqueNumberForeigner</td>
-                                        <td class="text-center align-middle">@guest.DocumentNumber</td>
-                                        <td class="text-center align-middle">@guest.DateOfIssue</td>
-                                        <td class="text-center align-middle">@guest.DateOfExpiry</td>
-                                        <td class="text-center align-middle">@guest.GenderName</td>
-                                        <td class="text-center align-middle">@guest.CityName</td>
-                                        <td class="text-center align-middle">@guest.Country</td>
-                                        @if (guest.UniqueNumberForeigner != null)
-                                        {
-                                            <td class="text-center align-middle text-success"><i class="fas fa-check"></i></td>
-                                        }
-                                        else
-                                        {
-                                            <td class="text-center align-middle text-danger"><i class="fas fa-times"></i></td>
-                                        }
-                                        <td>
-                                            <a class="btn btn-warning w-100" asp-action="Update" asp-controller="Guests" asp-route-guestId="@guest.Id">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                    }
-                }
-                </tbody>
-            </table>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-center align-middle">@guest.IdentificationNumber</td>
+                                    }
+                                    <td class="text-center align-middle">@guest.DocumentNumber</td>
+                                    <td class="text-center align-middle">@guest.DateOfIssue</td>
+                                    <td class="text-center align-middle">@guest.DateOfExpiry</td>
+                                    <td class="text-center align-middle">@guest.GenderName</td>
+                                    <td class="text-center align-middle">@guest.CityName</td>
+                                    <td class="text-center align-middle">@guest.Country</td>
+                                    @if (guest.UniqueNumberForeigner != null)
+                                    {
+                                        <td class="text-center align-middle text-success"><i class="fas fa-check"></i></td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-center align-middle text-danger"><i class="fas fa-times"></i></td>
+                                    }
+                                    <td>
+                                        <a class="btn btn-warning w-100" asp-action="Update" asp-controller="Guests" asp-route-guestId="@guest.Id">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 
 </div>

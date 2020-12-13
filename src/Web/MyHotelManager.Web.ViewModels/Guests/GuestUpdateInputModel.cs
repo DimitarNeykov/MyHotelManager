@@ -57,12 +57,12 @@ namespace MyHotelManager.Web.ViewModels.Guests
         public string DocumentNumber { get; set; }
 
         [Required(ErrorMessage = "The field is required!")]
-        [DateBeforeToday("Date of issue should not be after today!")]
+        [DateAfterToday("Date of issue should not be before today!")]
         [DisplayName("Document Date Of Issue")]
         public DateTime? DateOfIssue { get; set; }
 
         [Required(ErrorMessage = "The field is required!")]
-        [DateAfterToday("Date of expiry should not be before today!")]
+        [DateBeforeToday("Date of expiry should not be after today!")]
         [DisplayName("Document Date Of Expiry")]
         public DateTime? DateOfExpiry { get; set; }
 

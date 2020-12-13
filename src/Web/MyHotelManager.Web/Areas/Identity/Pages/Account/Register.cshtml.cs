@@ -62,7 +62,7 @@
             public string LastName { get; set; }
 
             [Required(ErrorMessage = "The field is required!")]
-            [DateBeforeToday("Birth date should not be after today!")]
+            [DateAfterToday("Birth date should not be before today!")]
             [DisplayName("Birth Date")]
             public DateTime BirthDate { get; set; }
 
