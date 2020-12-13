@@ -68,12 +68,9 @@
                 }
             }
 
-            var result = await this._userManager.DeleteAsync(user);
+            user.IsDeleted = true;
+            await this._userManager.UpdateAsync(user);
             var userId = await this._userManager.GetUserIdAsync(user);
-            if (!result.Succeeded)
-            {
-                throw new InvalidOperationException($"Unexpected error occurred deleting user with ID '{userId}'.");
-            }
 
             await this._signInManager.SignOutAsync();
 
