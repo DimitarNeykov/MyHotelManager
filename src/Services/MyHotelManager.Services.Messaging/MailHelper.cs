@@ -5,34 +5,31 @@
     using System.Threading.Tasks;
     using System.Web;
 
-    using Microsoft.EntityFrameworkCore;
     using MyHotelManager.Common;
-    using MyHotelManager.Data.Common.Repositories;
-    using MyHotelManager.Data.Models;
     using MyHotelManager.Services.CloudinaryManage;
 
     public class MailHelper : IMailHelper
     {
-        private readonly IDeletableEntityRepository<AboutUs> aboutUs;
         private readonly ICloudinaryService cloudinaryService;
+        private readonly string email;
+        private readonly string password;
 
-        public MailHelper(IDeletableEntityRepository<AboutUs> aboutUs, ICloudinaryService cloudinaryService)
+        public MailHelper(string email, string password, ICloudinaryService cloudinaryService)
         {
-            this.aboutUs = aboutUs;
+            this.email = email;
+            this.password = password;
             this.cloudinaryService = cloudinaryService;
         }
 
         public async Task SendContactFormAsync(string email, string names, string subject, string content)
         {
-            var aboutUsInformation = await this.aboutUs.All().FirstAsync();
-
             var body = HttpUtility.HtmlEncode(content);
 
             body = body.Replace(" ", "&nbsp;");
             body = body.Replace("\r\n", "<br>");
 
-            var fromAddress = new MailAddress(aboutUsInformation.Email, $"{names} - Contact Form");
-            var toAddress = new MailAddress(aboutUsInformation.Email, GlobalConstants.SystemName);
+            var fromAddress = new MailAddress(this.email, $"{names} - Contact Form");
+            var toAddress = new MailAddress(this.email, GlobalConstants.SystemName);
 
             var headerImg = this.cloudinaryService.GetImgByName("email_snw4un.png");
             var footerImg = this.cloudinaryService.GetImgByName("email_footer1_rqljpo.jpg");
@@ -61,15 +58,12 @@
                 + "</a>"
                 + "</div>";
 
-            await this.SendMessageAsync(fromAddress, toAddress, aboutUsInformation.Email, aboutUsInformation.EmailPassword,
-                subject, bodyBuilder);
+            await this.SendMessageAsync(fromAddress, toAddress, subject, bodyBuilder);
         }
 
         public async Task SendFromIdentityAsync(string email, string subject, string fullName, string textBeforeButton, string url, string textAfterButton)
         {
-            var aboutUsInformation = await this.aboutUs.All().FirstAsync();
-
-            var fromAddress = new MailAddress(aboutUsInformation.Email, GlobalConstants.SystemName);
+            var fromAddress = new MailAddress(this.email, GlobalConstants.SystemName);
             var toAddress = new MailAddress(email);
 
             var headerImg = this.cloudinaryService.GetImgByName("email_snw4un.png");
@@ -107,12 +101,10 @@
                 + "</a>"
                 + "</div>";
 
-            await this.SendMessageAsync(fromAddress, toAddress, aboutUsInformation.Email, aboutUsInformation.EmailPassword,
-                subject, bodyBuilder);
+            await this.SendMessageAsync(fromAddress, toAddress, subject, bodyBuilder);
         }
 
-        private async Task SendMessageAsync(MailAddress fromAddress, MailAddress toAddress, string companyEmail,
-            string companyEmailPassword, string subject, string body)
+        private async Task SendMessageAsync(MailAddress fromAddress, MailAddress toAddress, string subject, string body)
         {
             var smtp = new SmtpClient
             {
@@ -121,7 +113,7 @@
                 EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(companyEmail, companyEmailPassword),
+                Credentials = new NetworkCredential(this.email, this.password),
             };
             using var message = new MailMessage(fromAddress, toAddress)
             {

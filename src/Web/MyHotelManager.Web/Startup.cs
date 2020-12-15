@@ -72,6 +72,12 @@
                 new CloudinaryService(this.configuration["Cloudinary:CloudName"], this.configuration["Cloudinary:ApiKey"],
                     this.configuration["Cloudinary:ApiSecret"]));
 
+            services.AddTransient<IMailHelper>(serviceProvider =>
+                new MailHelper(
+                    this.configuration["MailSender:Email"],
+                    this.configuration["MailSender:Password"],
+                    serviceProvider.GetService<ICloudinaryService>()));
+
             services.Configure<CookiePolicyOptions>(
                 options =>
                     {
@@ -109,7 +115,6 @@
             services.AddTransient<IClearOldReservation, ClearOldReservations>();
             services.AddTransient<IAboutUsService, AboutUsService>();
             services.AddTransient<IContactUsService, ContactUsService>();
-            services.AddTransient<IMailHelper, MailHelper>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
