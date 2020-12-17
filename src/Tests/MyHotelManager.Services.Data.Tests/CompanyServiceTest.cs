@@ -152,6 +152,7 @@
             var hotelRepository = new EfDeletableEntityRepository<Hotel>(new ApplicationDbContext(options.Options));
 
             await companyRepository.AddAsync(new Company { Id = 1, Bulstat = "131071587" });
+            await companyRepository.AddAsync(new Company { Id = 2, Bulstat = "131071589" });
             await companyRepository.SaveChangesAsync();
 
             var companyService = new CompaniesService(companyRepository, hotelRepository);
