@@ -29,6 +29,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\MyHotelManager.Data\MyHotelManager.Data.csproj" />
     <ProjectReference Include="..\..\Services\MyHotelManager.Services.Data\MyHotelManager.Services.Data.csproj" />
+    <ProjectReference Include="..\..\Web\MyHotelManager.Web.Infrastructure\MyHotelManager.Web.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

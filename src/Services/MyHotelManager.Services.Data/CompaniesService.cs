@@ -23,13 +23,13 @@
 
         public async Task CreateAsync(string name, string bulstat, string phoneNumber, string email, int cityId, string address, int hotelId)
         {
-            var company = await this.companyRepository
+            var company = this.companyRepository
                 .All()
-                .FirstOrDefaultAsync(c => c.Bulstat == bulstat);
+                .FirstOrDefault(c => c.Bulstat == bulstat);
 
-            var hotel = await this.hotelRepository
+            var hotel = this.hotelRepository
                 .All()
-                .FirstOrDefaultAsync(h => h.Id == hotelId);
+                .FirstOrDefault(h => h.Id == hotelId);
 
             if (company != null)
             {
@@ -56,19 +56,19 @@
 
         public async Task EditAsync(int id, int hotelId, string name, string bulstat, string phoneNumber, string email, int cityId, string address)
         {
-            var company = await this.companyRepository
+            var company = this.companyRepository
                 .All()
-                .FirstOrDefaultAsync(c => c.Id == id);
+                .FirstOrDefault(c => c.Id == id);
 
             if (company.Bulstat != bulstat)
             {
-                company = await this.companyRepository
+                company = this.companyRepository
                     .All()
-                    .FirstOrDefaultAsync(c => c.Bulstat == bulstat);
+                    .FirstOrDefault(c => c.Bulstat == bulstat);
 
-                var hotel = await this.hotelRepository
+                var hotel = this.hotelRepository
                     .All()
-                    .FirstOrDefaultAsync(h => h.Id == hotelId);
+                    .FirstOrDefault(h => h.Id == hotelId);
 
                 if (company != null)
                 {
