@@ -123,11 +123,8 @@
         {
             var reservations = this.reservationRepository
                 .AllWithDeleted()
-                .Include(g => g.Guests)
-                .Include(r => r.Editor)
-                .Where(x => x.Room.HotelId == hotelId &&
-                            x.Guests.First() != null &&
-                            x.DeletedOn != null)
+                .Where(x => x.Room.HotelId == hotelId && x.IsDeleted == true)
+                .OrderBy(x => x.DeletedOn)
                 .To<T>()
                 .ToList();
 
