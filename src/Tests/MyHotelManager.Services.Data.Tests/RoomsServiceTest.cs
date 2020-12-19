@@ -1,18 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Moq;
-using MyHotelManager.Data;
-using MyHotelManager.Data.Common.Repositories;
-using MyHotelManager.Data.Models;
-using MyHotelManager.Data.Repositories;
-using MyHotelManager.Services.Mapping;
-using Xunit;
-
-namespace MyHotelManager.Services.Data.Tests
+﻿namespace MyHotelManager.Services.Data.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    using Microsoft.EntityFrameworkCore;
+    using Moq;
+    using MyHotelManager.Data;
+    using MyHotelManager.Data.Common.Repositories;
+    using MyHotelManager.Data.Models;
+    using MyHotelManager.Data.Repositories;
+    using MyHotelManager.Services.Mapping;
+    using Xunit;
+
     public class RoomsServiceTest
     {
         [Fact]

@@ -1,12 +1,10 @@
-﻿using System;
-using MyHotelManager.Web.Infrastructure.Attributes;
-using Xunit;
-
-namespace MyHotelManager.Services.Data.Tests
+﻿namespace MyHotelManager.Services.Data.Tests
 {
+    using MyHotelManager.Web.Infrastructure.Attributes;
+    using Xunit;
+
     public class ValidBulstatAttributeTest
     {
-
         [Fact]
         public void IsValidReturnsTrueForValidBulstat()
         {

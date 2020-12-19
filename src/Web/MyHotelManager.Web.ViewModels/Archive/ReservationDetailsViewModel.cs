@@ -1,9 +1,8 @@
-﻿using System.ComponentModel;
-
-namespace MyHotelManager.Web.ViewModels.Archive
+﻿namespace MyHotelManager.Web.ViewModels.Archive
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
 
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Mapping;

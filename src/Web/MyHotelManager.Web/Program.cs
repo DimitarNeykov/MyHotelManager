@@ -1,8 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
-
-namespace MyHotelManager.Web
+﻿namespace MyHotelManager.Web
 {
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Hosting;
 
     public static class Program

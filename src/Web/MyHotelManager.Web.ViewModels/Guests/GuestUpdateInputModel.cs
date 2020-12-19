@@ -1,13 +1,13 @@
-﻿using System.ComponentModel;
-using MyHotelManager.Web.Infrastructure.Attributes;
-
-namespace MyHotelManager.Web.ViewModels.Guests
+﻿namespace MyHotelManager.Web.ViewModels.Guests
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
+
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Mapping;
+    using MyHotelManager.Web.Infrastructure.Attributes;
 
     public class GuestUpdateInputModel : IMapTo<Guest>
     {

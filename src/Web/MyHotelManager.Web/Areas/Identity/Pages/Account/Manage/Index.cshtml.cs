@@ -1,9 +1,7 @@
-﻿using System.ComponentModel;
-using MyHotelManager.Web.Infrastructure.Attributes;
-
-namespace MyHotelManager.Web.Areas.Identity.Pages.Account.Manage
+﻿namespace MyHotelManager.Web.Areas.Identity.Pages.Account.Manage
 {
     using System;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.Threading.Tasks;
 
@@ -11,6 +9,7 @@ namespace MyHotelManager.Web.Areas.Identity.Pages.Account.Manage
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using MyHotelManager.Data.Models;
+    using MyHotelManager.Web.Infrastructure.Attributes;
 
     public partial class IndexModel : PageModel
     {

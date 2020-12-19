@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-
-namespace MyHotelManager.Web.ViewModels.Rooms
+﻿namespace MyHotelManager.Web.ViewModels.Rooms
 {
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Mapping;

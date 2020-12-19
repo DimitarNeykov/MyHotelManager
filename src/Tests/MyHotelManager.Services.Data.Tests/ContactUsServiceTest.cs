@@ -1,12 +1,11 @@
-﻿using MyHotelManager.Data.Common.Repositories;
-
-namespace MyHotelManager.Services.Data.Tests
+﻿namespace MyHotelManager.Services.Data.Tests
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
     using Moq;
+    using MyHotelManager.Data.Common.Repositories;
     using MyHotelManager.Data.Models;
     using MyHotelManager.Data.Repositories;
     using Xunit;

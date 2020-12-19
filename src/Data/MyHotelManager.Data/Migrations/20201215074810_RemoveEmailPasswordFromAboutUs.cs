@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace MyHotelManager.Data.Migrations
+﻿namespace MyHotelManager.Data.Migrations
 {
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class RemoveEmailPasswordFromAboutUs : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -1,14 +1,13 @@
-﻿using System.Linq;
-using Microsoft.AspNetCore.Identity;
-using MyHotelManager.Data.Models;
-
-namespace MyHotelManager.Web.Controllers
+﻿namespace MyHotelManager.Web.Controllers
 {
+    using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using MyHotelManager.Common;
+    using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Data;
     using MyHotelManager.Web.Infrastructure.Attributes;
     using MyHotelManager.Web.ViewModels.Guests;

@@ -58,7 +58,7 @@
 
             var guid = Guid.NewGuid().ToString();
 
-            await guestRepository.AddAsync(new Guest { Id = guid, FirstName = "Petar", LastName = "Stoqnov"});
+            await guestRepository.AddAsync(new Guest { Id = guid, FirstName = "Petar", LastName = "Stoqnov" });
             await guestRepository.SaveChangesAsync();
 
             var guestsService = new GuestsService(guestRepository);
