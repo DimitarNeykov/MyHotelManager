@@ -82,5 +82,17 @@
 
             await this.hotelRepository.SaveChangesAsync();
         }
+
+        public async Task SetPayTrue(int? hotelId)
+        {
+            var hotel = this.hotelRepository.All().FirstOrDefault(x => x.Id == hotelId);
+
+            if (hotel != null)
+            {
+                hotel.IsPay = true;
+            }
+
+            await this.hotelRepository.SaveChangesAsync();
+        }
     }
 }

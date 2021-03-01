@@ -8,6 +8,8 @@
     {
         Task CreateAsync(string name, int cityId, string address, int starsId, int cleaningPerDays, ApplicationUser user);
 
+        Task SetPayTrue(int? hotelId);
+
         Task<T> GetByIdAsync<T>(int id);
 
         Task<T> GetByIdWithDeletedAsync<T>(int id);

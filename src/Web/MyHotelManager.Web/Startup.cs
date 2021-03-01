@@ -1,4 +1,6 @@
-﻿namespace MyHotelManager.Web
+﻿using Stripe;
+
+namespace MyHotelManager.Web
 {
     using System;
     using System.Reflection;
@@ -125,6 +127,8 @@
             IServiceProvider serviceProvider)
         {
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
+
+            StripeConfiguration.ApiKey = this.configuration["Stripe:SecretKey"];
 
             if (env.IsProduction())
             {

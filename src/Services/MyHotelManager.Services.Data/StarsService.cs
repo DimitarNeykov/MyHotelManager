@@ -19,7 +19,7 @@
         public IEnumerable<T> GetAll<T>()
         {
             var stars = this.starsRepository
-                .All()
+                .AllAsNoTracking()
                 .OrderBy(x => x.StarsInNumbers)
                 .To<T>()
                 .ToList();

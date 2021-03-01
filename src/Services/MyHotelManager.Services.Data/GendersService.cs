@@ -19,7 +19,7 @@
         public IEnumerable<T> GetAll<T>()
         {
             var gender = this.genderRepository
-                .All()
+                .AllAsNoTracking()
                 .To<T>()
                 .ToList();
 

@@ -30,6 +30,8 @@
 
         public int CleaningPerDays { get; set; }
 
+        public bool IsPay { get; set; }
+
         public ICollection<Room> Rooms { get; set; }
 
         public ICollection<ApplicationUser> Users { get; set; }
