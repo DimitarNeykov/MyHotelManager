@@ -1,6 +1,4 @@
-﻿using Stripe;
-
-namespace MyHotelManager.Web
+﻿namespace MyHotelManager.Web
 {
     using System;
     using System.Reflection;
@@ -30,6 +28,7 @@ namespace MyHotelManager.Web
     using MyHotelManager.Services.Mapping;
     using MyHotelManager.Services.Messaging;
     using MyHotelManager.Web.ViewModels;
+    using Stripe;
 
     public class Startup
     {

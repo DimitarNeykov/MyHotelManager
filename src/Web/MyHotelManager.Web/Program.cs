@@ -20,7 +20,8 @@
                         var env = hostingContext.HostingEnvironment;
 
                         config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                            .AddJsonFile($"appsettings.{env.EnvironmentName}.json",
+                            .AddJsonFile(
+                                $"appsettings.{env.EnvironmentName}.json",
                                 optional: true, reloadOnChange: true);
 
                         if (args != null)

@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-
-namespace MyHotelManager.Web.Controllers
+﻿namespace MyHotelManager.Web.Controllers
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -8,8 +6,9 @@ namespace MyHotelManager.Web.Controllers
 
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
     using MyHotelManager.Data.Models;
-    using MyHotelManager.Web.ViewModels.Payments;
+    using MyHotelManager.Web.ViewModels.Payment;
     using Stripe;
 
     public class PaymentController : Controller
@@ -25,7 +24,6 @@ namespace MyHotelManager.Web.Controllers
 
         public async Task<IActionResult> Create()
         {
-
             var user = await this.userManager.GetUserAsync(this.User);
             var userNames = user.FirstName + ' ' + user.LastName;
 
@@ -74,16 +72,6 @@ namespace MyHotelManager.Web.Controllers
             };
 
             return this.View(model);
-        }
-
-        public IActionResult Success()
-        {
-            return this.View();
-        }
-
-        public IActionResult Cancel()
-        {
-            return this.View();
         }
     }
 }

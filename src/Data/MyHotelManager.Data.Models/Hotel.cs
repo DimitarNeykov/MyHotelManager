@@ -1,5 +1,6 @@
 ﻿namespace MyHotelManager.Data.Models
 {
+    using System;
     using System.Collections.Generic;
 
     using MyHotelManager.Data.Common.Models;
@@ -10,6 +11,7 @@
         {
             this.Rooms = new HashSet<Room>();
             this.Users = new HashSet<ApplicationUser>();
+            this.Payments = new HashSet<Payment>();
         }
 
         public string Name { get; set; }
@@ -30,7 +32,9 @@
 
         public int CleaningPerDays { get; set; }
 
-        public bool IsPay { get; set; }
+        public DateTime LicenseExpireDate { get; set; }
+
+        public ICollection<Payment> Payments { get; set; }
 
         public ICollection<Room> Rooms { get; set; }
 

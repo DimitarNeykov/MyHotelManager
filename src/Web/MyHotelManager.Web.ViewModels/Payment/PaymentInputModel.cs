@@ -1,4 +1,4 @@
-﻿namespace MyHotelManager.Web.ViewModels.Payments
+﻿namespace MyHotelManager.Web.ViewModels.Payment
 {
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;

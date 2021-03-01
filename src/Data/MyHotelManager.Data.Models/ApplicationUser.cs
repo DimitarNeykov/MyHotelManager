@@ -15,6 +15,7 @@ namespace MyHotelManager.Data.Models
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
+            this.Payments = new List<Payment>();
             this.CreatorReservations = new HashSet<Reservation>();
             this.EditorReservations = new HashSet<Reservation>();
         }
@@ -42,6 +43,8 @@ namespace MyHotelManager.Data.Models
         public int? HotelId { get; set; }
 
         public Hotel Hotel { get; set; }
+
+        public ICollection<Payment> Payments { get; set; }
 
         public ICollection<Reservation> CreatorReservations { get; set; }
 
