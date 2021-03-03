@@ -1,0 +1,98 @@
+﻿@model IEnumerable<MyHotelManager.Web.ViewModels.Reservations.ReservationManageViewModel>
+
+@{
+    this.ViewData["Title"] = "Reservations";
+}
+
+<div class="container-fluid">
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary h3">Manage your reservations</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover font-italic" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr class="bg-primary text-white-50">
+                        <th class="text-center align-middle">Room</th>
+                        <th class="text-center align-middle">Guest Names</th>
+                        <th class="text-center align-middle">Adult Count</th>
+                        <th class="text-center align-middle">Child Count</th>
+                        <th class="text-center align-middle">Book Date</th>
+                        <th class="text-center align-middle">Arrival Date</th>
+                        <th class="text-center align-middle">Return Date</th>
+                        <th class="text-center align-middle">Register</th>
+                        <th class="text-center align-middle">Edit</th>
+                        <th class="text-center align-middle">Delete</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr class="bg-primary text-white-50">
+                        <th class="text-center align-middle">Room</th>
+                        <th class="text-center align-middle">Guest Names</th>
+                        <th class="text-center align-middle">Adult Count</th>
+                        <th class="text-center align-middle">Child Count</th>
+                        <th class="text-center align-middle">Book Date</th>
+                        <th class="text-center align-middle">Arrival Date</th>
+                        <th class="text-center align-middle">Return Date</th>
+                        <th class="text-center align-middle">Register</th>
+                        <th class="text-center align-middle">Edit</th>
+                        <th class="text-center align-middle">Delete</th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    @{
+                        foreach (var reservation in Model)
+                        {
+                            <tr title="@reservation.Description">
+                                <td class="text-center align-middle">@reservation.RoomNumber</td>
+                                <td class="text-center align-middle">@reservation.ReservedByGuest.FirstName @reservation.ReservedByGuest.LastName</td>
+                                <td class="text-center align-middle">@reservation.AdultCount</td>
+                                <td class="text-center align-middle">@reservation.ChildCount</td>
+                                <td class="text-center align-middle">@reservation.BookDate.ToString("dd.MM.yyyy")</td>
+                                <td class="text-center align-middle">@reservation.ArrivalDate.ToString("dd.MM.yyyy")</td>
+                                <td class="text-center align-middle">@reservation.ReturnDate.ToString("dd.MM.yyyy")</td>
+                                <td class="text-center align-middle">
+                                    <a asp-controller="Reservations" asp-action="Details" asp-route-id="@reservation.Id" asp-fragment="guestInformation" class="btn btn-success w-100">
+                                        <i class="fas fa-user-plus"></i>
+                                    </a>
+                                </td>
+                                <td class="text-center align-middle">
+                                    <a asp-controller="Reservations" asp-action="Update" asp-route-reservationId="@reservation.Id" class="btn btn-warning w-100">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                </td>
+                                <td class="text-center align-middle">
+                                    <a class="btn btn-danger w-100" data-toggle="modal" data-target="#tips-@reservation.Id">
+                                        <i class="fas fa-trash text-white"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <div class="modal fade" id="tips-@reservation.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body text-danger">Select "Delete" below if you want to remove a reservation.</div>
+                                        <div class="modal-footer">
+                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                            <form class="form-inline" asp-action="Delete" asp-controller="Reservations" asp-route-reservationId="@reservation.Id">
+                                                <button type="submit" class="btn btn-danger">Remove</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

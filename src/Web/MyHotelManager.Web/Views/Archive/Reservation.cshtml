@@ -1,0 +1,86 @@
+﻿@model IEnumerable<MyHotelManager.Web.ViewModels.Archive.ReservationViewModel>
+
+@{
+    this.ViewData["Title"] = "Reservations";
+}
+
+<div class="container-fluid">
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary h3">Reservations information</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover font-italic" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr class="bg-gradient-primary text-white-50">
+                            <th class="text-center align-middle">Room</th>
+                            <th class="text-center align-middle">Guest Name</th>
+                            <th class="text-center align-middle">Phone Number</th>
+                            <th class="text-center align-middle">Book Date</th>
+                            <th class="text-center align-middle">Arrival Date</th>
+                            <th class="text-center align-middle">Return Date</th>
+                            <th class="text-center align-middle">Operator</th>
+                            <th class="text-center align-middle">Cancel Date</th>
+                            <th class="text-center align-middle">Cancel By</th>
+                            <th class="text-center align-middle">More Details</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr class="bg-gradient-primary text-white-50">
+                            <th class="text-center align-middle">Room</th>
+                            <th class="text-center align-middle">Guest Name</th>
+                            <th class="text-center align-middle">Phone Number</th>
+                            <th class="text-center align-middle">Book Date</th>
+                            <th class="text-center align-middle">Arrival Date</th>
+                            <th class="text-center align-middle">Return Date</th>
+                            <th class="text-center align-middle">Operator</th>
+                            <th class="text-center align-middle">Cancel Date</th>
+                            <th class="text-center align-middle">Cancel By</th>
+                            <th class="text-center align-middle">More Details</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @{
+                            foreach (var reservation in Model)
+                            {
+                                @if (reservation.CancelDate != new DateTime())
+                                {
+                                    <tr title="@reservation.Description" class="bg-gradient-danger text-white">
+                                        <td class="text-center align-middle">@reservation.RoomNumber</td>
+                                        <td class="text-center align-middle">@reservation.ReservedByGuest.FirstName @reservation.ReservedByGuest.LastName</td>
+                                        <td class="text-center align-middle">@reservation.ReservedByGuest.PhoneNumber</td>
+                                        <td class="text-center align-middle">@reservation.BookDate.ToString("dd.MM.yyyy")</td>
+                                        <td class="text-center align-middle">@reservation.ArrivalDate.ToString("dd.MM.yyyy")</td>
+                                        <td class="text-center align-middle">@reservation.ReturnDate.ToString("dd.MM.yyyy")</td>
+                                        <td class="text-center align-middle">@reservation.Creator.FirstName @reservation.Creator.LastName</td>
+                                        <td class="text-center align-middle">@reservation.CancelDate.ToLocalTime()</td>
+                                        <td class="text-center align-middle">@reservation.Editor.FirstName @reservation.Editor.LastName</td>
+                                        <td class="text-center align-middle bg-gray-400"><a asp-action="ReservationDetails" asp-route-id="@reservation.Id"><i class="fas fa-plus-circle text-primary h3"></i></a></td>
+                                    
+                                        </tr>
+                                }
+                                else
+                                {
+                                    <tr title="@reservation.Description" class="bg-gradient-success text-white">
+                                        <td class="text-center align-middle">@reservation.RoomNumber</td>
+                                        <td class="text-center align-middle">@reservation.ReservedByGuest.FirstName @reservation.ReservedByGuest.LastName</td>
+                                        <td class="text-center align-middle">@reservation.ReservedByGuest.PhoneNumber</td>
+                                        <td class="text-center align-middle">@reservation.BookDate.ToString("dd.MM.yyyy")</td>
+                                        <td class="text-center align-middle">@reservation.ArrivalDate.ToString("dd.MM.yyyy")</td>
+                                        <td class="text-center align-middle">@reservation.ReturnDate.ToString("dd.MM.yyyy")</td>
+                                        <td class="text-center align-middle">@reservation.Creator.FirstName @reservation.Creator.LastName</td>
+                                        <td class="text-center align-middle bg-gray-400"></td>
+                                        <td class="text-center align-middle bg-gray-400"></td>
+                                        <td class="text-center align-middle bg-gray-400"><a asp-action="ReservationDetails" asp-route-id="@reservation.Id"><i class="fas fa-plus-circle text-primary h3"></i></a></td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

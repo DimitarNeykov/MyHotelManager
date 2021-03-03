@@ -1,0 +1,155 @@
+﻿@model MyHotelManager.Web.ViewModels.Reservations.ReservationCreateInputModel
+
+@{
+    this.ViewData["Title"] = "New Reservation";
+}
+
+<div class="container">
+    <div class="card o-hidden border-0 shadow-lg my-5 bg-gradient-primary">
+        <div class="card-body p-0">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="p-4">
+                        <div class="text-center">
+                            <h1 class="h3 mb-4 text-white-50 font-italic">Create New Reservation!</h1>
+                        </div>
+
+                        <form class="user" method="post">
+                            <div class="form-group row was-validated text-center text-white-50">
+                                <div class="col-sm-5 mb-3 mb-sm-0">
+                                    <label asp-for="ArrivalDate"></label>
+                                    <input type="text" value="@Model.ShortArrivalDate" asp-for="ArrivalDate" readonly="readonly" class="form-control form-control-user text-center is-valid" placeholder="Arrival Date">
+                                </div>
+
+                                <div class="col-sm-5 mb-3 mb-sm-0">
+                                    <label asp-for="ReturnDate"></label>
+                                    <input type="text" value="@Model.ShortReturnDate" asp-for="ReturnDate" readonly="readonly" class="form-control form-control-user text-center is-valid" placeholder="Return Date">
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <label asp-for="Nights"></label>
+                                    <input asp-for="Nights" id="nights" class="form-control form-control-user text-center is-valid" readonly="readonly" placeholder="Nights" required>
+                                </div>
+                            </div>
+                            <div class="form-group row was-validated text-center text-white-50">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <label asp-for="ReservedByGuest.FirstName"></label>
+                                    <input asp-for="ReservedByGuest.FirstName" class="form-control form-control-user text-center is-invalid" placeholder="First Name" required>
+                                    <span asp-validation-for="ReservedByGuest.FirstName" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label asp-for="ReservedByGuest.LastName"></label>
+                                    <input asp-for="ReservedByGuest.LastName" class="form-control form-control-user text-center is-invalid" placeholder="Last Name" required>
+                                    <span asp-validation-for="ReservedByGuest.LastName" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group was-validated text-center text-white-50">
+                                <label asp-for="ReservedByGuest.PhoneNumber"></label>
+                                <input asp-for="ReservedByGuest.PhoneNumber" class="form-control form-control-user text-center is-invalid" placeholder="Phone Number" minlength="10" required>
+                                <span asp-validation-for="ReservedByGuest.PhoneNumber" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group row was-validated text-center text-white-50">
+                                <div class="col-sm-6 mb-3 mb-sm-0 text-center">
+                                    <label asp-for="AdultCount"></label>
+                                    <input value="" asp-for="AdultCount" class="form-control form-control-user text-center is-invalid" placeholder="Adult Count" required>
+                                    <span asp-validation-for="AdultCount" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-sm-6 text-center">
+                                    <label asp-for="AdultCount"></label>
+                                    <input value="" asp-for="ChildCount" class="form-control form-control-user text-center is-invalid" placeholder="Child Count" required>
+                                    <span asp-validation-for="ChildCount" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row was-validated text-center text-white-50">
+                                <div class="col-sm-6 mb-3 mb-sm-0 text-center">
+                                    <label asp-for="Room.MaxAdultCount"></label>
+                                    <input asp-for="Room.MaxAdultCount" readonly="readonly" class="form-control form-control-user text-center is-valid" placeholder="Adult Count" required>
+                                    <span asp-validation-for="Room.MaxAdultCount" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-sm-6 text-center">
+                                    <label asp-for="Room.MaxChildCount"></label>
+                                    <input asp-for="Room.MaxChildCount" readonly="readonly" class="form-control form-control-user text-center is-valid" placeholder="Child Count" required>
+                                    <span asp-validation-for="Room.MaxChildCount" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row was-validated text-center text-white-50">
+                                <div class="col-sm-6 mb-3 mb-sm-0 text-center">
+                                    <label asp-for="Room.Number"></label>
+                                    <input asp-for="Room.Number" readonly="readonly" class="form-control form-control-user text-center is-valid">
+                                </div>
+
+                                <div class="col-sm-6 text-center">
+                                    <label asp-for="Room.RoomTypeName"></label>
+                                    <input asp-for="Room.RoomTypeName" readonly="readonly" class="form-control form-control-user text-center is-valid">
+                                </div>
+                            </div>
+
+                            <div class="form-group row was-validated text-center text-white-50">
+                                <div class="col-sm-4 mb-3 mb-sm-0">
+                                    <label asp-for="Room.Price"></label>
+                                    <input asp-for="Room.Price" id="roomPrice" readonly="readonly" class="form-control form-control-user text-center is-valid" placeholder="Room Price">
+                                </div>
+
+                                <div class="col-sm-4 mb-3 mb-sm-0">
+                                    <label asp-for="CustomPrice"></label>
+                                    <input asp-for="CustomPrice" id="customPrice" class="form-control form-control-user text-center is-valid" placeholder="Custom Price">
+                                    <span asp-validation-for="CustomPrice" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <label asp-for="AllPrice"></label>
+                                    <input asp-for="AllPrice" readonly="readonly" id="allPrice" class="form-control form-control-user text-center is-valid" placeholder="All Price" required>
+                                    <span asp-validation-for="AllPrice" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <div class="form-group row text-center was-validated">
+                                <div class="col-sm-4 custom-control custom-checkbox">
+                                    <input type="checkbox" asp-for="HasBreakfast" class="custom-control-input">
+                                    <label asp-for="HasBreakfast" class="custom-control-label text-white"></label>
+                                </div>
+
+                                <div class="col-sm-4 custom-control custom-checkbox">
+                                    <input type="checkbox" asp-for="HasLunch" class="custom-control-input">
+                                    <label asp-for="HasLunch" class="custom-control-label text-white"></label>
+                                </div>
+
+                                <div class="col-sm-4 custom-control custom-checkbox">
+                                    <input type="checkbox" asp-for="HasDinner" class="custom-control-input">
+                                    <label asp-for="HasDinner" class="custom-control-label text-white"></label>
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <div class="form-group was-validated">
+                                <textarea asp-for="Description" class="form-control text-center" placeholder="Description" maxlength="200"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+
+                            <input asp-for="Room.Id" hidden="" readonly="readonly" class="custom-control-input">
+
+                            <button type="submit" class="btn btn-success btn-user btn-block">
+                                Create Reservation
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/custom/Reservation/Create.js" asp-append-version="true"></script>
+}

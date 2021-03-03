@@ -1,0 +1,67 @@
+﻿@model MyHotelManager.Web.ViewModels.Rooms.RoomUpdateInputModel
+
+@{
+    var roomTypes = Model.RoomTypes.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+    this.ViewData["Title"] = "New Room";
+}
+<div class="container">
+    <div class="card o-hidden border-0 shadow-lg my-5 bg-gradient-primary">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="p-4">
+                        <div class="text-center">
+                            <h1 class="h3 mb-4 font-italic text-white-50">Edit Room!</h1>
+                        </div>
+                        <form class="user" method="post">
+                            <div class="form-group row was-validated">
+                                <div class="col-sm-4 mb-3 mb-sm-0">
+                                    <input asp-for="Number" class="form-control form-control-user is-invalid text-center" placeholder="Room Number" required>
+                                    <span asp-validation-for="Number" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm-4 mb-3 mb-sm-0">
+                                    <input asp-for="Price" class="form-control form-control-user is-invalid text-center" placeholder="Room Price" required>
+                                    <span asp-validation-for="Price" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm-4">
+                                    <input asp-for="Floor" class="form-control form-control-user is-invalid text-center" placeholder="Floor" required>
+                                    <span asp-validation-for="Floor" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row was-validated">
+                                <div class="col-sm-6 mb-3 mb-sm-0 text-center">
+                                    <input asp-for="MaxAdultCount" class="form-control form-control-user is-invalid text-center" placeholder="Max Adult Count" required>
+                                    <span asp-validation-for="MaxAdultCount" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm-6 text-center">
+                                    <input asp-for="MaxChildCount" class="form-control form-control-user is-invalid text-center" placeholder="Max Child Count" required>
+                                    <span asp-validation-for="MaxChildCount" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group was-validated">
+                                <select asp-for="RoomTypeId" asp-items="roomTypes" class="form-control rounded-pill custom-select myselect" required>
+                                    <option value="" disabled selected>Select Room Type</option>
+                                </select>
+                                <span asp-validation-for="RoomTypeId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group was-validated">
+                                <textarea asp-for="Description" class="form-control text-center" placeholder="Description" maxlength="200"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+
+                            <input asp-for="Id" hidden="" required>
+
+                            <button type="submit" class="btn btn-success btn-user btn-block">
+                                Save
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

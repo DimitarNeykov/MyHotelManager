@@ -1,0 +1,40 @@
+﻿@model IEnumerable<MyHotelManager.Web.ViewModels.Rooms.AvailableRoomViewModel>
+
+@{ this.ViewData["Title"] = "New Room"; }
+<div class="row">
+    @foreach (var room in Model)
+    {
+    <div class="col-xl-3 col-md-6 mb-4" title="@room.Description">
+            <div class="card border-left-primary border-bottom-primary shadow h-100 py-1">
+                    <div class="card-header border-bottom-primary">
+                        <div class="text-center">
+                            <div class="h3 font-weight-bold text-primary text-uppercase text-center" id="@room.Number">@room.Number</div>
+                            <input value="@room.Id" id="@room.Id" hidden=""/>
+                        </div>
+                    </div>
+                    <div class="card-body border-bottom-primary">
+                        <a class="card bg-primary text-white shadow mb-3 rounded-pill" onclick="selectRoom(document.getElementById('@room.Id').value)">
+                            <div class="card-body text-center">
+                                <p class="text-center align-text-bottom h6 mb-0 font-weight-bold">@room.RoomTypeName</p>
+                                <p class="text-center align-text-bottom h6 mt-0">@room.Price / night</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row text-center">
+                            <div class="col-sm-6">
+                                <div class="svg-inline--fa">
+                                    <i class="fas fa-male text-primary"></i>
+                                    <i class="fas fa-female text-primary"> x @room.MaxAdultCount</i>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <i class="fas fa-child text-primary"> x @room.MaxChildCount</i>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+    </div>
+    }
+</div>

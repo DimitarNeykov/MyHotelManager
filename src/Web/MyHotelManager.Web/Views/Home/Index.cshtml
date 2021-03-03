@@ -1,0 +1,74 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using MyHotelManager.Data.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    this.ViewData["Title"] = "Home Page";
+}
+@if (TempData.ContainsKey("Message"))
+{
+    var statusMessageClass = TempData["Message"].ToString().StartsWith("Error") ? "danger" : "success";
+    <div class="alert alert-@statusMessageClass alert-dismissible fade show" role="alert">
+        @TempData["Message"].ToString()
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
+}
+
+<img class="rounded w-100" src="https://res.cloudinary.com/shaddowmike/image/upload/q_100/v1607264070/HomePageLogo_qxwvlf.jpg" alt="First slide">
+
+<div class="jumbotron bg-light">
+    <h1 class="display-4 text-center font-weight-bold">Why choose My Hotel Manager? </h1>
+    <div class="row mb-3">
+        <div class="col-md-6 p-3">
+            <p class="lead text-justify font-italic">Finding the perfect software for every hotel is especially important. Without a suitable solution, the business might suffer eventual losses.</p>
+            <p class="lead text-justify font-italic">My Hotel Manager is the best partner to each hotel management team. It is the newest software program for small and big hotels from every part of the world. You can enjoy it’s simple and modern design while working with it. The program is suitable for everyone and everyone can easily learn how to work with it.</p>
+        </div>
+        <div class="col-md-6 p-3">
+            <p class="lead text-justify font-italic">My Hotel Manager is suitable for both computers and mobile devices, and it offers amazing features – creating, updating and deleting reservations fast and easy, keeping track of the hotel’s capacity, modifying room information, preparing a daily list with breakfasts, lunches and dinners automatically, different roles and rights and many, many more!</p>
+            <p class="lead text-justify font-italic">We promise that your expectations will be fulfilled! </p>
+        </div>
+    </div>
+    @if (!SignInManager.IsSignedIn(this.User))
+    {
+        <div class="text-center">
+            <a class="btn btn-primary btn-lg" asp-area="Identity" asp-page="/Account/Register" role="button">See it for yourself</a>
+        </div>
+    }
+    else if (SignInManager.IsSignedIn(this.User) && UserManager.GetUserAsync(this.User).Result.HotelId == null)
+    {
+<div class="text-center">
+    <a class="btn btn-primary btn-lg" asp-controller="Hotels" asp-action="Create" role="button">See it for yourself</a>
+</div>
+    }
+    else
+    {
+<div class="text-center">
+    <a class="btn btn-primary btn-lg" asp-controller="Hotels" asp-action="Index" role="button">See it for yourself</a>
+</div>
+    }
+</div>
+
+<div class="row mb-3">
+    <div class="col-md-6 p-3">
+        <img class="rounded w-100" src="https://res.cloudinary.com/shaddowmike/image/upload/q_100/v1607274930/Dashboard_dqnsgh.png">
+    </div>
+    <div class="col-md-6 p-3">
+        <img class="rounded w-100" src="https://res.cloudinary.com/shaddowmike/image/upload/q_100/v1607274930/ManageReservation_xtktmy.png">
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="col-md-6 p-3">
+        <img class="rounded w-100" src="https://res.cloudinary.com/shaddowmike/image/upload/q_100/v1607274930/AvailableRooms_oibn07.png">
+    </div>
+    <div class="col-md-6 p-3">
+        <img class="rounded w-100" src="https://res.cloudinary.com/shaddowmike/image/upload/q_100/v1607274930/ManageUsers_ghvncy.png">
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="col-md-6 p-3">
+        <img class="rounded w-100" src="https://res.cloudinary.com/shaddowmike/image/upload/q_100/v1607274930/ManageReservationInfo_di2c2z.png">
+    </div>
+    <div class="col-md-6 p-3">
+        <img class="rounded w-100" src="https://res.cloudinary.com/shaddowmike/image/upload/q_100/v1607274930/ManageRestaurant_s9hrtz.png">
+    </div>
+</div>

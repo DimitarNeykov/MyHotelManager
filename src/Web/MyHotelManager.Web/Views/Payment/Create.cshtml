@@ -1,0 +1,122 @@
+﻿@model MyHotelManager.Web.ViewModels.Payment.PaymentInputModel
+@{
+    ViewData["Title"] = "Payment";
+}
+<div class="example example1 row justify-content-center" id="example-1">
+        <div class="col-xl-9 col-lg-9 col-md-9">
+            <div class="card o-hidden border-0 shadow-lg bg-gradient-primary">
+                <div class="card-body p-0">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-6">
+                            <div class="p-2">
+                                <div class="text-center">
+                                    <h1 class="h3 mb-4 font-italic text-white-50">Create Hotel!</h1>
+                                </div>
+                                <form class="user text-center text-white-50" method="post">
+                                    <div class="form-group was-validated">
+                                        <label asp-for="Names"></label>
+                                        <input asp-for="Names" id="cardHolder" class="form-control form-control-user text-center" placeholder="Hotel Name" required>
+                                        <span asp-validation-for="Names" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group was-validated mt-5 mb-4">
+                                        <div id="example1-card" style="min-width: 300px;">
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <input asp-for="Token" id="token" hidden="" readonly="" />
+                                    <a id="button" class="btn btn-success rounded-pill w-50" data-tid="elements_examples.form.pay_button">Pay $25</a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@section Scripts
+{
+    <script src="https://js.stripe.com/v3/"></script>
+    <script type="text/javascript" asp-append-version="true">
+        let stripe = Stripe('@Model.StripePublishableKey');
+
+        function registerElements(elements, exampleName) {
+            let formClass = '.' + exampleName;
+            let example = document.querySelector(formClass);
+
+            let form = example.querySelector('form');
+
+            document.getElementById('button').addEventListener('click',
+                function(e) {
+                    Array.prototype.forEach.call(form.querySelectorAll('input'),
+                        function(
+                            input
+                        ) {
+                            if (input.checkValidity && !input.checkValidity()) {
+                                return;
+                            }
+                        });
+
+                    let cardHolder = document.getElementById('cardHolder').value;
+
+                    stripe.confirmCardPayment(
+                        '@Model.Token',
+                        {
+                            payment_method: { card: elements[0], billing_details: {
+                                name: cardHolder
+                            } }
+                        }
+                    ).then(function(result) {
+                        if (result.error) {
+                            // Display error.message in your UI.
+                        } else {
+                            document.getElementById('token').value = '@Model.PaymentId';
+                            form.submit();
+                        }
+                    });
+
+                });
+        }
+
+        (function() {
+            'use strict';
+
+            let elements = stripe.elements({
+                fonts: [
+                    {
+                        cssSrc: 'https://fonts.googleapis.com/css?family=Roboto'
+                    }
+                ],
+                locale: window.__exampleLocale
+            });
+
+            let card = elements.create('card',
+                {
+                    iconStyle: 'solid',
+                    style: {
+                        base: {
+                            iconColor: '#c4f0ff',
+                            color: '#fff',
+                            fontWeight: 500,
+                            fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
+                            fontSize: '16px',
+                            fontSmoothing: 'antialiased',
+
+                            ':-webkit-autofill': {
+                                color: '#fce883'
+                            },
+                            '::placeholder': {
+                                color: '#87BBFD'
+                            },
+                        },
+                        invalid: {
+                            iconColor: '#FFC7EE',
+                            color: '#FFC7EE'
+                        }
+                    }
+                });
+            card.mount('#example1-card');
+
+            registerElements([card], 'example1');
+        })();
+    </script>
+}

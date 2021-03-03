@@ -1,0 +1,38 @@
+﻿@{
+
+    this.ViewData["Title"] = "";
+}
+<div class="container">
+    <div class="card o-hidden border-0 shadow-lg my-5 bg-gradient-primary rounded-pill">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="p-4">
+                        <div class="text-center">
+                            <h1 class="h3 mb-4 text-white-50 font-italic">Search Available Rooms!</h1>
+                        </div>
+                        <form class="user">
+                            <div class="form-group row was-validated">
+                                <div class="col-sm-6 mb-3 mb-sm-0 text-center">
+                                    <label class="text-white">Arrival Date</label>
+                                    <input value="" type="date" class="form-control form-control-user is-invalid" id="arrivalDate" oninput="availableRooms()" placeholder="Room Number" required>
+                                </div>
+                                <div class="col-sm-6 text-center">
+                                    <label class="text-white">Return Date</label>
+                                    <input value="" type="date" class="form-control form-control-user is-invalid" id="returnDate" oninput="availableRooms()" placeholder="Room Price" required>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="availableRooms"></div>
+
+@section Scripts {
+    <script src="~/js/custom/Room/DateSearch.js" asp-append-version="true"></script>
+}

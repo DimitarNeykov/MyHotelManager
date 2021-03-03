@@ -1,0 +1,72 @@
+﻿@model IEnumerable<MyHotelManager.Web.ViewModels.Cleaning.CleaningRoomViewModel>
+
+@{
+    this.ViewData["Title"] = "Reservations";
+}
+<div class="container-fluid" id="print">
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <a onclick="PrintOnlyTable()" class="btn btn-primary btn-icon-split text-white rounded-pill float-right">
+                <span class="icon text-white-50">
+                    <i class="fas fa-print"></i>
+                </span>
+                <span class="text">Print</span>
+            </a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover font-italic " id="example" width="100%">
+                    <thead>
+                        <tr>
+                            <th colspan="5" class="text-center">Cleaning Checklist For: @DateTime.UtcNow.ToLocalTime().ToString("d")</th>
+                        </tr>
+                        <tr class="bg-primary text-gray-400">
+                            <th class="text-center align-middle">Room</th>
+                            <th class="text-center align-middle">Room Type</th>
+                            <th class="text-center align-middle">Daily Cleanup</th>
+                            <th class="text-center align-middle">Full Cleanup</th>
+                            <th class="text-center align-middle">Checked</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th colspan="5" class="text-right"></th>
+                        </tr>
+
+                        <tr>
+                            <th colspan="4" class="text-right">Total Rooms:</th>
+                            <th colspan="1" class="text-center">@Model.Count()</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @{
+                            foreach (var rooms in Model)
+                            {
+                                <tr>
+                                    <th class="text-center align-middle">@rooms.Number</th>
+                                    <th class="text-center align-middle">@rooms.RoomTypeName</th>
+                                    @if (rooms.ReservationReturnDate.Date == DateTime.UtcNow.Date)
+                                    {
+                                        <th></th>
+                                        <th class="text-center align-middle text-success"><i class="fas fa-check"></i></th>
+                                    }
+                                    else
+                                    {
+                                        <th class="text-center align-middle text-success"><i class="fas fa-check"></i></th>
+                                        <th></th>
+                                    }
+                                    <th></th>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script src="~/js/custom/PrintDataTable.js" asp-append-version="true"></script>
+}

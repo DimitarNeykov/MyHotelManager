@@ -1,0 +1,140 @@
+﻿@model MyHotelManager.Web.ViewModels.Guests.GuestsCreateInputModel
+
+@{
+    var cities = Model.Cities.Select(x => new SelectListItem(x.Name + " / " + x.Region, x.Id.ToString()));
+    var countries = Model.Countries.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+    var genders = Model.Genders.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+    this.ViewData["Title"] = "New Room";
+}
+<div class="container">
+    <div class="card o-hidden border-0 shadow-lg my-5 bg-gradient-primary">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="p-4">
+                        <div class="text-center">
+                            <h1 class="h3 mb-4 font-italic text-white-50">Add New Guest In Reservation!</h1>
+                        </div>
+                        <form class="user text-center text-white-50" method="post">
+                            <div class="form-group row was-validated">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <label asp-for="FirstName"></label>
+                                    <input asp-for="FirstName" class="form-control form-control-user is-invalid text-center" placeholder="First Name" required>
+                                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <label asp-for="LastName"></label>
+                                    <input asp-for="LastName" class="form-control form-control-user is-invalid text-center" placeholder="Last Name" required>
+                                    <span asp-validation-for="LastName" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row was-validated justify-content-center">
+                                <div class="col-sm-6">
+                                    <label asp-for="GenderId"></label>
+                                    <select asp-for="GenderId" asp-items="genders" class="form-control rounded-pill custom-select myselect" required>
+                                        <option value="" disabled selected>Select Sex</option>
+                                    </select>
+                                    <span asp-validation-for="GenderId" class="text-danger mt-4"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group was-validated">
+                                <label asp-for="PhoneNumber"></label>
+                                <input asp-for="PhoneNumber" class="form-control form-control-user text-center is-invalid" placeholder="Phone Number" minlength="10" required>
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            </div>
+                            <hr />
+                            <div class="form-group row was-validated justify-content-center">
+                                <div class="col-sm-6">
+                                    <label>Nationality</label>
+                                    <select onchange="Nationality()" class="form-control rounded-pill custom-select myselect" id="nationalitySelect" required>
+                                        <option value="" disabled selected>Select Nationality</option>
+                                        <option value="1">Bulgarian</option>
+                                        <option value="2">Foreign</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <div class="form-group row was-validated justify-content-center">
+                                <div class="col-sm-6 mb-3 mb-sm-0" hidden="" id="city">
+                                    <label asp-for="CityId"></label>
+                                    <select asp-for="CityId" asp-items="cities" id="citySelect" class="form-control rounded-pill custom-select myselect" required>
+                                        <option value="" disabled selected>Select City</option>
+                                    </select>
+                                    <span asp-validation-for="CityId" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-sm-6 mb-3 mb-sm-0" hidden="" id="country">
+                                    <label asp-for="CountryId"></label>
+                                    <select asp-for="CountryId" asp-items="countries" id="countrySelect" class="form-control rounded-pill custom-select myselect" required>
+                                        <option value="" disabled selected>Select Country</option>
+                                    </select>
+                                    <span asp-validation-for="CountryId" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row was-validated">
+                                <div class="col-sm-6 mb-3 mb-sm-0" hidden="" id="UCN">
+                                    <label asp-for="IdentificationNumber"></label>
+                                    <input asp-for="IdentificationNumber" id="UCNinput" class="form-control form-control-user is-invalid text-center" placeholder="UCN" required>
+                                    <span asp-validation-for="IdentificationNumber" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm-6 mb-3 mb-sm-0" hidden="" id="PNF">
+                                    <label asp-for="UniqueNumberForeigner"></label>
+                                    <input asp-for="UniqueNumberForeigner" id="PNFinput" class="form-control form-control-user is-invalid text-center" placeholder="PNF" required>
+                                    <span asp-validation-for="UniqueNumberForeigner" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm-6" id="documentNumber" hidden="">
+                                    <label asp-for="DocumentNumber"></label>
+                                    <input asp-for="DocumentNumber" class="form-control form-control-user is-invalid text-center" placeholder="Document Number" required>
+                                    <span asp-validation-for="DocumentNumber" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row was-validated" id="dateExpiryIssue" hidden="">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <label asp-for="DateOfIssue"></label>
+                                    @if (Model.DateOfIssue != new DateTime())
+                                    {
+                                        <input type="date" asp-for="DateOfIssue" class="form-control form-control-user is-invalid text-center" placeholder="Date Of Issue" required>
+                                    }
+                                    else
+                                    {
+                                        <input value="" type="date" asp-for="DateOfIssue" class="form-control form-control-user is-invalid text-center" placeholder="Date Of Issue" required>
+                                    }
+                                    <span asp-validation-for="DateOfIssue" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <label asp-for="DateOfExpiry"></label>
+                                    @if (Model.DateOfExpiry != new DateTime())
+                                    {
+                                        <input type="date" asp-for="DateOfExpiry" class="form-control form-control-user is-invalid text-center" placeholder="Date Of Expiry" required>
+                                    }
+                                    else
+                                    {
+                                        <input type="date" value="" asp-for="DateOfExpiry" class="form-control form-control-user is-invalid text-center" placeholder="Date Of Expiry" required>
+                                    }
+                                    <span asp-validation-for="DateOfExpiry" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <input asp-for="ReservationId" hidden="" />
+
+                            <button type="submit" class="btn btn-success btn-user btn-block">
+                                Add Guest
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/custom/Guest/NationalityFunction.js" asp-append-version="true"></script>
+}

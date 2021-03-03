@@ -1,0 +1,132 @@
+﻿@model MyHotelManager.Web.ViewModels.Hotels.HotelDashboardViewModel
+
+@{
+    this.ViewData["Title"] = "My Hotels";
+    var thisYear = DateTime.UtcNow.Year;
+    var oneYearEarly = DateTime.UtcNow.Year - 1;
+    var twoYearEarly = DateTime.UtcNow.Year - 2;
+    var percentage = Model.PercentageOfArrivedReservations != 0 ? Model.PercentageOfArrivedReservations : 10;
+}
+<h1 class="text-center mb-5 font-italic">@Model.Name</h1>
+<div class="row text-center">
+    <div class="col-xl-4 col-md-4 mb-4">
+        <div class="card shadow rounded-pill">
+            <div class="card-body">
+                <h4 class="m-0 font-weight-bold text-primary">Sofia</h4>
+                <hr />
+                <div id="displayMomentSofia"></div>
+                <hr />
+                <div id="displayJsDateSofia"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-4 col-md-4 mb-4">
+        <div class="card shadow rounded-pill">
+            <div class="card-body rounded-pill">
+                <h4 class="m-0 font-weight-bold text-primary">London</h4>
+                <hr />
+                <div id="displayMomentLondon"></div>
+                <hr />
+                <div id="displayJsDateLondon"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-4 col-md-4 mb-4">
+        <div class="card shadow rounded-pill">
+            <div class="card-body">
+                <h4 class="m-0 font-weight-bold text-primary">Moscow</h4>
+                <hr />
+                <div id="displayMomentMoscow"></div>
+                <hr />
+                <div id="displayJsDateMoscow"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="mb-4" />
+
+<h6 class="m-0 font-weight-bold text-primary text-center mb-4 text-capitalize">Reservations in process!</h6>
+<div class="progress mb-4">
+    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="@Model.ArrivedReservationsForToday" aria-valuemin="0" aria-valuemax="@Model.ReservationsForToday" style="width: @percentage%">@Model.ArrivedReservationsForToday / @Model.ReservationsForToday</div>
+</div>
+
+<hr class="mb-4" />
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary text-center text-capitalize">Reservations per months</h6>
+    </div>
+    <div class="card-body">
+        <div class="chart-area">
+            <div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+            <canvas id="AreaChart" style="display: block; width: 337px; height: 160px;" width="337" height="160" class="chartjs-render-monitor"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-6 col-lg-6">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary text-center">Room Occupancy</h6>
+            </div>
+            <div class="card-body">
+                <div class="chart-pie">
+                    <div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                    <canvas id="PieChart" width="419" height="320" style="display: block; width: 419px; height: 320px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-6 col-lg-6">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary text-center text-capitalize">Total reservations for the last three years</h6>
+            </div>
+            <div class="card-body">
+                <div class="chart-bar">
+                    <div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                    <canvas id="BarChart" width="419" height="320" class="chartjs-render-monitor" style="display: block; width: 419px; height: 320px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script src="~/lib/chart.js/Chart.min.js"></script>
+    <script src="~/js/demo/chart-area-demo.js"></script>
+    <script src="~/js/demo/chart-pie-demo.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.7/moment-timezone-with-data-2010-2020.min.js"></script>
+    <script src="~/js/custom/Hotel/index.js" asp-append-version="true"></script>
+    <script>
+        window.onload = function() {
+            AreaChart(@Model.JanuaryReservations,
+                @Model.FebruaryReservations,
+                @Model.MarchReservations,
+                @Model.AprilReservations,
+                @Model.MayReservations,
+                @Model.JuneReservations,
+                @Model.JulyReservations,
+                @Model.AugustReservations,
+                @Model.SeptemberReservations,
+                @Model.OctoberReservations,
+                @Model.NovemberReservations,
+                @Model.DecemberReservations);
+
+            BarChart(@twoYearEarly,
+                @oneYearEarly,
+                @thisYear,
+                @Model.ReservationsCountForTwoYearEarly,
+                @Model.ReservationsCountForOneYearEarly,
+                @Model.ReservationsCountForThisYear);
+
+            PieChart(@Model.OccupiedRoomsCount, @Model.AvailableRoomsCount);
+        };
+    </script>
+}

@@ -1,0 +1,71 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+    Layout = "_BasicLayout";
+}
+<body class="bg-gradient-primary">
+    <div class="container">
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+
+            <div class="col-xl-6 col-lg-12 col-md-9">
+
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        @if (TempData.ContainsKey("Message"))
+                        {
+                            var statusMessageClass = TempData["Message"].ToString().StartsWith("Error") ? "danger" : "success";
+                            <div class="alert alert-@statusMessageClass alert-dismissible fade show" role="alert">
+                                @TempData["Message"].ToString()
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            </div>
+                        }
+                        <!-- Nested Row within Card Body -->
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h3 text-gray-900 mb-4 font-italic">Welcome Back!</h1>
+                            </div>
+                            <form class="user" id="account" method="post">
+                                <div class="form-group">
+                                    <input asp-for="Input.Username" class="form-control form-control-user" id="exampleInputUsername" aria-describedby="UsernameHelp" placeholder="Username">
+                                    <span asp-validation-for="Input.Username" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input asp-for="Input.Password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox small">
+                                        <input asp-for="Input.RememberMe" class="custom-control-input" id="customCheck">
+                                        <label class="custom-control-label" for="customCheck">Remember Me</label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-user btn-block">
+                                    Login
+                                </button>
+                            </form>
+                            <hr>
+                            <div class="text-center">
+                                <a class="small" id="forgot-password" asp-page="./ForgotPassword">Forgot Password?</a>
+                            </div>
+                            <div class="text-center">
+                                <a class="small" asp-page="./Register">Create an Account!</a>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="text-center h4">
+                            <a class="small" asp-action="Index" asp-controller="Home">
+                                <i class="fas fa-arrow-circle-left"></i>Back to home page
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
