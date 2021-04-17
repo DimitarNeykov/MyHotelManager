@@ -91,7 +91,6 @@
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 8)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
-            [RegularExpression(@"^ (?=.*[a - z])(?=.*[A - Z])(?=.*\d)(?=.*[@$!% *? &])[A - Za - z\d@$!% *? &]{8,}$", ErrorMessage = "The field requires 10 digits!")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
