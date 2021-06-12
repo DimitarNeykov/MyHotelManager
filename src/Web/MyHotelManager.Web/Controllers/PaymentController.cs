@@ -1,4 +1,6 @@
-﻿namespace MyHotelManager.Web.Controllers
+﻿using MyHotelManager.Web.Infrastructure.Attributes;
+
+namespace MyHotelManager.Web.Controllers
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -11,6 +13,7 @@
     using MyHotelManager.Web.ViewModels.Payment;
     using Stripe;
 
+    [AuthorizeRoles("Administrator")]
     public class PaymentController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;

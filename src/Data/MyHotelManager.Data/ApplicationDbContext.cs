@@ -49,6 +49,12 @@
 
         public virtual DbSet<Payment> Payments { get; set; }
 
+        public virtual DbSet<TourOperator> TourOperators { get; set; }
+
+        public virtual DbSet<TourOperatorAgent> TourOperatorAgents { get; set; }
+
+        public virtual DbSet<TourOperatorCompany> TourOperatorCompanies { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
