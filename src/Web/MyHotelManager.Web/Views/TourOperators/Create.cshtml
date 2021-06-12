@@ -1,0 +1,104 @@
+﻿@model MyHotelManager.Web.ViewModels.TourOperators.TourOperatorCreateInputModel
+
+@{
+    this.ViewData["Title"] = "New Tour Operator";
+}
+<div class="container">
+    <div class="col-xl-12 col-lg-12 col-md-12">
+        <div class="card o-hidden border-0 shadow-lg my-5 bg-gradient-primary">
+            <div class="card-body p-0">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="p-4">
+                            <div class="text-center">
+                                <h1 class="h3 mb-4 font-italic text-white-50">Create Tour Operator!</h1>
+                            </div>
+                            <form class="user text-center text-white-50" method="post">
+
+                                <div class="form-group row was-validated justify-content-center">
+                                    <div class="col-sm-6">
+                                        <label asp-for="Name"></label>
+                                        <input asp-for="Name" class="form-control form-control-user text-center" placeholder="Tour Operator Name" required>
+                                        <span asp-validation-for="Name" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <hr />
+
+                                <label>Agent Information</label>
+
+                                <div class="form-group row was-validated">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label asp-for="Agent.FirstName"></label>
+                                        <input asp-for="Agent.FirstName" class="form-control form-control-user is-invalid text-center" placeholder="Agent First Name">
+                                        <span asp-validation-for="Agent.FirstName" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label asp-for="Agent.LastName"></label>
+                                        <input asp-for="Agent.LastName" class="form-control form-control-user is-invalid text-center" placeholder="Agent Last Name">
+                                        <span asp-validation-for="Agent.LastName" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row was-validated">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label asp-for="Agent.Email"></label>
+                                        <input asp-for="Agent.Email" class="form-control form-control-user is-invalid text-center" placeholder="Agent Email">
+                                        <span asp-validation-for="Agent.Email" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label asp-for="Agent.PhoneNumber"></label>
+                                        <input asp-for="Agent.PhoneNumber" class="form-control form-control-user is-invalid text-center" placeholder="Agent Phone Number">
+                                        <span asp-validation-for="Agent.PhoneNumber" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <hr />
+
+                                <label>Company Information</label>
+
+                                <div class="form-group row was-validated">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label asp-for="Company.Name"></label>
+                                        <input asp-for="Company.Name" class="form-control form-control-user is-invalid text-center" placeholder="Company Name">
+                                        <span asp-validation-for="Company.Name" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label asp-for="Company.Bulstat"></label>
+                                        <input asp-for="Company.Bulstat" class="form-control form-control-user is-invalid text-center" placeholder="Bulstat">
+                                        <span asp-validation-for="Company.Bulstat" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row was-validated">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label asp-for="Company.Email"></label>
+                                        <input asp-for="Company.Email" class="form-control form-control-user is-invalid text-center" placeholder="Company Email">
+                                        <span asp-validation-for="Company.Email" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label asp-for="Company.PhoneNumber"></label>
+                                        <input asp-for="Company.PhoneNumber" class="form-control form-control-user is-invalid text-center" placeholder="Company Email">
+                                        <span asp-validation-for="Company.PhoneNumber" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <hr />
+                                <div class="form-group row was-validated justify-content-center">
+                                    <div class="col-sm-6">
+                                        <button type="submit" class="btn btn-success btn-user btn-block">
+                                            <span class="text h6 font-weight-bold">Create</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

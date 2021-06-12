@@ -25,6 +25,8 @@
     using MyHotelManager.Services.CloudinaryManage;
     using MyHotelManager.Services.CronJobs;
     using MyHotelManager.Services.Data;
+    using MyHotelManager.Services.Data.Interfaces;
+    using MyHotelManager.Services.Data.Services;
     using MyHotelManager.Services.Mapping;
     using MyHotelManager.Services.Messaging;
     using MyHotelManager.Web.ViewModels;
@@ -117,6 +119,7 @@
             services.AddTransient<IClearOldReservation, ClearOldReservations>();
             services.AddTransient<IAboutUsService, AboutUsService>();
             services.AddTransient<IContactUsService, ContactUsService>();
+            services.AddTransient<ITourOperatorsService, TourOperatorsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

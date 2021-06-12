@@ -19,7 +19,13 @@
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
+            if (value == null)
+            {
+                return ValidationResult.Success;
+            }
+
             var bulstat = value.ToString();
+
             if (bulstat != null && (bulstat.Length == this.mass.Length + 1 || bulstat.Length == this.mass.Length + this.massDomain.Length))
             {
                 if (int.TryParse(bulstat.Substring(0, 9), out var workData))

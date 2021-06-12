@@ -1,6 +1,4 @@
-﻿using MyHotelManager.Web.Infrastructure.Attributes;
-
-namespace MyHotelManager.Web.Controllers
+﻿namespace MyHotelManager.Web.Controllers
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -10,6 +8,7 @@ namespace MyHotelManager.Web.Controllers
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using MyHotelManager.Data.Models;
+    using MyHotelManager.Web.Infrastructure.Attributes;
     using MyHotelManager.Web.ViewModels.Payment;
     using Stripe;
 

@@ -1,0 +1,67 @@
+﻿@model IEnumerable<MyHotelManager.Web.ViewModels.TourOperators.TourOperatorViewModel>
+
+@{
+    this.ViewData["Title"] = "Tour Operators";
+}
+<div class="container-fluid" id="print">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <a asp-action="Create" asp-controller="TourOperators" class="btn btn-primary btn-icon-split text-white rounded-pill float-right">
+                <span class="icon text-white-50">
+                    <i class="fas fa-id-card-alt"></i>
+                </span>
+                <span class="text">Add Tour Operator</span>
+            </a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover font-italic table-sm" id="example" width="100%">
+                    <thead>
+                        <tr class="bg-primary text-gray-400">
+                            <th class="text-center align-middle">Tour Operator</th>
+                            <th class="text-center align-middle">Agent Names</th>
+                            <th class="text-center align-middle">Agent Phone</th>
+                            <th class="text-center align-middle">Agent E-Mail</th>
+                            <th class="text-center align-middle">Company Name</th>
+                            <th class="text-center align-middle">Bulstat</th>
+                            <th class="text-center align-middle">Company Phone</th>
+                            <th class="text-center align-middle">Company E-Mail</th>
+                            <th class="text-center align-middle">Edit</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    @{
+                        if (Model != null)
+                        {
+                            foreach (var tourOperator in Model)
+                            {
+                                <tr>
+                                    <td class="text-center align-middle">@tourOperator.Name</td>
+                                    <td class="text-center align-middle">@tourOperator.AgentFirstName @tourOperator.AgentLastName</td>
+                                    <td class="text-center align-middle">@tourOperator.AgentPhoneNumber</td>
+                                    <td class="text-center align-middle">@tourOperator.AgentEmail</td>
+                                    <td class="text-center align-middle">@tourOperator.CompanyName</td>
+                                    <td class="text-center align-middle">@tourOperator.CompanyBulstat</td>
+                                    <td class="text-center align-middle">@tourOperator.CompanyPhoneNumber</td>
+                                    <td class="text-center align-middle">@tourOperator.CompanyEmail</td>
+                                    <td class="text-center align-middle">
+                                        <a asp-controller="TourOperators" asp-action="Edit" asp-route-tourOperatorId="@tourOperator.Id" class="btn btn-warning w-100">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+    @section Scripts
+{
+        <script src="~/js/custom/PrintDataTable.js" asp-append-version="true"></script>
+    }
