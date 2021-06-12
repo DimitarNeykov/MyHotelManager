@@ -75,7 +75,8 @@
 
             services.AddTransient<IMailHelper>(serviceProvider =>
                 new MailHelper(
-                    this.configuration["MailSender:Email"],
+                    this.configuration["MailSender:SupportEmail"],
+                    this.configuration["MailSender:NoReplyEmail"],
                     this.configuration["MailSender:Password"],
                     serviceProvider.GetService<ICloudinaryService>()));
 
