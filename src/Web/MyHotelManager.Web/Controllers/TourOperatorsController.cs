@@ -6,9 +6,11 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
+    using MyHotelManager.Common;
     using MyHotelManager.Data.Models;
     using MyHotelManager.Services.Data.DTOs.TourOperators;
     using MyHotelManager.Services.Data.Interfaces;
+    using MyHotelManager.Web.Infrastructure.Attributes;
     using MyHotelManager.Web.ViewModels.TourOperators;
 
     public class TourOperatorsController : Controller
@@ -22,6 +24,7 @@
             this.userManager = userManager;
         }
 
+        [AuthorizeRoles(new[] { GlobalConstants.ReceptionistRoleName, GlobalConstants.ManagerRoleName })]
         public async Task<IActionResult> Index()
         {
             var user = await this.userManager.GetUserAsync(this.User);
@@ -31,12 +34,14 @@
             return this.View(viewModel);
         }
 
+        [AuthorizeRoles(GlobalConstants.ManagerRoleName)]
         public IActionResult Create()
         {
             return this.View();
         }
 
         [HttpPost]
+        [AuthorizeRoles(GlobalConstants.ManagerRoleName)]
         public async Task<IActionResult> Create(TourOperatorCreateInputModel input)
         {
             if (!this.ModelState.IsValid)
@@ -71,6 +76,7 @@
             return this.RedirectToAction("Index");
         }
 
+        [AuthorizeRoles(GlobalConstants.ManagerRoleName)]
         public IActionResult Edit(int tourOperatorId)
         {
             var viewModel = this.tourOperatorsService.GetById<TourOperatorEditInputModel>(tourOperatorId);
@@ -79,6 +85,7 @@
         }
 
         [HttpPost]
+        [AuthorizeRoles(GlobalConstants.ManagerRoleName)]
         public async Task<IActionResult> Edit(TourOperatorEditInputModel input)
         {
             var userId = this.userManager.GetUserId(this.User);
@@ -118,6 +125,25 @@
             };
 
             await this.tourOperatorsService.EditAsync(dto);
+
+            return this.RedirectToAction("Index");
+        }
+
+        [AuthorizeRoles(GlobalConstants.ManagerRoleName)]
+        public async Task<IActionResult> Delete(int tourOperatorId)
+        {
+            var userId = this.userManager.GetUserId(this.User);
+            var user = this.userManager.Users
+                .Include(x => x.Hotel)
+                .ThenInclude(x => x.TourOperators)
+                .First(x => x.Id == userId);
+
+            if (user.Hotel.TourOperators.All(x => x.Id != tourOperatorId))
+            {
+                return this.RedirectToAction("Index");
+            }
+
+            await this.tourOperatorsService.DeleteAsync(tourOperatorId);
 
             return this.RedirectToAction("Index");
         }

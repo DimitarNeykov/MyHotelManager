@@ -5,14 +5,17 @@
 }
 <div class="container-fluid" id="print">
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <a asp-action="Create" asp-controller="TourOperators" class="btn btn-primary btn-icon-split text-white rounded-pill float-right">
-                <span class="icon text-white-50">
-                    <i class="fas fa-id-card-alt"></i>
-                </span>
-                <span class="text">Add Tour Operator</span>
-            </a>
-        </div>
+        @if (this.User.IsInRole("Manager"))
+        {
+            <div class="card-header py-3">
+                <a asp-action="Create" asp-controller="TourOperators" class="btn btn-primary btn-icon-split text-white rounded-pill float-right">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-id-card-alt"></i>
+                    </span>
+                    <span class="text">Add Tour Operator</span>
+                </a>
+            </div>
+        }
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered table-hover font-italic table-sm" id="example" width="100%">
@@ -26,34 +29,68 @@
                             <th class="text-center align-middle">Bulstat</th>
                             <th class="text-center align-middle">Company Phone</th>
                             <th class="text-center align-middle">Company E-Mail</th>
-                            <th class="text-center align-middle">Edit</th>
+                            @if (this.User.IsInRole("Manager"))
+                            {
+                                <th class="text-center align-middle">Edit</th>
+                                <th class="text-center align-middle">Delete</th>
+                            }
                         </tr>
                     </thead>
 
                     <tbody>
-                    @{
-                        if (Model != null)
-                        {
-                            foreach (var tourOperator in Model)
+                        @{
+                            if (Model != null)
                             {
-                                <tr>
-                                    <td class="text-center align-middle">@tourOperator.Name</td>
-                                    <td class="text-center align-middle">@tourOperator.AgentFirstName @tourOperator.AgentLastName</td>
-                                    <td class="text-center align-middle">@tourOperator.AgentPhoneNumber</td>
-                                    <td class="text-center align-middle">@tourOperator.AgentEmail</td>
-                                    <td class="text-center align-middle">@tourOperator.CompanyName</td>
-                                    <td class="text-center align-middle">@tourOperator.CompanyBulstat</td>
-                                    <td class="text-center align-middle">@tourOperator.CompanyPhoneNumber</td>
-                                    <td class="text-center align-middle">@tourOperator.CompanyEmail</td>
-                                    <td class="text-center align-middle">
-                                        <a asp-controller="TourOperators" asp-action="Edit" asp-route-tourOperatorId="@tourOperator.Id" class="btn btn-warning w-100">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                    </td>
-                                </tr>
+                                foreach (var tourOperator in Model)
+                                {
+                                    <tr>
+                                        <td class="text-center align-middle">@tourOperator.Name</td>
+                                        <td class="text-center align-middle">@tourOperator.AgentFirstName @tourOperator.AgentLastName</td>
+                                        <td class="text-center align-middle">@tourOperator.AgentPhoneNumber</td>
+                                        <td class="text-center align-middle">@tourOperator.AgentEmail</td>
+                                        <td class="text-center align-middle">@tourOperator.CompanyName</td>
+                                        <td class="text-center align-middle">@tourOperator.CompanyBulstat</td>
+                                        <td class="text-center align-middle">@tourOperator.CompanyPhoneNumber</td>
+                                        <td class="text-center align-middle">@tourOperator.CompanyEmail</td>
+                                        @if (this.User.IsInRole("Manager"))
+                                        {
+                                            <td class="text-center align-middle">
+                                                <a asp-controller="TourOperators" asp-action="Edit" asp-route-tourOperatorId="@tourOperator.Id" class="btn btn-warning w-100">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                            </td>
+                                            <td class="text-center align-middle">
+                                                <a class="btn btn-danger w-100" data-toggle="modal" data-target="#tips-@tourOperator.Id">
+                                                    <i class="fas fa-trash text-white"></i>
+                                                </a>
+                                            </td>
+                                        }
+                                    </tr>
+                                    @if (this.User.IsInRole("Manager"))
+                                    {
+                                        <div class="modal fade" id="tips-@tourOperator.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+                                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">×</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body text-danger">Select "Delete" below if you want to remove a tour operator.</div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                        <form class="form-inline" asp-action="Delete" asp-controller="TourOperators" asp-route-tourOperatorId="@tourOperator.Id">
+                                                            <button type="submit" class="btn btn-danger">Remove</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
                             }
                         }
-                    }
                     </tbody>
                 </table>
             </div>
@@ -61,7 +98,7 @@
     </div>
 </div>
 
-    @section Scripts
+@section Scripts
 {
-        <script src="~/js/custom/PrintDataTable.js" asp-append-version="true"></script>
-    }
+    <script src="~/js/custom/PrintDataTable.js" asp-append-version="true"></script>
+}

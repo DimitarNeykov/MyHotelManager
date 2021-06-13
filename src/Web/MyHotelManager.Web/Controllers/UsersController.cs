@@ -50,6 +50,9 @@
         {
             if (!this.ModelState.IsValid)
             {
+                var genders = this.gendersService.GetAll<GenderDropDownViewModel>();
+                input.Genders = genders;
+
                 return this.View(input);
             }
 

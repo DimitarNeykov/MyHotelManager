@@ -14,5 +14,7 @@
         T GetById<T>(int tourOperatorId);
 
         Task EditAsync(TourOperatorEditDto input);
+
+        Task DeleteAsync(int tourOperatorId);
     }
 }

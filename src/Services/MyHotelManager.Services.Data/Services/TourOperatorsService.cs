@@ -50,6 +50,17 @@
             await this.tourOperatorRepository.SaveChangesAsync();
         }
 
+        public async Task DeleteAsync(int tourOperatorId)
+        {
+            var reservation = await this.tourOperatorRepository
+                .All()
+                .FirstOrDefaultAsync(x => x.Id == tourOperatorId);
+
+            this.tourOperatorRepository.Delete(reservation);
+
+            await this.tourOperatorRepository.SaveChangesAsync();
+        }
+
         public async Task EditAsync(TourOperatorEditDto input)
         {
             var tourOperator = this.tourOperatorRepository
